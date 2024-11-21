@@ -1,9 +1,8 @@
-<h1 align="center">PROJETO SISTEMA DE DELIVERY</h1>
+<h1 align="center">PROJETO SISTEMA DE DELIVERY - POB</h1>
 
-`"Delivery"` - Aplicação que simula um delivery. 
+`"Runner"` - Aplicação que simula um delivery. 
 
 ## Ideias
-+ Nomes:  Mão na Massa, YummiBox, BeeLine, ExpressTaste, ÀTable, Runner (referencia a maze runner e a rapidez)
 + Temas: livros, comida, entregas no geral
 
 ## Requisitos
@@ -22,8 +21,8 @@
 
 
 ## Exigências
-+ `Aplicação Gráfica:` Tela para o jogo ser executado.
-+ `Poo:` Lógica do jogo e estruturação de arquivos.
++ `Aplicação Gráfica:` Tela para a aplicação ser executada.
++ `Poo:` Lógica do delivery e estruturação de arquivos.
 + `Relacionamentos:` Interação entre classes.
 + `POB:` Classes DAO.
 
