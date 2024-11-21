@@ -1,9 +1,5 @@
 package modelo;
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
+
 import java.util.ArrayList;
 import java.util.List;
 

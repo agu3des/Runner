@@ -1,9 +1,5 @@
 package modelo;
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
+
 
 public class Telefone {
 	private int id;

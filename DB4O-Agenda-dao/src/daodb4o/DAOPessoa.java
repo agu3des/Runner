@@ -1,6 +1,5 @@
 package daodb4o;
 
-
 import java.util.List;
 
 import com.db4o.query.Candidate;
