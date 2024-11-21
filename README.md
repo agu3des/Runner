@@ -30,40 +30,40 @@
 ## Funcionamento
 1. Objetivo: Praticar os conceitos de persistência transparente de objetos, através do desenvolvimento de um sistema de informação, usando arquitetura em camadas, banco de objetos db4o e padrão DAO.
 2. Tarefas:
-- (1pt) Implementar as classes de negócio para o tema fornecido. Configurar as operações de cascata na classe Util.
-- (1pt) Implementar as classes DAO específicas, uma para cada classe de negócio, incluindo as 3 consultas do tema escolhido.
-- (1pt) Implementar a classe Fachada com os requisitos do sistema e as regras de negócio
-- (1pt) Implementar as aplicações console:
-   o Cadastrar.java - cadastrar vários objetos como massa de teste
-   o Listar.java – listar todos os objetos cadastrados
-   o Consultar.java – executar as 3 consultas pedidas
-- (1pt) Implementar as aplicações gráficas – uma tela para cada classe de negócio e uma tela para as 3 consultas.
-- (5pt) Apresentar o projeto
-Obs: A apresentação é obrigatória para cada aluno ter nota
+   1. (1pt) Implementar as classes de negócio para o tema fornecido. Configurar as operações de cascata na classe Util.
+   2. (1pt) Implementar as classes DAO específicas, uma para cada classe de negócio, incluindo as 3 consultas do tema escolhido.
+   3. (1pt) Implementar a classe Fachada com os requisitos do sistema e as regras de negócio
+   4. (1pt) Implementar as aplicações console:
+      1. o Cadastrar.java - cadastrar vários objetos como massa de teste
+      2. o Listar.java – listar todos os objetos cadastrados
+      3. o Consultar.java – executar as 3 consultas pedidas
+   5. (1pt) Implementar as aplicações gráficas – uma tela para cada classe de negócio e uma tela para as 3 consultas.
+   6. (5pt) Apresentar o projeto, a apresentação é obrigatória para cada aluno ter nota
 3. Requisitos:
-- Classes:
-    Pedido(id, data, valor, descrição)
-    Entrega(id, data, endereço, entregador, pedido)
-    Entregador(id, nome, lista de entrega)
-
-- Regras de Negócio:
-    1. Um entregador não pode ter mais de 5 entregas por dia
-    2. A entrega deve ser feita apenas por um entregador
-    3. Uma entrega não pode ter mais de um endereço
-    4. Um pedido não pode ter valor igual ou inferior a zero 
-    5. As datas de pedido e entrega são obtidas pelo sistema e seguem o formato (dd/mm/aaaa)
-    6. O entregador não pode fazer entrega de um pedido que esteja fora da sua lista
-    7. Apenas entregadores disponíveis podem ser atribuídos a novas entregas.
-
-
-    
-- Consultas:
-    1. Quais as entregas na data X 
-    2. Quais as entregas com data diferente da data do pedido 
-    3. Quais os entregadores que tem mais N entregas
-
+   1. Classes:
+       1. Pedido(id, data, valor, descrição)
+       2. Entrega(id, data, endereço, entregador, pedido)
+       3. Entregador(id, nome, lista de entrega)
+   
+   2. Regras de Negócio:
+       1. Um entregador não pode ter mais de 5 entregas por dia
+       2. A entrega deve ser feita apenas por um entregador
+       3. Uma entrega não pode ter mais de um endereço
+       4. Um pedido não pode ter valor igual ou inferior a zero 
+       5. As datas de pedido e entrega são obtidas pelo sistema e seguem o formato (dd/mm/aaaa)
+       6. O entregador não pode fazer entrega de um pedido que esteja fora da sua lista
+       7. Apenas entregadores disponíveis podem ser atribuídos a novas entregas.
+   
+   
+       
+   3. Consultas:
+       1. Quais as entregas na data X 
+       2. Quais as entregas com data diferente da data do pedido 
+       3. Quais os entregadores que tem mais N entregas
+   
 ## Descrição do arquivo
 | Nome | Descrição |
+| ---- | --------- |
 | modelo | Contém as classes principais que representam as entidades do sistema, como Pedido, Entrega e Entregador. Essas classes encapsulam os atributos e comportamentos básicos das entidades. |
 | appswing | mplementa a interface gráfica (GUI) utilizando o framework Swing, permitindo que o usuário interaja com o sistema por meio de janelas e elementos visuais. |
 | appconsole | Oferece uma interface de linha de comando (CLI) para interação com o sistema, ideal para testes ou usuários que preferem o terminal. |
