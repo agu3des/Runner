@@ -8,7 +8,6 @@ public class Entregador {
 	private int idEntregador;
 	private String nome;	
 	private List<Entrega> entregas = new ArrayList<>();
-	private Entrega entrega;
 
 	//mesma duvida de Pedido
 	public Entregador(String nome) {
@@ -31,14 +30,6 @@ public class Entregador {
 		this.nome = novoNome;
 	}
 	
-	/*----------Relacionamento-----------*/
-	public Entrega getEntrega() {
-		return entrega;
-	}
-	public void setEntrega(Entrega entrega) {
-		this.entrega = entrega;
-	}
-	
 	public List<Entrega> getEntregas() {
 		return entregas;
 	}
@@ -49,7 +40,6 @@ public class Entregador {
 	
 	public void adicionar(Entrega e){
 		entregas.add(e);
-        //conferir se é de fato setEntrega
 		e.setEntregador(this);
 	}
 	public void remover(Entrega e){
