@@ -11,6 +11,8 @@ public class Entrega {
     private String endereco;
 	private List<Entregador> entregadores = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
+	private Entregador entregador;
+	private Pedido pedido;
 
 	//mesma duvida de Pedido
 	public Entrega(int id) {
@@ -59,7 +61,21 @@ public class Entrega {
 		this.pedidos = listaPedidos;
 	}
     
+	/*----------Relacionamento-----------*/
+	public Entregador getEntregador() {
+		return entregador;
+	}
+	public void setEntregador(Entregador entregador) {
+		this.entregador = entregador;
+	}
 	
+	public Pedido getPedido() {
+		return pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 	
 	public void adicionarEntregador(Entregador e){
 		entregadores.add(e);

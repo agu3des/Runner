@@ -7,6 +7,7 @@ public class Pedido {
     private String datapedido;	
     private double valor;
 	private String descricao;
+	private Entrega entrega;
 
 	//incluir valor e descrição??
 	public Pedido(int id) {
@@ -45,6 +46,14 @@ public class Pedido {
 		this.descricao = novaDescricao;
 	}
 
+	
+	/*----------Relacionamento-----------*/
+	public Entrega getEntrega() {
+		return entrega;
+	}
+	public void setEntrega(Entrega entrega) {
+		this.entrega = entrega;
+	}
 	
 	public String toString() {
 		String texto = "id" + idPedido+" DataPedido=" +  getDataPedido() + ", Valor=" + getValor()  + ", Descrição=" + getDescricao();

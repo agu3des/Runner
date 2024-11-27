@@ -7,19 +7,22 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import daodb4o.DAO;
-import daodb4o.DAOAluno;
-import daodb4o.DAOPessoa;
-import daodb4o.DAOTelefone;
+import daodb4o.DAOEntrega;
+import daodb4o.DAOEntregador;
+import daodb4o.DAOPedido;
 import modelo.Aluno;
+import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
 import modelo.Pessoa;
 import modelo.Telefone;
 
 public class Fachada {
 	private Fachada() {}
 
-	private static DAOPessoa daopessoa = new DAOPessoa();
-	private static DAOAluno daoaluno = new DAOAluno();
-	private static DAOTelefone daotelefone = new DAOTelefone();
+	private static DAOPedido daopedido = new DAOPedido();
+	private static DAOEntregador daoentregador = new DAOEntregador();
+	private static DAOEntrega daoentrega = new DAOEntrega();
 
 	public static void inicializar() {
 		DAO.open();
@@ -29,65 +32,92 @@ public class Fachada {
 		DAO.close();
 	}
 
-	public static Pessoa localizarPessoa(String nome) throws Exception {
-		Pessoa p = daopessoa.read(nome);
+	public static Pedido localizarPedido(int idPedido) throws Exception {
+		Pedido p = daopedido.read(idPedido);
 		if (p == null) {
-			throw new Exception("pessoa inexistente:" + nome);
+			throw new Exception("Pedido inexistente:" + idPedido);
 		}
 		return p;
 	}
-	public static Aluno localizarAluno(String nome) throws Exception {
-		Aluno a = daoaluno.read(nome);
-		if (a == null) {
-			throw new Exception("aluno inexistente:" + nome);
+	public static Entregador localizarEntregador(String nome) throws Exception {
+		Entregador e = daoentregador.read(nome);
+		if (e == null) {
+			throw new Exception("Entregador inexistente:" + nome);
 		}
-		return a;
+		return e;
+	}
+	
+	public static Entrega localizarEntrega(int idEntrega) throws Exception {
+		Entrega e = daoentrega.read(idEntrega);
+		if (e == null) {
+			throw new Exception("Entrega inexistente:" + idEntrega);
+		}
+		return e;
 	}
 
-	public static void criarPessoa(String nome, String data, List<String> apelidos) throws Exception {
+
+	public static void criarPedido(int idPedido, String dataPedido, double valor, String descricao) throws Exception {
 		DAO.begin();
 		try {
-			LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			//verificar se tem que fazer verificacao do valor
+			LocalDate.parse(dataPedido, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (DateTimeParseException e) {
 			DAO.rollback();
-			throw new Exception("formato data invalido:" + data);
+			throw new Exception("Formato data invalido:" + dataPedido);
 		}
-		Pessoa p = daopessoa.read(nome);
+		Pedido p = daopedido.read(idPedido);
 		if (p != null) {
 			DAO.rollback();
-			throw new Exception("criar pessoa - nome ja existe:" + nome);
+			throw new Exception("Criar pedido - pedido ja existe:" + idPedido);
 		}
-		p = new Pessoa(nome);
-		p.setDtNascimento(data);
-		p.setApelidos(apelidos);
-		daopessoa.create(p);
+		p = new Pedido(idPedido);
+		p.setDataPedido(dataPedido);
+		p.setValor(valor);
+		p.setDescricao(descricao);
+		daopedido.create(p);
 		DAO.commit();
 	}
 
-	public static void criarAluno(String nome, String data, List<String>  apelidos, double nota) throws Exception {
+	public static void criarEntregador(int idEntregador, String nome, List<Entrega> entregas) throws Exception {
+		DAO.begin();
+
+		Entregador en = daoentregador.read(nome); 
+		if (en != null) {
+			DAO.rollback();
+			throw new Exception("Criar entregador - nome ja existe:" + nome);
+		}
+
+		Entregador e = new Entregador(nome);
+		e.setNome(nome);
+		e.setEntregas(entregas);
+		daoentregador.create(e);
+		DAO.commit();
+	}
+	
+	public static void criarEntrega(int idEntrega, String dataEntrega, String endereco, List<Entregador> entregadores, List<Pedido> pedidos) throws Exception {
 		DAO.begin();
 		try {
-			LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			//verificar se tem que fazer verificacao do valor
+			LocalDate.parse(dataEntrega, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (DateTimeParseException e) {
 			DAO.rollback();
-			throw new Exception("formato data invalido:" + data);
+			throw new Exception("Formato data invalido:" + dataEntrega);
 		}
-
-		Pessoa p = daopessoa.read(nome); // nome de qualquer pessoa
-		if (p != null) {
+		Entrega e = daoentrega.read(idEntrega);
+		if (e != null) {
 			DAO.rollback();
-			throw new Exception("criar aluno - nome ja existe:" + nome);
+			throw new Exception("Criar entrega - pedido ja existe:" + idEntrega);
 		}
-
-		Aluno a = new Aluno(nome, nota);
-		a.setDtNascimento(data);
-		a.setApelidos(apelidos);
-		daoaluno.create(a);
+		e = new Entrega(idEntrega);
+		e.setDataEntrega(dataEntrega);
+		e.setEndereco(endereco);
+		e.setEntregadores(entregadores);
+		e.setPedidos(pedidos);
+		daoentrega.create(e);
 		DAO.commit();
 	}
 
 	public static void alterarPessoa(String nome, String data, List<String> apelidos) throws Exception {
-		// permite alterar data, foto e apelidos
 		DAO.begin();
 		Pessoa p = daopessoa.read(nome);
 		if (p == null) {

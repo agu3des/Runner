@@ -8,10 +8,11 @@ public class Entregador {
 	private int idEntregador;
 	private String nome;	
 	private List<Entrega> entregas = new ArrayList<>();
+	private Entrega entrega;
 
 	//mesma duvida de Pedido
-	public Entregador(int id) {
-		this.idEntregador = id;
+	public Entregador(String nome) {
+		this.nome = nome;
 	}
 	
 	
@@ -30,6 +31,13 @@ public class Entregador {
 		this.nome = novoNome;
 	}
 	
+	/*----------Relacionamento-----------*/
+	public Entrega getEntrega() {
+		return entrega;
+	}
+	public void setEntrega(Entrega entrega) {
+		this.entrega = entrega;
+	}
 	
 	public List<Entrega> getEntregas() {
 		return entregas;

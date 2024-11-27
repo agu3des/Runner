@@ -2,6 +2,8 @@ package daodb4o;
 
 import java.util.List;
 
+import com.db4o.query.Candidate;
+import com.db4o.query.Evaluation;
 import com.db4o.query.Query;
 
 import modelo.Entregador;
@@ -10,7 +12,7 @@ import modelo.Entregador;
 
 public class DAOEntregador  extends DAO<Entregador>{
 	
-	//nome � usado como campo unico 
+	//nome eh usado como campo unico 
 	public Entregador read (String nome) {
 		Query q = manager.query();
 		q.constrain(Entregador.class);
@@ -28,5 +30,27 @@ public class DAOEntregador  extends DAO<Entregador>{
 		manager.store( obj );
 	}
 	
+	//dúvida acerca do funcionamento
+	//quais os entregadores que tem mais de n entregas
+	public List<Entregador> readByNEntregas(int n) {
+		Query q = manager.query();
+		q.constrain(Entregador.class);
+		q.constrain(new Filtro(n));
+		return q.execute(); 
+	}
+	
+	/*-------------------------------------------------*/
+	@SuppressWarnings("serial")
+	class Filtro  implements Evaluation {
+		private int n;
+		public Filtro (int n) {
+			this.n=n;
+		}
+		public void evaluate(Candidate candidate) {
+			Entregador e = (Entregador) candidate.getObject();
+			candidate.include( e.getEntregas().size() > n );
+		}
+	}
+
 }
 
