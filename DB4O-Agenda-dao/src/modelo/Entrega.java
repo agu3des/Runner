@@ -6,22 +6,30 @@ import java.util.List;
 
 public class Entrega {
 	
-	private int idEntrega;
+	private int id;
+	private String idEntrega;
 	private String dataEntrega;	
     private String endereco;
 	private Entregador entregador;
 	private Pedido pedido;
 
 
-	public Entrega(int id) {
+	public Entrega(String id) {
 		this.idEntrega = id;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
-    public int getIdEntrega() {
+	
+    public String getIdEntrega() {
 		return idEntrega;
 	}
-	public void setIdEntrega(int id) {
+	public void setIdEntrega(String id) {
 		this.idEntrega = id;
 	}
 	

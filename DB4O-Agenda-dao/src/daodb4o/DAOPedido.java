@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.db4o.query.Query;
 
+import modelo.Entrega;
 import modelo.Pedido;
 
 public class DAOPedido  extends DAO<Pedido>{
 	
 	//id eh usado como campo unico 
-	public Pedido read (int idPedido) {
+	public Pedido read (String idPedido) {
 		Query q = manager.query();
 		q.constrain(Pedido.class);
 		q.descend("id").constrain(idPedido);
@@ -20,9 +21,18 @@ public class DAOPedido  extends DAO<Pedido>{
 			return null;
 	}
 	
+	
+	public  List<Pedido> readAll(String pedidos) {
+		Query q = manager.query();
+		q.constrain(Pedido.class);
+		q.descend("id").constrain(pedidos).like();		//insensitive
+		List<Pedido> result = q.execute(); 
+		return result;
+	}
+	
 	public void create(Pedido obj){
 		int novoid = super.gerarId(Pedido.class);  	//gerar novo id da classe
-		obj.setIdPedido(novoid);				//atualizar id do objeto antes de grava-lo no banco
+		obj.setId(novoid);				//atualizar id do objeto antes de grava-lo no banco
 		manager.store( obj );
 	}
 	

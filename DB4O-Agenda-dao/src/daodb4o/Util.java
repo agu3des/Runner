@@ -6,9 +6,11 @@ import com.db4o.config.EmbeddedConfiguration;
 import com.db4o.cs.Db4oClientServer;
 import com.db4o.cs.config.ClientConfiguration;
 
-import modelo.Aluno;
-import modelo.Pessoa;
-import modelo.Telefone;
+import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
+
+
 
 public class Util {
 	private static ObjectContainer manager=null;
@@ -24,15 +26,19 @@ public class Util {
 		config.common().messageLevel(0);  // mensagens na tela 0(desliga),1,2,3...
 		
 		// habilitar cascata para alterar, apagar e recuperar objetos
-		config.common().objectClass(Pessoa.class).cascadeOnDelete(false);;
-		config.common().objectClass(Pessoa.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Pessoa.class).cascadeOnActivate(true);
-		config.common().objectClass(Aluno.class).cascadeOnDelete(false);;
-		config.common().objectClass(Aluno.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Aluno.class).cascadeOnActivate(true);
-		config.common().objectClass(Telefone.class).cascadeOnDelete(false);;
-		config.common().objectClass(Telefone.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Telefone.class).cascadeOnActivate(true);		
+		config.common().objectClass(Pedido.class).cascadeOnDelete(false);;
+		config.common().objectClass(Pedido.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Pedido.class).cascadeOnActivate(true);	
+		
+		config.common().objectClass(Entregador.class).cascadeOnDelete(false);;
+		config.common().objectClass(Entregador.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Entregador.class).cascadeOnActivate(true);
+		
+		config.common().objectClass(Entrega.class).cascadeOnDelete(false);;
+		config.common().objectClass(Entrega.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Entrega.class).cascadeOnActivate(true);
+
+	
 		
 		//conexao local
 		manager = Db4oEmbedded.openFile(config, "banco.db4o");
@@ -50,16 +56,19 @@ public class Util {
 		ClientConfiguration config = Db4oClientServer.newClientConfiguration( ) ;
 		config.common().messageLevel(0);  // 0,1,2,3...
 
-		config.common().objectClass(Pessoa.class).cascadeOnDelete(false);;
-		config.common().objectClass(Pessoa.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Pessoa.class).cascadeOnActivate(true);
-		config.common().objectClass(Aluno.class).cascadeOnDelete(false);;
-		config.common().objectClass(Aluno.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Aluno.class).cascadeOnActivate(true);
-		config.common().objectClass(Telefone.class).cascadeOnDelete(false);;
-		config.common().objectClass(Telefone.class).cascadeOnUpdate(true);;
-		config.common().objectClass(Telefone.class).cascadeOnActivate(true);		
-
+		config.common().objectClass(Pedido.class).cascadeOnDelete(false);;
+		config.common().objectClass(Pedido.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Pedido.class).cascadeOnActivate(true);	
+		
+		config.common().objectClass(Entregador.class).cascadeOnDelete(false);;
+		config.common().objectClass(Entregador.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Entregador.class).cascadeOnActivate(true);
+		
+		config.common().objectClass(Entrega.class).cascadeOnDelete(false);;
+		config.common().objectClass(Entrega.class).cascadeOnUpdate(true);;
+		config.common().objectClass(Entrega.class).cascadeOnActivate(true);
+		
+		
 		//Conex�o remota 
 		//***************
 		//String ipservidor="localhost";

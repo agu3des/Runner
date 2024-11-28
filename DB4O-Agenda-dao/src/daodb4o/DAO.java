@@ -44,8 +44,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 	public List<T> readAll() {
 		manager.ext().purge(); // limpar cache do manager
 
-		Class<T> type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
+		Class<T> type = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		Query q = manager.query();
 		q.constrain(type);
 		return (List<T>) q.execute();

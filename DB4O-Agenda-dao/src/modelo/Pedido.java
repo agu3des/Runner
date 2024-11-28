@@ -3,21 +3,29 @@ package modelo;
 
 public class Pedido {
 	
-	private int idPedido;
+	private int id;
+	private String idPedido;
     private String datapedido;	
     private double valor;
 	private String descricao;
 
 	
-	public Pedido(int id) {
+	public Pedido(String id) {
 		this.idPedido = id;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
-	public int getIdPedido() {
+	
+	public String getIdPedido() {
 		return idPedido;
 	}
-	public void setIdPedido(int id) {
+	public void setIdPedido(String id) {
 		this.idPedido = id;
 	}
 	
@@ -33,8 +41,8 @@ public class Pedido {
 	public double getValor() {
 		return valor;
 	}
-	public void setValor(double novoValor) {
-		this.valor = novoValor;
+	public void setValor(double valor) {
+		this.valor = valor ; 
 	}
 	
 	

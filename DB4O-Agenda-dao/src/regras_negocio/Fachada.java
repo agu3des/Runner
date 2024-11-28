@@ -10,12 +10,11 @@ import daodb4o.DAO;
 import daodb4o.DAOEntrega;
 import daodb4o.DAOEntregador;
 import daodb4o.DAOPedido;
-import modelo.Aluno;
+
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
-import modelo.Pessoa;
-import modelo.Telefone;
+
 
 public class Fachada {
 	private Fachada() {}
@@ -32,7 +31,7 @@ public class Fachada {
 		DAO.close();
 	}
 
-	public static Pedido localizarPedido(int idPedido) throws Exception {
+	public static Pedido localizarPedido(String idPedido) throws Exception {
 		Pedido p = daopedido.read(idPedido);
 		if (p == null) {
 			throw new Exception("Pedido inexistente:" + idPedido);
@@ -47,7 +46,7 @@ public class Fachada {
 		return e;
 	}
 	
-	public static Entrega localizarEntrega(int idEntrega) throws Exception {
+	public static Entrega localizarEntrega(String idEntrega) throws Exception {
 		Entrega e = daoentrega.read(idEntrega);
 		if (e == null) {
 			throw new Exception("Entrega inexistente:" + idEntrega);
@@ -56,7 +55,7 @@ public class Fachada {
 	}
 
 
-	public static void criarPedido(int idPedido, String dataPedido, double valor, String descricao) throws Exception {
+	public static void criarPedido(String idPedido, String dataPedido, double valor, String descricao) throws Exception {
 		DAO.begin();
 		try {
 			//verificar se tem que fazer verificacao do valor
@@ -78,7 +77,7 @@ public class Fachada {
 		DAO.commit();
 	}
 
-	public static void criarEntregador(int idEntregador, String nome, List<Entrega> entregas) throws Exception {
+	public static void criarEntregador(String nome, List<Entrega> entregas) throws Exception {
 		DAO.begin();
 
 		Entregador en = daoentregador.read(nome); 
@@ -89,12 +88,18 @@ public class Fachada {
 
 		Entregador e = new Entregador(nome);
 		e.setNome(nome);
-		e.setEntregas(entregas);
+		try{
+			if (entregas.size() < 5) {
+				e.setEntregas(entregas);
+			}
+		} catch (Exception er) {
+			System.out.println(er.getMessage());
+		}
 		daoentregador.create(e);
 		DAO.commit();
 	}
 	
-	public static void criarEntrega(int idEntrega, String dataEntrega, String endereco, Entregador entregador, Pedido pedido) throws Exception {
+	public static void criarEntrega(String idEntrega, String dataEntrega, String endereco, Entregador entregador, Pedido pedido) throws Exception {
 		DAO.begin();
 		try {
 			//verificar se tem que fazer verificacao do valor
@@ -117,7 +122,7 @@ public class Fachada {
 		DAO.commit();
 	}
 
-	public static void alterarEntrega(int idEntrega, String dataEntrega, String endereco, Entregador entregador, Pedido pedido) throws Exception {
+	public static void alterarEntregadorDeEntrega(String idEntrega, Entregador entregador) throws Exception {
 		DAO.begin();
 		Entrega e = daoentrega.read(idEntrega);
 		if (e == null) {
@@ -125,206 +130,170 @@ public class Fachada {
 			throw new Exception("Alterar entrega - entrega inexistente:" + idEntrega);
 		}
 
-		e.setPedido(pedido);
 		e.setEntregador(entregador);
-		
-		if (dataEntrega != null) {
+
+		daoentrega.update(e);
+		DAO.commit();
+	}
+
+
+	public static void alterarDataEntrega(String idEntrega, String dataEntrega) throws Exception {
+		DAO.begin();
+		Entrega e = daoentrega.read(idEntrega);
+		if (e == null) {
+			DAO.rollback();
+			throw new Exception("Alterar entrega - entrega inexistente:" + idEntrega);
+		}
+
+		if (e.getdataEntrega() != null) {
 			try {
 				LocalDate.parse(dataEntrega, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				e.setDataEntrega(dataEntrega);
 			} catch (DateTimeParseException en) {
 				DAO.rollback();
-				throw new Exception("Alterar entrega - formato data invalido:" + dataEntrega);
+				throw new Exception("Alterar data - formato data invalido:" + dataEntrega);
 			}
 		}
 
 		daoentrega.update(e);
 		DAO.commit();
 	}
+	
+	public static void alterarEnderecoEntrega(String idEntrega, String endereco) throws Exception {
+		DAO.begin();
+		Entrega e = daoentrega.read(idEntrega);
+		if (e == null) {
+			DAO.rollback();
+			throw new Exception("Alterar entrega - entrega inexistente:" + idEntrega);
+		}
 
-	public static void alterarEntregador(int idEntregador, String nome, List<Entrega> entregas) throws Exception {
+		if (e.getEndereco() != null) {
+				e.setDataEntrega(endereco);
+		}
+
+		daoentrega.update(e);
+		DAO.commit();
+	}
+
+
+	public static void alterarNomeEntregador(String nome, String novoNome) throws Exception {
+		DAO.begin();
+		Entregador e = daoentregador.read(nome); 
+		if (e == null) {
+			DAO.rollback();
+			throw new Exception("Alterar nome - nome inexistente:" + nome);
+		}
+		e.setNome(novoNome);
+		daoentregador.update(e);
+		DAO.commit();
+	}
+	
+	public static void excluirPedido(String idPedido) throws Exception {
+		DAO.begin();
+		Pedido p = daopedido.read(idPedido);
+		if (p == null) {
+			DAO.rollback();
+			throw new Exception("Excluir pedido - id inexistente:" + idPedido);
+		}
+
+		daopedido.delete(p); 
+		DAO.commit();
+	}
+	
+	public static void excluirEntregador(String nome) throws Exception {
 		DAO.begin();
 		Entregador e = daoentregador.read(nome);
 		if (e == null) {
 			DAO.rollback();
-			throw new Exception("Alterar entregador - nome inexistente:" + nome);
+			throw new Exception("Excluir entrega - id inexistente:" + nome);
 		}
 
-		e.setEntregas(entregas);
-		daoentregador.update(e);
+		daoentregador.delete(e); 
 		DAO.commit();
 	}
-
-	public static void alterarDataEntrega(String nome, String data) throws Exception {
+	
+	public static void excluirEntrega(String idEntrega) throws Exception {
 		DAO.begin();
-		Pessoa p = daopessoa.read(nome);
-		if (p == null) {
+		Entrega e = daoentrega.read(idEntrega);
+		if (e == null) {
 			DAO.rollback();
-			throw new Exception("alterar pessoa - pessoa inexistente:" + nome);
+			throw new Exception("Excluir entrega - id inexistente:" + idEntrega);
 		}
 
-		if (data != null) {
-			try {
-				LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-				p.setDtNascimento(data);
-			} catch (DateTimeParseException e) {
-				DAO.rollback();
-				throw new Exception("alterar data - formato data invalido:" + data);
-			}
-		}
-
-		daopessoa.update(p);
+		daoentrega.delete(e); 
 		DAO.commit();
 	}
 
-	public static void alterarNome(String nome, String novonome) throws Exception {
-		DAO.begin();
-		Pessoa p = daopessoa.read(nome); // usando chave primaria
-		if (p == null) {
-			DAO.rollback();
-			throw new Exception("alterar nome - nome inexistente:" + nome);
-		}
-		p.setNome(novonome);
-		daopessoa.update(p);
-		DAO.commit();
-	}
 
-	public static void excluirPessoa(String nome) throws Exception {
-		DAO.begin();
-		Pessoa p = daopessoa.read(nome);
-		if (p == null) {
-			DAO.rollback();
-			throw new Exception("excluir pessoa - nome inexistente:" + nome);
-		}
 
-		// desligar a pessoa de seus telefones orfaos e apaga-los do banco
-		for (Telefone t : p.getTelefones()) {
-			daotelefone.delete(t); // deletar o telefone orfao
-		}
-
-		daopessoa.delete(p); // apagar a pessoa
-		DAO.commit();
-	}
-
-	public static void criarTelefone(String nome, String numero) throws Exception {
-		DAO.begin();
-		Pessoa p = daopessoa.read(nome);
-		if (p == null) {
-			DAO.rollback();
-			throw new Exception("criar telefone - nome inexistente" + nome + numero);
-		}
-		Telefone t = daotelefone.read(numero);
-		if (t != null) {
-			DAO.rollback();
-			throw new Exception("criar telefone - numero ja cadastrado:" + numero);
-		}
-		if (numero.isEmpty()) {
-			DAO.rollback();
-			throw new Exception("criar telefone - numero vazio:" + numero);
-		}
-
-		t = new Telefone(numero);
-		p.adicionar(t);
-		daotelefone.create(t);
-		DAO.commit();
-	}
-
-	public static void excluirTelefone(String numero) throws Exception {
-		DAO.begin();
-		Telefone t = daotelefone.read(numero);
-		if (t == null) {
-			DAO.rollback();
-			throw new Exception("excluir telefone - numero inexistente:" + numero);
-		}
-		Pessoa p = t.getPessoa();
-		p.remover(t);
-		t.setPessoa(null);
-		daopessoa.update(p);
-		daotelefone.delete(t);
-		DAO.commit();
-	}
-
-	public static void alterarNumero(String numero, String novonumero) throws Exception {
-		DAO.begin();
-		Telefone t1 = daotelefone.read(numero);
-		if (t1 == null) {
-			DAO.rollback();
-			throw new Exception("alterar numero - numero inexistente:" + numero);
-		}
-		Telefone t2 = daotelefone.read(novonumero);
-		if (t2 != null) {
-			DAO.rollback();
-			throw new Exception("alterar numero - novo numero ja existe:" + novonumero);
-		}
-		if (novonumero.isEmpty()) {
-			DAO.rollback();
-			throw new Exception("alterar numero - novo numero vazio:");
-		}
-
-		t1.setNumero(novonumero); // substituir
-		daotelefone.update(t1);
-		DAO.commit();
-	}
-
-	public static List<Pessoa> listarPessoas() {
-		List<Pessoa> result = daopessoa.readAll();
+	public static List<Pedido> listarPedidos() {
+		List<Pedido> result = daopedido.readAll();
 		return result;
 	}
 
-	public static List<Aluno> listarAlunos() {
-		List<Aluno> result = daoaluno.readAll();
+	public static List<Entregador> listarEntregadores() {
+		List<Entregador> result = daoentregador.readAll();
 		return result;
 	}
 
-	public static List<Telefone> listarTelefones() {
-		List<Telefone> result = daotelefone.readAll();
+	public static List<Entrega> listarEntregas() {
+		List<Entrega> result = daoentrega.readAll();
 		return result;
 	}
+	
 
-	/**********************************************************
-	 * 
-	 * CONSULTAS IMPLEMENTADAS NOS DAO
-	 * 
-	 **********************************************************/
-	public static List<Pessoa> consultarPessoas(String caracteres) {
-		List<Pessoa> result;
-		if (caracteres.isEmpty())
-			result = daopessoa.readAll();
+	public static List<Pedido> consultarPedidos(String pedidos) {
+		List<Pedido> result;
+		if (pedidos.isEmpty())
+			result = daopedido.readAll();
 		else
-			result = daopessoa.readAll(caracteres);
+			result = daopedido.readAll(pedidos);
 		return result;
 	}
 
 
-	public static List<Telefone> consultarTelefones(String digitos) {
-		List<Telefone> result;
-		if (digitos.isEmpty())
-			result = daotelefone.readAll();
+	public static List<Entregador> consultarEntregadores(String entregadores) {
+		List<Entregador> result;
+		if (entregadores.isEmpty())
+			result = daoentregador.readAll();
 		else
-			result = daotelefone.readAll(digitos);
+			result = daoentregador.readAll(entregadores);
+		return result;
+	}
+	
+	public static List<Entrega> consultarEntregas(String entregas) {
+		List<Entrega> result;
+		if (entregas.isEmpty())
+			result = daoentrega.readAll();
+		else
+			result = daoentrega.readAll(entregas);
 		return result;
 	}
 
-	public static List<Pessoa> consultarMesNascimento(String mes) {
-		List<Pessoa> result;
-		result = daopessoa.readByMes(mes);
-		return result;
-	}
-
-	public static List<Pessoa> consultarPessoasNTelefones(int n) {
-		List<Pessoa> result;
+	public static List<Entregador> consultarPorNEntregas(int n) {
+		List<Entregador> result;
 		DAO.begin();
-		result = daopessoa.readByNTelefones(n);
+		result = daoentregador.readByNEntregas(n);
 		DAO.commit();
 		return result;
 	}
-
-	public static boolean temTelefoneFixo(String nome) {
-		return daopessoa.temTelefoneFixo(nome);
+	
+	public static List<Entrega> consultarPorData(String data) {
+		List<Entrega> result;
+		result = daoentrega.readByData(data);
+		return result;
 	}
 
-	public static List<Pessoa> consultarApelido(String ap) {
-		return daopessoa.consultarApelido(ap);
+	public static boolean temDataDiferente(String data) {
+		return daoentrega.dataEhDiferente(data);
 	}
+
+	public static List<Pedido> consultarPorValor(double valor) {
+		return daopedido.readByValor(valor);
+	}
+	
+
+
+
 
 }
