@@ -278,7 +278,7 @@ public class Fachada {
 		return result;
 	}
 	
-	public static List<Entrega> consultarPorData(String data) {
+	public static List<Entrega> consultarEntregaPorData(String data) {
 		List<Entrega> result;
 		result = daoentrega.readByData(data);
 		return result;
@@ -288,7 +288,7 @@ public class Fachada {
 		return daoentrega.dataEhDiferente(data);
 	}
 
-	public static List<Pedido> consultarPorValor(double valor) {
+	public static List<Pedido> consultarPedidoPorValor(double valor) {
 		return daopedido.readByValor(valor);
 	}
 	

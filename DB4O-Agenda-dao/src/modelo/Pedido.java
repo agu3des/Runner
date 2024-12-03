@@ -55,7 +55,7 @@ public class Pedido {
 
 	
 	public String toString() {
-		String texto = "Id:" + idPedido + " DataPedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao() + ", Entrega: " + getEntrega();
+		String texto = "Id:" + idPedido + " DataPedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao();
 
 		return texto;
 	}

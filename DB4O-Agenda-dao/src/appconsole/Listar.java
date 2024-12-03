@@ -1,8 +1,9 @@
 package appconsole;
 
-import modelo.Aluno;
-import modelo.Pessoa;
-import modelo.Telefone;
+
+import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
 import regras_negocio.Fachada;
 
 public class Listar {
@@ -11,17 +12,19 @@ public class Listar {
 		try {
 			Fachada.inicializar();
 
-			System.out.println("*** Listagem de pessoas:");
-			for(Pessoa p : Fachada.listarPessoas())		
+
+
+			System.out.println("\n*** Listagem de pedidos:");
+			for(Pedido p : Fachada.listarPedidos())		
 				System.out.println(p);
 
-			System.out.println("\n*** Listagem de alunos:");
-			for(Aluno a : Fachada.listarAlunos())		
-				System.out.println(a);
-
-			System.out.println("\n*** Listagem de telefones:");
-			for(Telefone t : Fachada.listarTelefones())	
-				System.out.println(t);
+			System.out.println("*** Listagem de entregadores:");
+			for(Entregador e : Fachada.listarEntregadores())		
+				System.out.println(e);
+			
+			System.out.println("*** Listagem de entregas:");
+			for(Entrega e : Fachada.listarEntregas())		
+				System.out.println(e);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

@@ -1,5 +1,6 @@
 package appconsole;
 
+import modelo.Entregador;
 import regras_negocio.Fachada;
 
 public class Alterar {
@@ -8,7 +9,7 @@ public class Alterar {
 		Fachada.inicializar();
 		//alteracao 1
 		try {
-			Fachada.alterarEntregadorDeEntrega("g5ys2", "João"); //verificar 
+			Fachada.alterarEntregadorDeEntrega("g5ys2", new Entregador("João")); //verificar 
 			System.out.println("Entregador alterado");
 		}
 		catch (Exception e) {
