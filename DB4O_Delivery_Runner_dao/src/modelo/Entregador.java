@@ -6,7 +6,6 @@ import java.util.List;
 public class Entregador {
 	
 	private int id;
-	private int idEntregador;
 	private String nome;	
 	private List<Entrega> entregas = new ArrayList<>();
 
@@ -51,17 +50,21 @@ public class Entregador {
 	
 	public Entrega localizar(String idEntrega){
 		for(Entrega e : entregas)
-			if (e.getIdEntrega() == idEntrega)
+			if (idEntrega.equals(e.getIdEntrega()))
 				return e;
 		return null;
 	}
 	
 	public String toString() {
-		String texto = "id" + idEntregador+" Nome=" +  getNome();
+		String texto = "id: " + id +", Nome: " +  getNome();
 
-		texto += "  Entregas: ";
+		texto += ",  Entregas: ";
 		for(Entrega e : entregas)
-			texto += e.getIdEntrega() + ",";
+			if (e != null) {
+		        texto += e.getIdEntrega() + ",";
+		    } else {
+		        texto += "";
+		    }
 		return texto;
 	}
 }

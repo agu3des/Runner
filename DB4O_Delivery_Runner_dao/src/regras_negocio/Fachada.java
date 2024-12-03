@@ -10,7 +10,6 @@ import daodb4o.DAO;
 import daodb4o.DAOEntrega;
 import daodb4o.DAOEntregador;
 import daodb4o.DAOPedido;
-
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
@@ -64,20 +63,23 @@ public class Fachada {
 			DAO.rollback();
 			throw new Exception("Formato data invalido:" + dataPedido);
 		}
+		
 		Pedido p = daopedido.read(idPedido);
 		if (p != null) {
 			DAO.rollback();
 			throw new Exception("Criar pedido - pedido ja existe:" + idPedido);
 		}
+		
 		p = new Pedido(idPedido);
 		p.setDataPedido(dataPedido);
 		p.setValor(valor);
 		p.setDescricao(descricao);
+		
 		daopedido.create(p);
 		DAO.commit();
 	}
 
-	public static void criarEntregador(String nome, List<Entrega> entregas) throws Exception {
+	public static void criarEntregador(String nome) throws Exception {
 		DAO.begin();
 
 		Entregador en = daoentregador.read(nome); 
@@ -88,26 +90,22 @@ public class Fachada {
 
 		Entregador e = new Entregador(nome);
 		e.setNome(nome);
-		try{
-			if (entregas.size() < 5) {
-				e.setEntregas(entregas);
-			}
-		} catch (Exception er) {
-			System.out.println(er.getMessage());
-		}
+		
 		daoentregador.create(e);
+		
 		DAO.commit();
 	}
 	
-	public static void criarEntrega(String idEntrega, String dataEntrega, String endereco, Entregador entregador, Pedido pedido) throws Exception {
+	public static void criarEntrega(String idEntrega, String dataEntrega, String endereco, String entregador, String pedido) throws Exception {
 		DAO.begin();
+		
 		try {
-			//verificar se tem que fazer verificacao do valor
 			LocalDate.parse(dataEntrega, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (DateTimeParseException e) {
 			DAO.rollback();
 			throw new Exception("Formato data invalido:" + dataEntrega);
 		}
+		
 		Entrega e = daoentrega.read(idEntrega);
 		if (e != null) {
 			DAO.rollback();
@@ -116,13 +114,29 @@ public class Fachada {
 		e = new Entrega(idEntrega);
 		e.setDataEntrega(dataEntrega);
 		e.setEndereco(endereco);
-		e.setEntregador(entregador);
-		e.setPedido(pedido);
+		
+		
+		Entregador en = daoentregador.read(entregador);
+		if (en != null && en.getEntregas().size() < 5) {
+			en.adicionar(e);
+		} else {
+			DAO.rollback();
+			throw new Exception("Criar entrega - entregador não existe:" + entregador);
+		}
+		e.setEntregador(en);
+		
+		
+		Pedido p = daopedido.read(pedido);
+		if (p != null) {
+			e.setPedido(p);
+		}
+		
+		
 		daoentrega.create(e);
 		DAO.commit();
 	}
 
-	public static void alterarEntregadorDeEntrega(String idEntrega, Entregador entregador) throws Exception {
+	public static void alterarEntregadorDeEntrega(String idEntrega, String entregador) throws Exception {
 		DAO.begin();
 		Entrega e = daoentrega.read(idEntrega);
 		if (e == null) {
@@ -130,9 +144,17 @@ public class Fachada {
 			throw new Exception("Alterar entrega - entrega inexistente:" + idEntrega);
 		}
 
-		e.setEntregador(entregador);
+		Entregador en = daoentregador.read(entregador);
+		if (en != null && en.getEntregas().size() < 5) {
+			en.adicionar(e);
+		} else {
+			DAO.rollback();
+			throw new Exception("Criar entrega - entregador não existe:" + entregador);
+		}
+		e.setEntregador(en);
 
 		daoentrega.update(e);
+		daoentregador.update(en);
 		DAO.commit();
 	}
 
@@ -168,7 +190,7 @@ public class Fachada {
 		}
 
 		if (e.getEndereco() != null) {
-				e.setDataEntrega(endereco);
+				e.setEndereco(endereco);
 		}
 
 		daoentrega.update(e);
@@ -205,7 +227,7 @@ public class Fachada {
 		Entregador e = daoentregador.read(nome);
 		if (e == null) {
 			DAO.rollback();
-			throw new Exception("Excluir entrega - id inexistente:" + nome);
+			throw new Exception("Excluir entregador - nome inexistente:" + nome);
 		}
 
 		daoentregador.delete(e); 

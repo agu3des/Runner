@@ -13,7 +13,7 @@ public class DAOPedido  extends DAO<Pedido>{
 	public Pedido read (String idPedido) {
 		Query q = manager.query();
 		q.constrain(Pedido.class);
-		q.descend("id").constrain(idPedido);
+		q.descend("idPedido").constrain(idPedido);
 		List<Pedido> resultados = q.execute();
 		if (resultados.size()>0)
 			return resultados.get(0);
@@ -25,7 +25,7 @@ public class DAOPedido  extends DAO<Pedido>{
 	public  List<Pedido> readAll(String pedidos) {
 		Query q = manager.query();
 		q.constrain(Pedido.class);
-		q.descend("id").constrain(pedidos).like();		//insensitive
+		q.descend("idPedido").constrain(pedidos).like();		//insensitive
 		List<Pedido> result = q.execute(); 
 		return result;
 	}

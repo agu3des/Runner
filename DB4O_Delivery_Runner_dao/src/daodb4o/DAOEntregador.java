@@ -29,7 +29,7 @@ public class DAOEntregador extends DAO<Entregador>{
 	public  List<Entregador> readAll(String entregadores) {
 		Query q = manager.query();
 		q.constrain(Entregador.class);
-		q.descend("id").constrain(entregadores).like();		//insensitive
+		q.descend("nome").constrain(entregadores).like();		//insensitive
 		List<Entregador> result = q.execute(); 
 		return result;
 	}

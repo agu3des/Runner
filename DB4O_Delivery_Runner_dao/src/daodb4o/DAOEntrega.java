@@ -13,7 +13,7 @@ public class DAOEntrega  extends DAO<Entrega>{
 	public Entrega read (String idEntrega) {
 		Query q = manager.query();
 		q.constrain(Entrega.class);
-		q.descend("id").constrain(idEntrega);
+		q.descend("idEntrega").constrain(idEntrega);
 		List<Entrega> resultados = q.execute();
 		if (resultados.size()>0)
 			return resultados.get(0);
@@ -24,7 +24,7 @@ public class DAOEntrega  extends DAO<Entrega>{
 	public  List<Entrega> readAll(String entregas) {
 		Query q = manager.query();
 		q.constrain(Entrega.class);
-		q.descend("id").constrain(entregas).like();		//insensitive
+		q.descend("idEntrega").constrain(entregas).like();		//insensitive
 		List<Entrega> result = q.execute(); 
 		return result;
 	}

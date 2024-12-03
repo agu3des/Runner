@@ -12,19 +12,20 @@ public class Listar {
 		try {
 			Fachada.inicializar();
 
-
-
 			System.out.println("\n*** Listagem de pedidos:");
 			for(Pedido p : Fachada.listarPedidos())		
 				System.out.println(p);
+			System.out.println("\n------------------------------------------\n");
 
 			System.out.println("*** Listagem de entregadores:");
-			for(Entregador e : Fachada.listarEntregadores())		
+			for(Entregador e : Fachada.listarEntregadores())	
 				System.out.println(e);
+			System.out.println("\n------------------------------------------\n");
 			
 			System.out.println("*** Listagem de entregas:");
 			for(Entrega e : Fachada.listarEntregas())		
 				System.out.println(e);
+			System.out.println("\n------------------------------------------\n");
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

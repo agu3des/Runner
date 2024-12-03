@@ -14,8 +14,8 @@ public class Entrega {
 	private Pedido pedido;
 
 
-	public Entrega(String id) {
-		this.idEntrega = id;
+	public Entrega(String idEntrega) {
+		this.idEntrega = idEntrega;
 	}
 	
 	public int getId() {
@@ -29,8 +29,8 @@ public class Entrega {
     public String getIdEntrega() {
 		return idEntrega;
 	}
-	public void setIdEntrega(String id) {
-		this.idEntrega = id;
+	public void setIdEntrega(String novoId) {
+		this.idEntrega = novoId;
 	}
 	
 	
@@ -67,7 +67,7 @@ public class Entrega {
 
 
 	public String toString() {
-		String texto = "id" + idEntrega+" Data de Entrega=" +  getdataEntrega() + ", Endereço=" + getEndereco() + "  Entregadores: " + getEntregador() + ",   Pedido: " + getPedido() + ",";
+		String texto = "id: " + idEntrega+", Data de Entrega: " +  getdataEntrega() + ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n[Pedidos: " + getPedido() + "]\n;";
 
 		return texto;
 	}
