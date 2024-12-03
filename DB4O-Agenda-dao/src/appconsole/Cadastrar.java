@@ -53,3 +53,7 @@ public class Cadastrar {
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8605f4bc156e993758338a2d389d27af18a19b81

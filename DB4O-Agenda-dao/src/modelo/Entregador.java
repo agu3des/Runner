@@ -49,7 +49,7 @@ public class Entregador {
 		e.setEntregador(null);
 	}
 	
-	public Entrega localizar(int idEntrega){
+	public Entrega localizar(String idEntrega){
 		for(Entrega e : entregas)
 			if (e.getIdEntrega() == idEntrega)
 				return e;
