@@ -106,44 +106,6 @@ public abstract class DAO<T> implements DAOInterface<T> {
 	 * 
 	 */
 	
-/*	
-	public <X> int gerarId(Class<X> classe) {
-		
-		// verificar se o banco esta vazio
-		if (manager.query(classe).isEmpty()) {
-			return 1; 	// primeiro id da classe
-		} 
-		else {
-			// obter o maior id da classe
-			Query q = manager.query();
-			q.constrain(classe);
-			q.descend("id").orderDescending();
-			List<X> resultados = q.execute();
-			if (resultados.isEmpty())
-				return 1; // retorna primeiro id
-			else
-				try {
-					// obter objeto com maior id
-					X objeto = resultados.getFirst();
-					//localizar atributo id dentro do objeto
-					int id = 0;
-					for (Field f : getAllFieldsList(classe)) {
-						if (f.getName().equals("id")) {
-							f.setAccessible(true);		//atributo private
-							id = (Integer)f.get(objeto);
-						}
-					}
-					if (id == 0)
-						throw new NoSuchFieldException();
-					
-					return id+1;
-				} catch (NoSuchFieldException e) {
-					throw new RuntimeException("classe " + classe + " - nao tem atributo id");
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException("classe " + classe + " - atributo id inacessivel");
-				}
-		}
-	}*/
 
 	public static <X> List<Field> getAllFieldsList(final Class<X> cls) {
 		// retorna uma lista com todos os campos do objeto

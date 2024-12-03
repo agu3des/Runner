@@ -1,15 +1,11 @@
 package appconsole;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import regras_negocio.Fachada;
 
 public class Cadastrar {
 
 	public Cadastrar(){
 		try {
-			System.out.println("cadastrando...");
 			Fachada.inicializar();
 			
 			Fachada.criarPedido("17yv84", "01/01/2025",15.69, "Forma de bolo de cenoura");

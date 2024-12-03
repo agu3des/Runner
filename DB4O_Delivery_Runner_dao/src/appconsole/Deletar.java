@@ -12,8 +12,8 @@ public class Deletar {
             System.out.println("Apagou o entregador João");
 
             // Excluir uma entrega
-            Fachada.excluirEntrega("9xy123");
-            System.out.println("Apagou a entrega com ID 9xy123");
+            Fachada.excluirEntrega("249");
+            System.out.println("Apagou a entrega com ID 249");
 
             // Excluir um pedido
             Fachada.excluirPedido("17yv84");
@@ -25,5 +25,9 @@ public class Deletar {
         Fachada.finalizar();
         System.out.println("Fim do programa");
     }
+	//=================================================
+	public static void main(String[] args) {
+		new Deletar();
+	}
 }
 

@@ -143,18 +143,26 @@ public class Fachada {
 			DAO.rollback();
 			throw new Exception("Alterar entrega - entrega inexistente:" + idEntrega);
 		}
-
+		
+	    Entregador entregadorAntigo = e.getEntregador();
+	    if (entregadorAntigo != null) {
+	        entregadorAntigo.remover(e);
+	    }
+		
 		Entregador en = daoentregador.read(entregador);
+		
 		if (en != null && en.getEntregas().size() < 5) {
 			en.adicionar(e);
 		} else {
 			DAO.rollback();
-			throw new Exception("Criar entrega - entregador não existe:" + entregador);
+			throw new Exception("Criar entrega - entregador inválido:" + entregador);
 		}
+
 		e.setEntregador(en);
 
 		daoentrega.update(e);
 		daoentregador.update(en);
+		daoentregador.update(entregadorAntigo);
 		DAO.commit();
 	}
 

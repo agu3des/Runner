@@ -9,7 +9,7 @@ public class Entregador {
 	private String nome;	
 	private List<Entrega> entregas = new ArrayList<>();
 
-	//mesma duvida de Pedido
+
 	public Entregador(String nome) {
 		this.nome = nome;
 	}
