@@ -21,179 +21,194 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Pessoa;
-import modelo.Telefone;
+import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
 import regras_negocio.Fachada;
 
 public class TelaConsulta {
-	private JDialog frame;
-	private JTable table;
-	private JScrollPane scrollPane;
-	private JButton button;
-	private JLabel label;
-	private JLabel label_4;
+    private JDialog frame;
+    private JTable table;
+    private JScrollPane scrollPane;
+    private JButton button;
+    private JLabel label;
+    private JLabel label_4;
 
-	private JComboBox<String> comboBox;
+    private JComboBox<String> comboBox;
 
-	/**
-	 * Launch the application.
-	 */
-	//	public static void main(String[] args) {
-	//		EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				try {
-	//					new TelaConsulta();
-	//				} catch (Exception e) {
-	//					e.printStackTrace();
-	//				}
-	//			}
-	//		});
-	//	}
+    public TelaConsulta() {
+        initialize();
+        frame.setVisible(true);
+    }
 
-	/**
-	 * Create the application.
-	 */
-	public TelaConsulta() {
-		initialize();
-		frame.setVisible(true);
-	}
+    private void initialize() {
+        frame = new JDialog();
+        frame.setModal(true);
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JDialog();
-		frame.setModal(true);
+        frame.setResizable(false);
+        frame.setTitle("Consultas");
+        frame.setBounds(100, 100, 800, 400);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                Fachada.inicializar();
+            }
 
-		frame.setResizable(false);
-		frame.setTitle("Consultas");
-		frame.setBounds(100, 100, 729, 385);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				Fachada.inicializar();
-			}
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Fachada.finalizar();
-			}
-		});
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Fachada.finalizar();
+            }
+        });
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 43, 674, 148);
-		frame.getContentPane().add(scrollPane);
+        scrollPane = new JScrollPane();
+        scrollPane.setBounds(20, 50, 750, 200);
+        frame.getContentPane().add(scrollPane);
 
-		table = new JTable() {
-			public boolean isCellEditable(int rowIndex, int vColIndex) {
-				return false;
-			}
-		};
+        table = new JTable() {
+            public boolean isCellEditable(int rowIndex, int vColIndex) {
+                return false;
+            }
+        };
 
-		table.setGridColor(Color.BLACK);
-		table.setRequestFocusEnabled(false);
-		table.setFocusable(false);
-		table.setBackground(Color.LIGHT_GRAY);
-		table.setFillsViewportHeight(true);
-		table.setRowSelectionAllowed(true);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		scrollPane.setViewportView(table);
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setShowGrid(true);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setGridColor(Color.BLACK);
+        table.setRequestFocusEnabled(false);
+        table.setFocusable(false);
+        table.setBackground(Color.LIGHT_GRAY);
+        table.setFillsViewportHeight(true);
+        table.setRowSelectionAllowed(true);
+        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        scrollPane.setViewportView(table);
+        table.setBorder(new LineBorder(new Color(0, 0, 0)));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setShowGrid(true);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		label = new JLabel("");		//label de mensagem
-		label.setForeground(Color.BLUE);
-		label.setBounds(21, 321, 688, 14);
-		frame.getContentPane().add(label);
+        label = new JLabel(""); // Label para mensagens
+        label.setForeground(Color.BLUE);
+        label.setBounds(20, 320, 750, 20);
+        frame.getContentPane().add(label);
 
-		label_4 = new JLabel("resultados:");
-		label_4.setBounds(21, 190, 431, 14);
-		frame.getContentPane().add(label_4);
+        label_4 = new JLabel("Resultados:");
+        label_4.setBounds(20, 260, 750, 20);
+        frame.getContentPane().add(label_4);
 
-		button = new JButton("Consultar");
-		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = comboBox.getSelectedIndex();
-				if(index<0)
-					label_4.setText("consulta nao selecionada");
-				else {
-					label_4.setText("");
-					switch(index) {
-					case 0: 
-						String mes = JOptionPane.showInputDialog("digite o mes");
-						List<Pessoa> resultado1 = Fachada.consultarMesNascimento(mes) ;
-						listagemPessoa(resultado1);
-						break;
-					case 1: 
-						String modelo = JOptionPane.showInputDialog("digite o apelido");
-						List<Pessoa> resultado2 = Fachada.consultarApelido(modelo);
-						listagemPessoa(resultado2);		
-						break;
-					case 2: 
-						String n = JOptionPane.showInputDialog("digite N");
-						int numero = Integer.parseInt(n);
-						List<Pessoa> resultado3 = Fachada.consultarPessoasNTelefones(numero);
-						listagemPessoa(resultado3);
-						break;
+        button = new JButton("Consultar");
+        button.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = comboBox.getSelectedIndex();
+                if (index < 0)
+                    label_4.setText("Consulta não selecionada");
+                else {
+                    label_4.setText("");
+                    try {
+                        switch (index) {
+                            case 0: // Consultar pedidos que tenham "17" no ID
+                                listarPedidos(Fachada.consultarPedidos("17"));
+                                break;
+                            case 1: // Consultar entregadores com "An" no nome
+                                listarEntregadores(Fachada.consultarEntregadores("An"));
+                                break;
+                            case 2: // Consultar entregas que tenham "1" no ID
+                                listarEntregas(Fachada.consultarEntregas("1"));
+                                break;
+                            case 3: // Consultar entregas por data
+                                listarEntregas(Fachada.consultarEntregaPorData("06/12/2024"));
+                                break;
+                            case 4: // Consultar entregadores com mais de N entregas
+                                listarEntregadores(Fachada.consultarPorNEntregas(1));
+                                break;
+                            case 5: // Consultar pedidos por valor
+                                listarPedidos(Fachada.consultarPedidoPorValor(100.00));
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        label.setText(ex.getMessage());
+                    }
+                }
+            }
+        });
+        button.setBounds(650, 10, 120, 30);
+        frame.getContentPane().add(button);
 
-					}
-				}
+        comboBox = new JComboBox<>();
+        comboBox.setToolTipText("Selecione a consulta");
+        comboBox.setModel(new DefaultComboBoxModel<>(
+                new String[] { 
+                    "Pedidos com '17' no ID", 
+                    "Entregadores com 'An' no nome",
+                    "Entregas com '1' no ID", 
+                    "Entregas na data 06/12/2024", 
+                    "Entregadores com mais de 1 entrega",
+                    "Pedidos com valor 100.00"
+                }));
+        comboBox.setBounds(20, 10, 600, 30);
+        frame.getContentPane().add(comboBox);
+    }
 
-			}
-		});
-		button.setBounds(606, 10, 89, 23);
-		frame.getContentPane().add(button);
+    private void listarPedidos(List<Pedido> lista) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            table.setModel(model);
 
-		comboBox = new JComboBox<String>();
-		comboBox.setToolTipText("selecione a consulta");
-		comboBox.setModel(new DefaultComboBoxModel<>(
-				new String[] {"pessoas que nasceram no mes X","pessoa com apelido X", "pessoas com N telefones" }));
-		comboBox.setBounds(21, 10, 513, 22);
-		frame.getContentPane().add(comboBox);
-	}
+            model.addColumn("ID");
+            model.addColumn("Data");
+            model.addColumn("Valor");
+            model.addColumn("Descrição");
 
-	public void listagemPessoa(List<Pessoa> lista) {
-		try {
-			// objeto model contem todas as linhas e colunas da tabela
-			DefaultTableModel model = new DefaultTableModel();
-			table.setModel(model);
+            for (Pedido p : lista) {
+                model.addRow(new Object[] { p.getIdPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+            }
+        } catch (Exception erro) {
+            label.setText(erro.getMessage());
+        }
+    }
 
-			// criar as colunas (0,1,2) da tabela
-			model.addColumn("Id");
-			model.addColumn("Nome");
-			model.addColumn("Nascimento");
-			model.addColumn("Apelidos");
-			model.addColumn("Telefones");
+    private void listarEntregadores(List<Entregador> lista) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            table.setModel(model);
 
-			// criar as linhas da tabela
-			String texto1, texto2;
-			for (Pessoa p : lista) {
-				texto1 = String.join(",", p.getApelidos()); // concatena strings
-				if (p.getTelefones().size() > 0) {
-					texto2 = "";
-					for (Telefone t : p.getTelefones())
-						texto2 += t.getNumero() + " ";
-				} else
-					texto2 = "sem telefone";
-				//adicionar linha no table
-				model.addRow(new Object[] { p.getId(), p.getNome(), p.getDtNascimento(), texto1, texto2 });
+            model.addColumn("Nome");
+            model.addColumn("Número de Entregas");
 
-			}
-			// redimensionar a coluna 0,3 e 4
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // desabilita
-			table.getColumnModel().getColumn(0).setMaxWidth(40); // coluna id
-			table.getColumnModel().getColumn(3).setMinWidth(200); // coluna dos apelidos
-			table.getColumnModel().getColumn(4).setMinWidth(200); // coluna dos telefones
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // desabilita
+            for (Entregador e : lista) {
+                model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
+            }
+        } catch (Exception erro) {
+            label.setText(erro.getMessage());
+        }
+    }
 
-		} catch (Exception erro) {
-			label.setText(erro.getMessage());
-		}
-	}
+    private void listarEntregas(List<Entrega> lista) {
+        try {
+            DefaultTableModel model = new DefaultTableModel();
+            table.setModel(model);
 
+            model.addColumn("ID");
+            model.addColumn("Data");
+            model.addColumn("Endereço");
+            model.addColumn("Entregador");
+            model.addColumn("Id do Pedido");
 
+            for (Entrega e : lista) {
+                model.addRow(new Object[] { 
+                    e.getIdEntrega(), 
+                    e.getdataEntrega(), 
+                    e.getEndereco(), 
+                    e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador", 
+                    e.getPedido() != null ? e.getPedido().getIdPedido() : "Sem pedido" 
+                });
+            }
+        } catch (Exception erro) {
+            label.setText(erro.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        // Inicia a interface gráfica
+        new TelaConsulta();
+    }
 }
