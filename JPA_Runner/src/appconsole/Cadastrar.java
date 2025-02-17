@@ -1,124 +1,64 @@
 package appconsole;
 
-import regras_negocio.Fachada;
-
-public class Cadastrar {
-	private EntityManager manager;
-
-	public Cadastrar(){
-		try {
-			Fachada.inicializar();
-			
-			Fachada.criarPedido("17yv84", "01/01/2025",15.69, "Forma de bolo de cenoura");
-			Fachada.criarPedido("2753pk", "15/12/2024",100, "Suporte de monitor");
-			Fachada.criarPedido("9xy123", "05/12/2024", 50.00, "Caixa organizadora");
-            Fachada.criarPedido("d4z687", "10/01/2025", 120.49, "Conjunto de ferramentas");
-            Fachada.criarPedido("a1b2c3", "20/12/2024", 30.75, "Cesta de frutas");
-			
-			
-			Fachada.criarEntregador("João");
-			Fachada.criarEntregador("Maria");
-            Fachada.criarEntregador("Carlos");
-            Fachada.criarEntregador("Ana");
-
-			
-			Fachada.criarEntrega("158","01/01/2025", "Avenida Vasco da Gama, 1245", "João", "17yv84");
-			Fachada.criarEntrega("249", "06/12/2024", "Rua das Flores, 456", "Carlos", "9xy123");
-            Fachada.criarEntrega("373", "11/01/2025", "Avenida Central, 789", "Ana", "d4z687");
-            Fachada.criarEntrega("416", "21/12/2024", "Praça da Liberdade, 321", "Maria", "a1b2c3");
-			
-			
-			System.out.println("Cadastrando");
-
-		} catch (Exception e) 	{
-			System.out.println(e.getMessage());
-		}
-
-		Fachada.finalizar();
-		System.out.println("fim do programa");
-	}
- 
-	
-	//=================================================
-	public static void main(String[] args) {
-		new Cadastrar();
-	}
-}
-/**********************************
- * projeto POB
- **********************************/
-
-package appconsole;
-
 import jakarta.persistence.EntityManager;
-import modelo.Pedido;
-import modelo.Entregador;
 import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
 
 public class Cadastrar {
-	private EntityManager manager;
+    private EntityManager manager;
 
-	public Cadastrar() {
-		try {
-			manager = Util.conectarBanco();
-			System.out.println("Cadastrando entregadores, pedidos e entregas...");
-			
-			Pedido a1, a2, a3, a4, a5;
-			a1 = new Pedido("17yv84", "01/01/2025", 15.69, "Forma de bolo de cenoura");
-			a2 = new Pedido("2753pk", "15/12/2024", 100, "Suporte de monitor");
-			a3 = new Pedido("9xy123", "05/12/2024", 50.00, "Caixa organizadora");
-			a4 = new Pedido("d4z687", "10/01/2025", 120.49, "Conjunto de ferramentas");
-			a5 = new Pedido("a1b2c3", "20/12/2024", 30.75, "Cesta de frutas");
-			
-			Entregador e1, e2, e3, e4;
-			e1 = new Entregador("João");
-			e2 = new Entregador("Maria");
-			e3 = new Entregador("Carlos");
-			e4 = new Entregador("Ana");
+    public Cadastrar() {
+        try {
+            manager = Util.conectarBanco();
+            System.out.println("Cadastrando entregadores, pedidos e entregas...");
 
-			Entregador p1, p2, p3, p4;
-			t1 = new Entrega("158","01/01/2025", "Avenida Vasco da Gama, 1245", "João", "17yv84");
-			t2 = new Entrega("249", "06/12/2024", "Rua das Flores, 456", "Carlos", "9xy123");
-			t3 = new Entrega("373", "11/01/2025", "Avenida Central, 789", "Ana", "d4z687");
-			t4 = new Entrega("416", "21/12/2024", "Praça da Liberdade, 321", "Maria", "a1b2c3");
+            // Criando pedidos
+            Pedido a1 = new Pedido("17yv84", "01/01/2025", 15.69, "Forma de bolo de cenoura");
+            Pedido a2 = new Pedido("2753pk", "15/12/2024", 100, "Suporte de monitor");
+            Pedido a3 = new Pedido("9xy123", "05/12/2024", 50.00, "Caixa organizadora");
+            Pedido a4 = new Pedido("d4z687", "10/01/2025", 120.49, "Conjunto de ferramentas");
+            Pedido a5 = new Pedido("a1b2c3", "20/12/2024", 30.75, "Cesta de frutas");
 
-			t1.adicionar(a1);
-			t1.adicionar(e1);
-			t2.adicionar(a3);
-			t2.adicionar(e3);
-			t3.adicionar(a4);
-			t3.adicionar(e4);
-			t4.adicionar(a5);
-			t4.adicionar(e2);
-// nao entendi oq vem abaixo disso			
-			manager.getTransaction().begin();
-			manager.persist(t1);
-			manager.getTransaction().commit();
+            // Criando entregadores
+            Entregador e1 = new Entregador("João");
+            Entregador e2 = new Entregador("Maria");
+            Entregador e3 = new Entregador("Carlos");
+            Entregador e4 = new Entregador("Ana");
 
-			manager.getTransaction().begin();
-			manager.persist(t2);
-			manager.getTransaction().commit();
-			
-			manager.getTransaction().begin();
-			manager.persist(t3);
-			manager.getTransaction().commit();
-			
-			manager.getTransaction().begin();
-			manager.persist(a6);
-			manager.getTransaction().commit();
-			
-		} catch (Exception e) {
-			System.out.println("excecao=" + e.getMessage());
-		}
+            // Criando entregas
+            Entrega t1 = new Entrega("158", "01/01/2025", "Avenida Vasco da Gama, 1245", e1, a1);
+            Entrega t2 = new Entrega("249", "06/12/2024", "Rua das Flores, 456", e3, a3);
+            Entrega t3 = new Entrega("373", "11/01/2025", "Avenida Central, 789", e4, a4);
+            Entrega t4 = new Entrega("416", "21/12/2024", "Praça da Liberdade, 321", e2, a5);
 
-		Util.fecharBanco();
-		System.out.println("\nfim da aplica��o");
-	}
+            // Persistindo os dados no banco de uma vez só para otimizar
+            manager.getTransaction().begin();
+            manager.persist(a1);
+            manager.persist(a2);
+            manager.persist(a3);
+            manager.persist(a4);
+            manager.persist(a5);
+            manager.persist(e1);
+            manager.persist(e2);
+            manager.persist(e3);
+            manager.persist(e4);
+            manager.persist(t1);
+            manager.persist(t2);
+            manager.persist(t3);
+            manager.persist(t4);
+            manager.getTransaction().commit();
 
-	// =================================================
-	public static void main(String[] args) {
-		new Cadastrar();
-	}
-	// =================================================
+        } catch (Exception e) {
+            System.out.println("Exceção: " + e.getMessage());
+        }
 
+        Util.fecharBanco();
+        System.out.println("\nFim da aplicação");
+    }
+
+    // =================================================
+    public static void main(String[] args) {
+        new Cadastrar();
+    }
 }
