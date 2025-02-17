@@ -1,7 +1,4 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Prof. Fausto Maranhão Ayres
- **********************************/
+
 package appconsole;
 
 import java.util.List;
