@@ -1,0 +1,47 @@
+18:00:51,757 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+18:00:51,965  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+18:00:52,080  INFO Version:44 - HHH000412: Hibernate ORM core version 6.6.5.Final
+18:00:52,137 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+18:00:52,138  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+18:00:52,607  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
+18:00:53,353  INFO pooling:157 - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/pob]
+	Database driver: org.postgresql.Driver
+	Database version: 16.7
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Minimum pool size: 1
+	Maximum pool size: 20
+18:00:54,813  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+18:00:54,844  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7015ebef] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+18:00:55,907 DEBUG SQL:135 - select p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.id=17
+18:00:55,980 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome like '%An%' escape ''
+18:00:56,013 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+18:00:56,015 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+18:00:56,029 DEBUG SQL:135 - select e1_0.id,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=1
+18:00:56,035 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
+18:00:56,035 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+18:00:56,038 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+18:00:56,039 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+18:00:56,046 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
+18:00:56,047 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+18:00:56,071 DEBUG SQL:135 - select e1_0.id,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.dataEntrega=?
+18:00:56,071 TRACE bind:24 - binding parameter (1:DATE) <- [2025-02-19]
+18:00:56,076 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
+18:00:56,076 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
+18:00:56,078 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
+18:00:56,078 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
+18:00:56,080 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
+18:00:56,080 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+18:00:56,082 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
+18:00:56,082 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
+18:00:56,085 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+18:00:56,086 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
+18:00:56,089 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
+18:00:56,089 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
+18:00:56,092 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+18:00:56,092 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
+18:00:56,094 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
+18:00:56,095 TRACE bind:24 - binding parameter (1:INTEGER) <- [5]
+18:00:56,259 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where (select count(*) from Entrega e2_0 where e1_0.id=e2_0.entregador_id)>1
+18:00:56,279 DEBUG SQL:135 - select p1_0.id,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.valor=100.00

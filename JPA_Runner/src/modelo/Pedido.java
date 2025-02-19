@@ -2,10 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pedido {
@@ -13,13 +15,19 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-    private String datapedido = LocalDate.now();	
+    private LocalDate dataPedido = LocalDate.now();	
     private double valor;
 	private String descricao;
-
 	
-	public Pedido(int id) {
-		this.id = id;
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Entrega entrega;
+	
+	public Pedido() {
+	}
+	
+	public Pedido(double valor, String descricao) {
+		this.valor = valor;
+		this.descricao = descricao;
 	}
 	
 	public int getId() {
@@ -30,11 +38,11 @@ public class Pedido {
 	}
 	
 	
-	public String getDataPedido() {
-		return datapedido;
+	public LocalDate getDataPedido() {
+		return dataPedido;
 	}
-	public void setDataPedido(String dt) {
-		datapedido = dt ; 
+	public void setDataPedido(LocalDate dt) {
+		dataPedido = dt ; 
 	}
 	
 	
@@ -53,6 +61,14 @@ public class Pedido {
 		this.descricao = novaDescricao;
 	}
 
+	
+	public Entrega getEntrega() {
+		return entrega;
+	}
+	public void setEntrega(Entrega entrega) {
+		this.entrega = entrega;
+	}
+	
 	
 	public String toString() {
 		String texto = "id:" + id + ", Data Pedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao();

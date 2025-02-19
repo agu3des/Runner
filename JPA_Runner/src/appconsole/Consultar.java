@@ -1,6 +1,8 @@
 package appconsole;
 
+import java.time.LocalDate;
 import java.util.List;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
@@ -39,9 +41,10 @@ public class Consultar {
             entregas = queryEntrega.getResultList();
             entregas.forEach(System.out::println);
 
-            System.out.println("\n---Consultar entregas com a data 06/12/2024");
-            jpql = "select e from Entrega e where e.data = '2024-12-06'";
+            System.out.println("\n---Consultar entregas com a data 19/02/2025");
+            jpql = "select e from Entrega e where e.dataEntrega = :dataEntrega";
             queryEntrega = manager.createQuery(jpql, Entrega.class);
+            queryEntrega.setParameter("dataEntrega", LocalDate.of(2025, 2, 19));
             entregas = queryEntrega.getResultList();
             entregas.forEach(System.out::println);
 
