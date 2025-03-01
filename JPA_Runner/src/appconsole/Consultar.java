@@ -23,8 +23,8 @@ public class Consultar {
             List<Entrega> entregas;
             String jpql;
 
-            System.out.println("\n---Consultar pedidos que tenham 17 no seu id");
-            jpql = "select p from Pedido p where p.id = 17";
+            System.out.println("\n---Consultar pedidos que tenham 1 no seu id");
+            jpql = "select p from Pedido p where p.id = 1";
             queryPedido = manager.createQuery(jpql, Pedido.class);
             pedidos = queryPedido.getResultList();
             pedidos.forEach(System.out::println);
@@ -48,8 +48,8 @@ public class Consultar {
             entregas = queryEntrega.getResultList();
             entregas.forEach(System.out::println);
 
-            System.out.println("\n---Consultar entregadores com mais de 1 entrega");
-            jpql = "select e from Entregador e where size(e.entregas) > 1";
+            System.out.println("\n---Consultar entregadores com mais de 2 entregas");
+            jpql = "select e from Entregador e where size(e.entregas) > 2";
             queryEntregador = manager.createQuery(jpql, Entregador.class);
             entregadores = queryEntregador.getResultList();
             entregadores.forEach(System.out::println);
