@@ -1,46 +1,37 @@
 
 package appconsole;
 
-import java.util.List;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
+import regras_negocio.Fachada;
 
 public class Listar {
-	private EntityManager manager;
 
 	public Listar() {
 		try {
-			manager = Util.conectarBanco();
+			Fachada.inicializar();
 
-			System.out.println("\nListagem de pedidos:");
-			TypedQuery<Pedido> query1 = manager.createQuery("select p from Pedido p order by p.id", Pedido.class);
-			List<Pedido> resultados1 = query1.getResultList();
-			for (Pedido p : resultados1) {
-				System.out.println(p);
-			}
-
-			System.out.println("\nListagem de entregadores:");
-			TypedQuery<Entregador> query2 = manager.createQuery("select e from Entregador e order by e.id", Entregador.class);
-			List<Entregador> resultados2 = query2.getResultList();
-			for (Entregador e : resultados2) {
-				System.out.println(e);
-			}
-
-			System.out.println("\nListagem de entregas:");
-			TypedQuery<Entrega> query3 = manager.createQuery("select e from Entrega e order by e.id", Entrega.class);
-			List<Entrega> resultados3 = query3.getResultList();
-			for (Entrega e : resultados3) {
-				System.out.println(e);
-			}
+			System.out.println("\n*** Listagem de pedidos:");
+			for (Pedido p : Fachada.listarPedidos())
+				System.out.println(Fachada.localizarPedido(p.getCodigoPedido()));
+			System.out.println("\n------------------------------------------\n");
+			
+			System.out.println("*** Listagem de entregadores:");
+			for (Entregador e : Fachada.listarEntregadores())
+				System.out.println(Fachada.localizarEntregador(e.getNome()));
+			System.out.println("\n------------------------------------------\n");
+			
+			System.out.println("*** Listagem de entregas:");
+			for (Entrega e : Fachada.listarEntregas())
+				System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
+			System.out.println("\n------------------------------------------\n");
 
 		} catch (Exception e) {
-			System.out.println("excecao=" + e.getMessage());
+			System.out.println(e.getMessage());
 		}
-		Util.fecharBanco();
+		
+		Fachada.finalizar();
 	}
 
 	// =================================================

@@ -45,13 +45,6 @@ public class Entregador {
 		this.nome = novoNome;
 	}
 	
-	public List<Entrega> getEntregas() {
-		return entregas;
-	}
-	public void setEntregas(List<Entrega> listaEntregas){
-		this.entregas = listaEntregas;
-	}
-	
 	
 	public void adicionar(Entrega e){
 		entregas.add(e);
@@ -63,9 +56,9 @@ public class Entregador {
 		e.setEntregador(null);
 	}
 	
-	public Entrega localizar(String id){
+	public Entrega localizar(String codigo){
 		for(Entrega e : entregas)
-			if (id.equals(e.getId()))
+			if (codigo.equals(e.getCodigoEntrega()))
 				return e;
 		return null;
 	}
@@ -76,10 +69,18 @@ public class Entregador {
 		texto += ",  Entregas: ";
 		for(Entrega e : entregas)
 			if (e != null) {
-		        texto += e.getId() + ",";
+		        texto += e.getCodigoEntrega() + ",";
 		    } else {
 		        texto += "";
 		    }
 		return texto;
 	}
+	
+	public List<Entrega> getEntregas() {
+		return entregas;
+	}/*
+	public void setEntregas(List<Entrega> listaEntregas){
+		this.entregas = listaEntregas;
+	}*/
+	
 }

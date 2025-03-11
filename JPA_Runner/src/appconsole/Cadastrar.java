@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import regras_negocio.Fachada;
 
 public class Cadastrar {
-    //private EntityManager manager;
 
     public Cadastrar() {
         try {

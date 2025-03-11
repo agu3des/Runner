@@ -6,6 +6,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,7 +23,7 @@ public class Entrega {
 	private LocalDate dataEntrega = LocalDate.now();	
     private String endereco;
     
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private Entregador entregador;
     
     @OneToMany(mappedBy = "entrega", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -69,6 +70,24 @@ public class Entrega {
 	public void setEndereco(String novoEndereco) {
 		endereco = novoEndereco ; 
 	}
+
+	
+	public void adicionar(Pedido p){
+		pedidos.add(p);
+		p.setEntrega(this);
+	}
+	
+	public void remover(Pedido p){
+		pedidos.remove(p);
+		p.setEntrega(null);
+	}
+	
+	public Pedido localizar(String codigo){
+		for(Pedido p : pedidos)
+			if (codigo.equals(p.getCodigoPedido()))
+				return p;
+		return null;
+	}
 	
 
 	/*----------Relacionamento com Entregador-----------*/
@@ -89,30 +108,13 @@ public class Entrega {
 	}
 	
 	
-	public void adicionar(Pedido p){
-		pedidos.add(p);
-		p.setEntrega(this);
-	}
-	
-	public void remover(Pedido p){
-		pedidos.remove(p);
-		p.setEntrega(null);
-	}
-	
-	public Pedido localizar(int id){
-		for(Pedido p : pedidos)
-			if (id == p.getId())
-				return p;
-		return null;
-	}
-	
 	public String toString() {
-		String texto = "codigo: " + getCodigoEntrega() +", Data de Entrega: " + getdataEntrega()+ ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n;";
+		String texto = "codigo: " + getCodigoEntrega() +", Data de Entrega: " + getDataEntrega()+ ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n;";
 
 		texto += ",  Pedidos: ";
 		for(Pedido p : pedidos)
 			if (p != null) {
-		        texto += p.getId() + ",";
+		        texto += p.getCodigoPedido() + ",";
 		    } else {
 		        texto += "";
 		    }
