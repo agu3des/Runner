@@ -15,6 +15,7 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String codigoPedido;
     private LocalDate dataPedido = LocalDate.now();	
     private double valor;
 	private String descricao;
@@ -24,8 +25,12 @@ public class Pedido {
 	
 	public Pedido() {
 	}
+
+	public Pedido(String codigoPedido) {
+	}
 	
-	public Pedido(double valor, String descricao) {
+	public Pedido(String codigoPedido, double valor, String descricao) {
+		this.codigoPedido = codigoPedido;
 		this.valor = valor;
 		this.descricao = descricao;
 	}
@@ -36,8 +41,16 @@ public class Pedido {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+	public String getCodigoPedido() {
+		return codigoPedido;
+	}
+	public void setCodigoPedido(String codigo) {
+		this.codigoPedido = codigo;
+	}
+
+
+
 	public LocalDate getDataPedido() {
 		return dataPedido;
 	}
@@ -71,7 +84,7 @@ public class Pedido {
 	
 	
 	public String toString() {
-		String texto = "id:" + id + ", Data Pedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao();
+		String texto = "codigo:" + getCodigoPedido() + ", Data Pedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao();
 
 		return texto;
 	}

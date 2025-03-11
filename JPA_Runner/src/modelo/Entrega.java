@@ -18,6 +18,7 @@ public class Entrega {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String codigoEntrega;
 	private LocalDate dataEntrega = LocalDate.now();	
     private String endereco;
     
@@ -30,8 +31,12 @@ public class Entrega {
 
 	public Entrega() {
 	}
-	
-	public Entrega(String endereco) {
+
+	public Entrega(String codigoEntrega) {
+	}
+
+	public Entrega(String codigoEntrega, String endereco) {
+		this.codigoEntrega = codigoEntrega;
 		this.endereco = endereco;
 	}
 	
@@ -41,8 +46,14 @@ public class Entrega {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+	public String getCodigoEntrega() {
+		return codigoEntrega;
+	}
+	public void setCodigoEntrega(String codigoEntrega) {
+		this.codigoEntrega = codigoEntrega;
+	}
+
 	public LocalDate getdataEntrega() {
 		return dataEntrega;
 	}
@@ -95,7 +106,7 @@ public class Entrega {
 	}
 	
 	public String toString() {
-		String texto = "id: " + id +", Data de Entrega: " + getdataEntrega()+ ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n;";
+		String texto = "codigo: " + getCodigoEntrega() +", Data de Entrega: " + getdataEntrega()+ ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n;";
 
 		texto += ",  Pedidos: ";
 		for(Pedido p : pedidos)
@@ -106,4 +117,5 @@ public class Entrega {
 		    }
 		return texto;
 	}
+
 }
