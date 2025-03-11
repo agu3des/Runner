@@ -12,7 +12,6 @@ import daojpa.DAOPedido;
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
-import modelo.Pessoa;
 
 public class Fachada {
 	private Fachada() {
@@ -330,7 +329,7 @@ public class Fachada {
 
 	public static List<Entrega> consultarEntregaPorData(LocalDate data) {
 		List<Entrega> result;
-		result = daoentrega.readByData(String.valueOf(data));
+		result = daoentrega.readByData(data);
 		return result;
 	}
 

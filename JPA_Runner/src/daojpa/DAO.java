@@ -33,7 +33,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		manager.remove(obj);
 	}
 
-	public abstract T read(Object chave); // depende de cada dao
+	public abstract T read(Object chave); 
 	
 	
 	@SuppressWarnings("unchecked")

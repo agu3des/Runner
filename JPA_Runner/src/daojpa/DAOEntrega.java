@@ -1,12 +1,12 @@
 package daojpa;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
-import modelo.Pedido;
 
 public class
 DAOEntrega extends DAO<Entrega> {
@@ -46,7 +46,7 @@ DAOEntrega extends DAO<Entrega> {
 		return q.getResultList();
 	}
 
-	public List<Entrega> readByData(String dataEntrega) {
+	public List<Entrega> readByData(LocalDate dataEntrega) {
 		TypedQuery<Entrega> q = manager
 				.createQuery(
 						"""

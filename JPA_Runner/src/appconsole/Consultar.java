@@ -1,6 +1,7 @@
 package appconsole;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import modelo.Entrega;
 import modelo.Entregador;
@@ -28,12 +29,12 @@ public class Consultar {
                 System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
             }
 
-            /*System.out.println("\n---Consultar entregas com data 19/02/2025");
-            for (Entrega e : Fachada.consultarEntregaPorData(LocalDate.of(2025, 2, 19))) {
+            System.out.println("\n---Consultar entregas com data 11/03/2025");
+            for (Entrega e : Fachada.consultarEntregaPorData(LocalDate.parse("11/03/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")))) {
                 System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
-            }*/
-
-            System.out.println("\n---Consultar entregadores com mais de 2 entregas");
+            }
+            //Verificar lógica
+            System.out.println("\n---Consultar entregadores com 2 entregas");
             for (Entregador e : Fachada.consultarPorNEntregas(2)) {
                 System.out.println(Fachada.localizarEntregador(e.getNome()));
             }

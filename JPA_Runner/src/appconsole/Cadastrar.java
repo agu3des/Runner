@@ -36,10 +36,10 @@ public class Cadastrar {
 			Fachada.criarEntrega("3bdg73", LocalDate.now(), "Avenida Central, 789", "Ana", "d4z687");
 			Fachada.criarEntrega("4pws16", LocalDate.now(), "Praça da Liberdade, 321", "Maria", "a1b2c3");
 			Fachada.criarEntrega("2sdn85", LocalDate.now(), "Rua Rio de Janeiro, 12", "Lucas", "x2g9q8");
-			Fachada.criarEntrega("3hk7t4", LocalDate.now(), "Avenida Paulista, 2000", "Carla", "a4f57t");
-			Fachada.criarEntrega("5drx92", LocalDate.now(), "Rua dos Três Irmãos, 60", "Ricardo", "z9t21k");
+			Fachada.criarEntrega("3hk7t4", LocalDate.now(), "Avenida Paulista, 2000", "Fernanda", "a4f57t");
+			Fachada.criarEntrega("5drx92", LocalDate.now(), "Rua dos Três Irmãos, 60", "Fernanda", "z9t21k");
 			Fachada.criarEntrega("8l9u84", LocalDate.now(), "Avenida das Nações, 500", "Fernanda", "j7b46n");
-			Fachada.criarEntrega("4pws16", LocalDate.now(), "Rua Fafá de Belém, 45", "Maria", "d4e26");
+			Fachada.criarEntrega("7956oh", LocalDate.now(), "Rua Fafá de Belém, 45", "Maria", "2753pk");
 			
 
         } catch (Exception e) {

@@ -12,7 +12,7 @@ public class DAOEntregador extends DAO<Entregador>{
 	public Entregador read (Object chave){
 		try{
 			String nome = (String) chave;
-			TypedQuery<Entregador> q = manager.createQuery("select e from Entregador e where e.nome=:n", Entregador.class);
+			TypedQuery<Entregador> q = manager.createQuery("select e from Entregador e where e.nome =:n", Entregador.class);
 			q.setParameter("n", nome);
 			return q.getSingleResult();
 

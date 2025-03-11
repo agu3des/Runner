@@ -26,7 +26,7 @@ public class Entrega {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private Entregador entregador;
     
-    @OneToMany(mappedBy = "entrega", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "entrega", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 	private List<Pedido> pedidos = new ArrayList<>();
 
 

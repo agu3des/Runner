@@ -19,7 +19,7 @@ public class Entregador {
 	private int id;
 	private String nome;	
 	
-	@OneToMany(mappedBy = "entregador", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "entregador", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 	private List<Entrega> entregas = new ArrayList<>();
 
 	public Entregador() {

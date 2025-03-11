@@ -5,7 +5,6 @@ import java.util.List;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import modelo.Pedido;
-import modelo.Telefone;
 
 public class DAOPedido extends DAO<Pedido> {
 
@@ -23,7 +22,6 @@ public class DAOPedido extends DAO<Pedido> {
 	}
 	
 	public List<Pedido> readByCodigo(String codigo) {
-		// carregar telefone com seus relacionamentos
 		TypedQuery<Pedido> q = manager.createQuery("""
 				select p from Pedido p 
 				where p.codigoPedido like :x """, Pedido.class);
@@ -38,7 +36,7 @@ public class DAOPedido extends DAO<Pedido> {
 		TypedQuery<Pedido> q = manager
 				.createQuery(
 						"""
-						select p from Pedido
+						select p from Pedido p
 						where p.valor = :m
 						""", Pedido.class);
 		q.setParameter("m", valor);
