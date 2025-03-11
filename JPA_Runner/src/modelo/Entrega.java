@@ -33,6 +33,7 @@ public class Entrega {
 	}
 
 	public Entrega(String codigoEntrega) {
+		this.codigoEntrega = codigoEntrega;
 	}
 
 	public Entrega(String codigoEntrega, String endereco) {
@@ -54,7 +55,7 @@ public class Entrega {
 		this.codigoEntrega = codigoEntrega;
 	}
 
-	public LocalDate getdataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 	public void setDataEntrega(LocalDate dataEntrega) {

@@ -1,123 +1,39 @@
 package appconsole;
 
-import jakarta.persistence.EntityManager;
-import modelo.Entrega;
-import modelo.Entregador;
-import modelo.Pedido;
+import java.time.LocalDate;
+
+import regras_negocio.Fachada;
 
 public class Cadastrar {
-    private EntityManager manager;
+    //private EntityManager manager;
 
     public Cadastrar() {
         try {
-            manager = Util.conectarBanco();
-            System.out.println("Cadastrando entregadores, pedidos e entregas...");
+        	System.out.println("Cadastrando entregadores, pedidos e entregas...");
+        	Fachada.inicializar();
+            
+			Fachada.criarEntregador("João");
+			Fachada.criarEntregador("Maria");
+			Fachada.criarEntregador("Carlos");
+			Fachada.criarEntregador("Ana");
+        	
+			Fachada.criarPedido("17yv84",  LocalDate.now(), 15.50, "Forma de bolo de cenoura");
+			Fachada.criarPedido("2753pk", LocalDate.now(), 100, "Suporte de monitor");
+			Fachada.criarPedido("9xy123", LocalDate.now(), 50, "Caixa organizadora");
+			Fachada.criarPedido("d4z687", LocalDate.now(), 120, "Conjunto de ferramentas");
+			Fachada.criarPedido("a1b2c3", LocalDate.now(), 30, "Cesta de frutas");
 
-            // Criando pedidos
-            Pedido p1 = new Pedido("154d", 15.69, "Forma de bolo de cenoura");
-            Pedido p2 = new Pedido("werr34", 100, "Suporte de monitor");
-            Pedido p3 = new Pedido("frfrf", 50, "Caixa organizadora");
-            Pedido p4 = new Pedido("awew12", 120.49, "Conjunto de ferramentas");
-            Pedido p5 = new Pedido("mkmiu", 42, "Saia");
-            Pedido p6 = new Pedido("gtgr5", 35.99, "Escova de cabelo");
-            Pedido p7 = new Pedido("bfg75", 20.00, "Caneca personalizada");
-            Pedido p8 = new Pedido("542de", 75.80, "Cadeira ergonômica");
-            Pedido p9 = new Pedido("hsuwq", 45.60, "Caderno de anotações");
-            Pedido p10 = new Pedido("xker", 29.90, "Fone de ouvido");
-
-            // Criando entregadores
-            Entregador er1 = new Entregador("João");
-            Entregador er2 = new Entregador("Maria");
-            Entregador er3 = new Entregador("Carlos");
-            Entregador er4 = new Entregador("Ana");
-            Entregador er5 = new Entregador("Pedro");
-            Entregador er6 = new Entregador("Lucas");
-
-            // Criando entregas
-            Entrega e1 = new Entrega("de5e", "Avenida Vasco da Gama, 1245");
-            Entrega e2 = new Entrega("e54w", "Rua das Flores, 456");
-            Entrega e3 = new Entrega("sa8d7", "Avenida Central, 789");
-            Entrega e4 = new Entrega("cd7s", "Praça da Liberdade, 321");
-            Entrega e5 = new Entrega("aa87", "Rua Tavares de Lima, 298");
-            Entrega e6 = new Entrega("xw2d", "Rua do Sol, 550");
-            Entrega e7 = new Entrega("uj8u", "Avenida Brasil, 1189");
-            Entrega e8 = new Entrega("b15g4", "Rua das Palmeiras, 890");
-            Entrega e9 = new Entrega("sq6w5", "Alameda dos Eucaliptos, 765");
-            Entrega e10 = new Entrega("ccd87f", "Rua das Acácias, 432");
-            
-            
-            
-            // Relacionamentos Entregas - Pedidos
-            e1.adicionar(p1);
-			e1.adicionar(p2);
-			e2.adicionar(p3);
-			e3.adicionar(p4);
-			e4.adicionar(p5);
-            e6.adicionar(p6);
-            e6.adicionar(p7);
-            e7.adicionar(p8);
-            e8.adicionar(p9);
-            e9.adicionar(p10);
-            
-            
-            // Relacionamentos Entregadores - Entregas
-            er1.adicionar(e1);
-			er4.adicionar(e2);
-			er2.adicionar(e3);
-			er3.adicionar(e4);
-			er4.adicionar(e5);
-            er5.adicionar(e6);
-            er6.adicionar(e7);
-            er5.adicionar(e8);
-            er5.adicionar(e9);
-            er6.adicionar(e10);
-			
-
-			// Pedidos
-			
-            manager.getTransaction().begin();
-            manager.persist(p1);
-            manager.persist(p2);
-            manager.persist(p3);
-            manager.persist(p4);
-            manager.persist(p5);
-            manager.persist(p6);
-            manager.persist(p7);
-            manager.persist(p8);
-            manager.persist(p9);
-            manager.persist(p10);
-            manager.getTransaction().commit();
-            
-            // Entregadores
-            manager.getTransaction().begin();
-            manager.persist(er1);
-            manager.persist(er2);
-            manager.persist(er3);
-            manager.persist(er4);
-            manager.persist(er5);
-            manager.persist(er6);
-            manager.getTransaction().commit();
-            
-            // Entregas
-            manager.getTransaction().begin();
-            manager.persist(e1);
-            manager.persist(e2);
-            manager.persist(e3);
-            manager.persist(e4);
-            manager.persist(e5);
-            manager.persist(e6);
-            manager.persist(e7);
-            manager.persist(e8);
-            manager.persist(e9);
-            manager.persist(e10);
-            manager.getTransaction().commit();
-            
+			Fachada.criarEntrega("1deu58", LocalDate.now(), "Avenida Vasco da Gama, 1245", "João", "17yv84");
+			Fachada.criarEntrega("24lhy9", LocalDate.now(), "Rua das Flores, 456", "Carlos", "9xy123");
+			Fachada.criarEntrega("3bdg73", LocalDate.now(), "Avenida Central, 789", "Ana", "d4z687");
+			Fachada.criarEntrega("4pws16", LocalDate.now(), "Praça da Liberdade, 321", "Maria", "a1b2c3");
+           
 
         } catch (Exception e) {
             System.out.println("Exceção: " + e.getMessage());
         }
 
-        Util.fecharBanco();
+        Fachada.finalizar();
         System.out.println("\nFim da aplicação");
     }
 

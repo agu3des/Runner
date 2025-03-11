@@ -53,7 +53,7 @@ public class TelaEntregador {
         buttonCriar.setBounds(21, 340, 150, 30);
         buttonCriar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarCamposCriar();
+                //mostrarCamposCriar();
                 criarEntregador();
             }
         });
@@ -63,7 +63,6 @@ public class TelaEntregador {
         buttonBuscar.setBounds(181, 340, 150, 30);
         buttonBuscar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarCamposBuscar();
                 buscarEntregador();
             }
         });
@@ -73,7 +72,6 @@ public class TelaEntregador {
         buttonAlterar.setBounds(341, 340, 150, 30);
         buttonAlterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarCamposAlterar();
                 alterarNomeEntregador();
             }
         });
@@ -83,7 +81,6 @@ public class TelaEntregador {
         buttonApagar.setBounds(501, 340, 150, 30);
         buttonApagar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarCamposApagar();
                 apagarEntregador();
             }
         });
@@ -106,7 +103,6 @@ public class TelaEntregador {
         textFieldNovoNome.setBounds(101, 260, 165, 20);
         frame.getContentPane().add(textFieldNovoNome);
 
-        ocultarCampos();
 
         // Label de status
         labelStatus = new JLabel("");
@@ -128,39 +124,6 @@ public class TelaEntregador {
         for (Entregador e : lista) {
             model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
         }
-    }
-
-    private void mostrarCamposCriar() {
-        ocultarCampos();
-        labelNome.setVisible(true);
-        textFieldNome.setVisible(true);
-    }
-
-    private void mostrarCamposBuscar() {
-        ocultarCampos();
-        labelNome.setVisible(true);
-        textFieldNome.setVisible(true);
-    }
-
-    private void mostrarCamposAlterar() {
-        ocultarCampos();
-        labelNome.setVisible(true);
-        textFieldNome.setVisible(true);
-        labelNovoNome.setVisible(true);
-        textFieldNovoNome.setVisible(true);
-    }
-
-    private void mostrarCamposApagar() {
-        ocultarCampos();
-        labelNome.setVisible(true);
-        textFieldNome.setVisible(true);
-    }
-
-    private void ocultarCampos() {
-        labelNome.setVisible(false);
-        textFieldNome.setVisible(false);
-        labelNovoNome.setVisible(false);
-        textFieldNovoNome.setVisible(false);
     }
 
     private void criarEntregador() {

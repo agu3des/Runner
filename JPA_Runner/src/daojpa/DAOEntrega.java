@@ -12,9 +12,9 @@ DAOEntrega extends DAO<Entrega> {
 
 	public Entrega read(Object chave) {
 		try {
-			int id = (int) chave;
-			TypedQuery<Entrega> q = manager.createQuery("select e from Entrega e where e.id=:n", Entrega.class);
-			q.setParameter("n", id);
+			String codigo = (String) chave;
+			TypedQuery<Entrega> q = manager.createQuery("select e from Entrega e where e.codigoEntrega =: en", Entrega.class);
+			q.setParameter("en", codigo);
 			return q.getSingleResult();
 
 		} catch (NoResultException e) {

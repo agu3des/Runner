@@ -1,7 +1,6 @@
 package regras_negocio;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class Fachada {
 		return e;
 	}
 
-	public static void criarPedido(String codigoPedido, LocalDate dataPedido, int valor, String descricao) throws Exception {
+	public static void criarPedido(String codigoPedido, LocalDate dataPedido, double valor, String descricao) throws Exception {
 		DAO.begin();
 
 		Pedido p = daopedido.read(codigoPedido);
@@ -162,7 +161,7 @@ public class Fachada {
 			throw new Exception("Alterar entrega - entrega inexistente:" + codigoEntrega);
 		}
 
-		if (e.getdataEntrega() != null) {
+		if (e.getDataEntrega() != null) {
 			try {
 				e.setDataEntrega(dataEntrega);
 			} catch (DateTimeParseException en) {
@@ -260,7 +259,7 @@ public class Fachada {
 		return result;
 	}
 
-	/*
+	
 	public static List<Pedido> consultarPedidos(String pedidos) {
 		List<Pedido> result;
 		if (pedidos.isEmpty())
@@ -287,7 +286,7 @@ public class Fachada {
 			result = daoentrega.readAll();
 		return result;
 	}
-*/
+
 	public static List<Entregador> consultarPorNEntregas(int n) {
 		List<Entregador> result;
 		DAO.begin();

@@ -16,26 +16,26 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import modelo.Pedido;
+import modelo.Entrega;
 import regras_negocio.Fachada;
 
-public class TelaPedido {
+public class TelaEntrega {
     private JDialog frame;
     private JTable table;
     private JScrollPane scrollPane;
     private JButton buttonCriar, buttonBuscar, buttonAtualizar, buttonApagar;
-    private JTextField textFieldCodigoPedido, textFieldDataPedido, textFieldValor, textFieldDescricao;
+    private JTextField textFieldCodigoEntrega, textFieldDataEntrega, textFieldValor, textFieldEndereco;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
 
-    public TelaPedido() {
+    public TelaEntrega() {
         initialize();
     }
 
     private void initialize() {
         frame = new JDialog();
         frame.setModal(true);
-        frame.setTitle("Pedidos");
+        frame.setTitle("Entregas");
         frame.setBounds(100, 100, 744, 428);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
@@ -56,30 +56,22 @@ public class TelaPedido {
         buttonCriar.setBounds(21, 340, 150, 30);
         buttonCriar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                criarPedido();
+                criarEntrega();
             }
         });
         frame.getContentPane().add(buttonCriar);
 
         buttonBuscar = new JButton("Buscar");
         buttonBuscar.setBounds(181, 340, 150, 30);
-        buttonBuscar.addActionListener(e -> buscarPedido());
+        buttonBuscar.addActionListener(e -> buscarEntrega());
         frame.getContentPane().add(buttonBuscar);
 
-        buttonAtualizar = new JButton("Buscar por valor");
-        buttonAtualizar.setBounds(341, 340, 150, 30);
-        buttonBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mostrarPedidosPorValor();
-            }
-        });
-        frame.getContentPane().add(buttonAtualizar);
 
         buttonApagar = new JButton("Apagar");
         buttonApagar.setBounds(501, 340, 150, 30);
         buttonApagar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                apagarPedido();
+                apagarEntrega();
             }
         });
         frame.getContentPane().add(buttonApagar);
@@ -89,84 +81,69 @@ public class TelaPedido {
         labelStatus.setBounds(21, 372, 677, 14);
         frame.getContentPane().add(labelStatus);
 
-        listarPedidos();
+        listarEntregas();
         frame.setVisible(true);
     }
 
-    private Object criarPedido() {
+    private Object criarEntrega() {
         try {
-            String codigo = textFieldCodigoPedido.getText().trim();
-            LocalDate dataPedido = textFieldDataPedido.getText().trim();
+            String codigo = textFieldCodigoEntrega.getText().trim();
+            LocalDate dataEntrega = textFieldDataEntrega.getText().trim();
             double valor = Double.parseDouble(textFieldValor.getText().trim());
-            String descricao = textFieldDescricao.getText().trim();
-            Fachada.criarPedido(codigo, dataPedido, valor, descricao);
+            String endereco = textFieldEndereco.getText().trim();
+            Fachada.criarEntrega(codigo, dataEntrega, valor, endereco);
             labelStatus.setText("Entregador criado com sucesso!");
-            listarPedidos();
+            listarEntregas();
         } catch (Exception e) {
             labelStatus.setText("Erro ao criar entregador: " + e.getMessage());
         }
     }
 
-    public void listarPedidos() {
+    public void listarEntregas() {
         try {
-            List<Pedido> lista = regras_negocio.Fachada.listarPedidos();
+            List<Entrega> lista = regras_negocio.Fachada.listarEntregas();
             DefaultTableModel model = new DefaultTableModel();
             table.setModel(model);
-            model.addColumn("ID Pedido");
-            model.addColumn("Data Pedido");
+            model.addColumn("Código Entrega");
+            model.addColumn("Data Entrega");
             model.addColumn("Valor");
             model.addColumn("Descrição");
 
-            for (Pedido p : lista) {
-                model.addRow(new Object[]{p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao()});
+            for (Entrega e : lista) {
+                model.addRow(new Object[]{e.getId(), e.getDataEntrega(), e.getEndereco()});
             }
         } catch (Exception e) {
-            labelStatus.setText("Erro ao listar pedidos: " + e.getMessage());
+            labelStatus.setText("Erro ao listar entregas: " + e.getMessage());
         }
     }
-    private void buscarPedido() {
+    private void buscarEntrega() {
         try {
-            Pedido pedido = regras_negocio.Fachada.localizarPedido(textFieldCodigoPedido.getText().trim()); // Método corrigido
-            if (pedido != null) {
+            Entrega entrega = regras_negocio.Fachada.localizarEntrega(textFieldCodigoEntrega.getText().trim()); 
+            if (entrega != null) {
                 // Convertendo LocalDateTime para String no formato correto
-                textFieldDataPedido.setText(pedido.getDataPedido().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                textFieldValor.setText(String.valueOf(pedido.getValor()));
-                textFieldDescricao.setText(pedido.getDescricao());
-                labelStatus.setText("Pedido encontrado!");
+                textFieldDataEntrega.setText(entrega.getDataEntrega().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                textFieldEndereco.setText(entrega.getEndereco());
+                labelStatus.setText("Entrega encontrado!");
             } else {
-                labelStatus.setText("Pedido não encontrado.");
+                labelStatus.setText("Entrega não encontrado.");
             }
         } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedido: " + e.getMessage());
+            labelStatus.setText("Erro ao buscar entrega: " + e.getMessage());
         }
     }
 
-    private void mostrarPedidosPorValor() {
-        try {
-            double valor = Double.parseDouble(textFieldValor.getText().trim());
-            List<Pedido> listaPedidos = Fachada.consultarPedidoPorValor(valor);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-            for (Pedido p : listaPedidos) {
-                model.addRow(new Object[]{p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao()});
-            }
-            labelStatus.setText("Pedidos encontrados!");
-        } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedidos por valor: " + e.getMessage());
-        }
-    }
 
-    private void apagarPedido() {
+    private void apagarEntrega() {
         try {
-            regras_negocio.Fachada.excluirPedido(textFieldCodigoPedido.getText().trim());
-            labelStatus.setText("Pedido apagado com sucesso!");
-            listarPedidos();
+            regras_negocio.Fachada.excluirEntrega(textFieldCodigoEntrega.getText().trim());
+            labelStatus.setText("Entrega apagado com sucesso!");
+            listarEntregas();
         } catch (Exception e) {
-            labelStatus.setText("Erro ao apagar pedido: " + e.getMessage());
+            labelStatus.setText("Erro ao apagar entrega: " + e.getMessage());
         }
     }
 
     public static void main(String[] args) {
-        new TelaPedido();
+        new TelaEntrega();
     }
 }

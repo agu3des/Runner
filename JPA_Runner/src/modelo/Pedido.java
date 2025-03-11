@@ -27,6 +27,7 @@ public class Pedido {
 	}
 
 	public Pedido(String codigoPedido) {
+		this.codigoPedido = codigoPedido;
 	}
 	
 	public Pedido(String codigoPedido, double valor, String descricao) {
