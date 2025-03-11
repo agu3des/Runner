@@ -12,6 +12,7 @@ import daojpa.DAOPedido;
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
+import modelo.Pessoa;
 
 public class Fachada {
 	private Fachada() {
@@ -244,6 +245,14 @@ public class Fachada {
 		DAO.commit();
 		return result;
 	}
+	
+	public static List<Pedido> listarPedidos(String codigoPedido) {
+		List<Pedido> result;
+		DAO.begin();
+		result = daopedido.readByCodigo(codigoPedido);
+		DAO.commit();
+		return result;
+	}
 
 	public static List<Entregador> listarEntregadores() {
 		DAO.begin();
@@ -259,6 +268,13 @@ public class Fachada {
 		return result;
 	}
 
+	public static List<Entrega> listarEntregas(String codigoEntrega) {
+		List<Entrega> result;
+		DAO.begin();
+		result = daoentrega.readByCodigo(codigoEntrega);
+		DAO.commit();
+		return result;
+	}
 	
 	public static List<Pedido> consultarPedidos(String pedidos) {
 		List<Pedido> result;
@@ -277,6 +293,15 @@ public class Fachada {
 			result = daoentregador.readAll();
 		return result;
 	}
+	
+	public static List<Entregador> listarEntregadores(String nome) {
+		List<Entregador> result;
+		DAO.begin();
+		result = daoentregador.readLikeNome(nome);
+		DAO.commit();
+		return result;
+	}
+
 
 	public static List<Entrega> consultarEntregas(String entregas) {
 		List<Entrega> result;

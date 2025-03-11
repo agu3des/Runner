@@ -85,7 +85,11 @@ public class Pedido {
 	
 	
 	public String toString() {
-		String texto = "codigo:" + getCodigoPedido() + ", Data Pedido: " +  getDataPedido() + ", Valor: " + getValor()  + ", Descrição: " + getDescricao();
+		String texto = "[ Codigo do Pedido:" + getCodigoPedido() + 
+				", Data Pedido: " +  getDataPedido() + 
+				", Valor: " + getValor()  + 
+				", Descrição: " + getDescricao() +
+				" ]";
 
 		return texto;
 	}

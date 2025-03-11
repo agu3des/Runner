@@ -1,70 +1,53 @@
 package appconsole;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
 import modelo.Entregador;
 import modelo.Pedido;
+import regras_negocio.Fachada;
 
 public class Consultar {
-    protected EntityManager manager;
 
     public Consultar() {
         try {
-            manager = Util.conectarBanco();
-            TypedQuery<Pedido> queryPedido;
-            TypedQuery<Entregador> queryEntregador;
-            TypedQuery<Entrega> queryEntrega;
-            List<Pedido> pedidos;
-            List<Entregador> entregadores;
-            List<Entrega> entregas;
-            String jpql;
+            Fachada.inicializar();
 
-            System.out.println("\n---Consultar pedidos que tenham 1 no seu id");
-            jpql = "select p from Pedido p where p.id = 1";
-            queryPedido = manager.createQuery(jpql, Pedido.class);
-            pedidos = queryPedido.getResultList();
-            pedidos.forEach(System.out::println);
+            System.out.println("\n---Consultar pedidos que tenham '17yv84' no seu codigo");
+            for (Pedido p : Fachada.listarPedidos("17yv84")) {  
+                System.out.println(Fachada.localizarPedido(p.getCodigoPedido()));
+            }
 
             System.out.println("\n---Consultar entregadores com nome contendo 'An'");
-            jpql = "select e from Entregador e where e.nome like '%An%'";
-            queryEntregador = manager.createQuery(jpql, Entregador.class);
-            entregadores = queryEntregador.getResultList();
-            entregadores.forEach(System.out::println);
+            for (Entregador e : Fachada.listarEntregadores("An")) {  
+                System.out.println(Fachada.localizarEntregador(e.getNome()));
+            }
 
-            System.out.println("\n---Consultar entregas que tenham 1 no seu id");
-            jpql = "select e from Entrega e where e.id = 1";
-            queryEntrega = manager.createQuery(jpql, Entrega.class);
-            entregas = queryEntrega.getResultList();
-            entregas.forEach(System.out::println);
+            System.out.println("\n---Consultar entregas que tenham código = 3bdg73");
+            for (Entrega e : Fachada.listarEntregas("3bdg73")) {  
+                System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
+            }
 
-            System.out.println("\n---Consultar entregas com a data 19/02/2025");
-            jpql = "select e from Entrega e where e.dataEntrega = :dataEntrega";
-            queryEntrega = manager.createQuery(jpql, Entrega.class);
-            queryEntrega.setParameter("dataEntrega", LocalDate.of(2025, 2, 19));
-            entregas = queryEntrega.getResultList();
-            entregas.forEach(System.out::println);
+            /*System.out.println("\n---Consultar entregas com data 19/02/2025");
+            for (Entrega e : Fachada.consultarEntregaPorData(LocalDate.of(2025, 2, 19))) {
+                System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
+            }*/
 
             System.out.println("\n---Consultar entregadores com mais de 2 entregas");
-            jpql = "select e from Entregador e where size(e.entregas) > 2";
-            queryEntregador = manager.createQuery(jpql, Entregador.class);
-            entregadores = queryEntregador.getResultList();
-            entregadores.forEach(System.out::println);
+            for (Entregador e : Fachada.consultarPorNEntregas(2)) {
+                System.out.println(Fachada.localizarEntregador(e.getNome()));
+            }
 
             System.out.println("\n---Consultar pedidos com valor de 100 reais");
-            jpql = "select p from Pedido p where p.valor = 100.00";
-            queryPedido = manager.createQuery(jpql, Pedido.class);
-            pedidos = queryPedido.getResultList();
-            pedidos.forEach(System.out::println);
+            for (Pedido p : Fachada.consultarPedidoPorValor(100.00)) {
+                System.out.println(Fachada.localizarPedido(p.getCodigoPedido()));
+            }
 
         } catch (Exception e) {
             System.out.println("Exceção: " + e.getMessage());
         }
-        
-        Util.fecharBanco();
+
+        Fachada.finalizar();
         System.out.println("\nFim da aplicação");
     }
 
@@ -72,5 +55,3 @@ public class Consultar {
         new Consultar();
     }
 }
-
-

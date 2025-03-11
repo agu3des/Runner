@@ -64,23 +64,20 @@ public class Entregador {
 	}
 	
 	public String toString() {
-		String texto = "id: " + id +", Nome: " +  getNome();
-
-		texto += ",  Entregas: ";
+		String texto = "Id: " + id +
+				", Nome: " +  getNome();
+		texto += ", [ Entregas: ";
 		for(Entrega e : entregas)
 			if (e != null) {
 		        texto += e.getCodigoEntrega() + ",";
 		    } else {
-		        texto += "";
+		        texto += " ]";
 		    }
-		return texto;
+		return texto += " ]";
 	}
 	
 	public List<Entrega> getEntregas() {
 		return entregas;
-	}/*
-	public void setEntregas(List<Entrega> listaEntregas){
-		this.entregas = listaEntregas;
-	}*/
+	}
 	
 }

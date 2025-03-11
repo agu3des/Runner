@@ -24,13 +24,13 @@ public class DAOEntregador extends DAO<Entregador>{
 	// --------------------------------------------
 		// consultas
 		// --------------------------------------------
-		public List<Entregador> readLikeNome(String caracteres) {
+		public List<Entregador> readLikeNome(String nome) {
 			TypedQuery<Entregador> q = manager.createQuery(
 					"""
 					select er from Entregador er 
 					where er.nome like :x  
 					""",Entregador.class);
-			q.setParameter("x", "%" + caracteres + "%");
+			q.setParameter("x", "%" + nome + "%");
 			return q.getResultList();
 		}
 		

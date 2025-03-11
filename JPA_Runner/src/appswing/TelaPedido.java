@@ -2,8 +2,7 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class TelaPedido {
     private JDialog frame;
     private JTable table;
     private JScrollPane scrollPane;
-    private JButton buttonCriar, buttonBuscar, buttonAtualizar, buttonApagar;
+    private JButton buttonCriar, buttonBuscar, buttonBuscarValor, buttonApagar;
     private JTextField textFieldCodigoPedido, textFieldDataPedido, textFieldValor, textFieldDescricao;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
@@ -54,11 +53,7 @@ public class TelaPedido {
 
         buttonCriar = new JButton("Criar");
         buttonCriar.setBounds(21, 340, 150, 30);
-        buttonCriar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                criarPedido();
-            }
-        });
+        buttonCriar.addActionListener(e -> criarPedido());
         frame.getContentPane().add(buttonCriar);
 
         buttonBuscar = new JButton("Buscar");
@@ -66,22 +61,14 @@ public class TelaPedido {
         buttonBuscar.addActionListener(e -> buscarPedido());
         frame.getContentPane().add(buttonBuscar);
 
-        buttonAtualizar = new JButton("Buscar por valor");
-        buttonAtualizar.setBounds(341, 340, 150, 30);
-        buttonBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mostrarPedidosPorValor();
-            }
-        });
-        frame.getContentPane().add(buttonAtualizar);
+        buttonBuscarValor = new JButton("Buscar por valor");
+        buttonBuscarValor.setBounds(341, 340, 150, 30);
+        buttonBuscarValor.addActionListener(e -> mostrarPedidosPorValor());
+        frame.getContentPane().add(buttonBuscarValor);
 
         buttonApagar = new JButton("Apagar");
         buttonApagar.setBounds(501, 340, 150, 30);
-        buttonApagar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                apagarPedido();
-            }
-        });
+        buttonApagar.addActionListener(e -> apagarPedido());
         frame.getContentPane().add(buttonApagar);
 
         labelStatus = new JLabel("");
@@ -93,43 +80,45 @@ public class TelaPedido {
         frame.setVisible(true);
     }
 
-    private Object criarPedido() {
+    private void criarPedido() {
         try {
             String codigo = textFieldCodigoPedido.getText().trim();
-            LocalDate dataPedido = textFieldDataPedido.getText().trim();
+            LocalDate dataPedido = LocalDate.parse(textFieldDataPedido.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             double valor = Double.parseDouble(textFieldValor.getText().trim());
             String descricao = textFieldDescricao.getText().trim();
             Fachada.criarPedido(codigo, dataPedido, valor, descricao);
-            labelStatus.setText("Entregador criado com sucesso!");
+            labelStatus.setText("Pedido criado com sucesso!");
             listarPedidos();
         } catch (Exception e) {
-            labelStatus.setText("Erro ao criar entregador: " + e.getMessage());
+            labelStatus.setText("Erro ao criar pedido: " + e.getMessage());
         }
     }
 
     public void listarPedidos() {
         try {
-            List<Pedido> lista = regras_negocio.Fachada.listarPedidos();
+            List<Pedido> lista = Fachada.listarPedidos();
             DefaultTableModel model = new DefaultTableModel();
             table.setModel(model);
-            model.addColumn("ID Pedido");
-            model.addColumn("Data Pedido");
+            model.addColumn("Código do Pedido");
+            model.addColumn("Data do Pedido");
             model.addColumn("Valor");
             model.addColumn("Descrição");
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             for (Pedido p : lista) {
-                model.addRow(new Object[]{p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao()});
+                model.addRow(new Object[]{p.getCodigoPedido(), p.getDataPedido().format(formatter), p.getValor(), p.getDescricao()});
             }
         } catch (Exception e) {
             labelStatus.setText("Erro ao listar pedidos: " + e.getMessage());
         }
     }
+
     private void buscarPedido() {
         try {
-            Pedido pedido = regras_negocio.Fachada.localizarPedido(textFieldCodigoPedido.getText().trim()); // Método corrigido
+            Pedido pedido = Fachada.localizarPedido(textFieldCodigoPedido.getText().trim());
             if (pedido != null) {
-                // Convertendo LocalDateTime para String no formato correto
-                textFieldDataPedido.setText(pedido.getDataPedido().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                textFieldDataPedido.setText(pedido.getDataPedido().format(formatter));
                 textFieldValor.setText(String.valueOf(pedido.getValor()));
                 textFieldDescricao.setText(pedido.getDescricao());
                 labelStatus.setText("Pedido encontrado!");
@@ -147,8 +136,9 @@ public class TelaPedido {
             List<Pedido> listaPedidos = Fachada.consultarPedidoPorValor(valor);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             for (Pedido p : listaPedidos) {
-                model.addRow(new Object[]{p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao()});
+                model.addRow(new Object[]{p.getCodigoPedido(), p.getDataPedido().format(formatter), p.getValor(), p.getDescricao()});
             }
             labelStatus.setText("Pedidos encontrados!");
         } catch (Exception e) {
@@ -158,7 +148,7 @@ public class TelaPedido {
 
     private void apagarPedido() {
         try {
-            regras_negocio.Fachada.excluirPedido(textFieldCodigoPedido.getText().trim());
+            Fachada.excluirPedido(textFieldCodigoPedido.getText().trim());
             labelStatus.setText("Pedido apagado com sucesso!");
             listarPedidos();
         } catch (Exception e) {

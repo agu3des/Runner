@@ -109,16 +109,20 @@ public class Entrega {
 	
 	
 	public String toString() {
-		String texto = "codigo: " + getCodigoEntrega() +", Data de Entrega: " + getDataEntrega()+ ", Endereço: " + getEndereco() + "\n[Entregadores: " + getEntregador() + "]\n;";
+		String texto = "Codigo da Entrega: " + getCodigoEntrega() +
+				", Data de Entrega: " + getDataEntrega() + 
+				", Endereço: " + getEndereco() + 
+				"\n[Entregadores: " + getEntregador() + 
+				"]\n";
 
-		texto += ",  Pedidos: ";
+		texto += ", [ Pedidos: ";
 		for(Pedido p : pedidos)
 			if (p != null) {
 		        texto += p.getCodigoPedido() + ",";
 		    } else {
-		        texto += "";
+		        texto += " ]";
 		    }
-		return texto;
+		return texto += " ]";
 	}
 
 }

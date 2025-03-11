@@ -1,15 +1,15 @@
-16:38:39,236  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
-16:38:39,243  INFO Util:34 - sgbd => postgresql
-16:38:39,243  INFO Util:35 - banco => pob
-16:38:39,244  INFO Util:36 - ip => localhost
-16:38:39,245  INFO Util:41 - ----configurando postgresql
-16:38:39,297 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
-16:38:39,430  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
-16:38:39,505  INFO Version:44 - HHH000412: Hibernate ORM core version 6.6.5.Final
-16:38:39,590 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
-16:38:39,592  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
-16:38:40,108  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
-16:38:40,830  INFO pooling:157 - HHH10001005: Database info:
+17:20:28,318  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
+17:20:28,324  INFO Util:34 - sgbd => postgresql
+17:20:28,324  INFO Util:35 - banco => pob
+17:20:28,325  INFO Util:36 - ip => localhost
+17:20:28,325  INFO Util:41 - ----configurando postgresql
+17:20:28,368 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+17:20:28,492  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+17:20:28,556  INFO Version:44 - HHH000412: Hibernate ORM core version 6.6.5.Final
+17:20:28,594 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+17:20:28,595  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+17:20:28,939  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
+17:20:29,551  INFO pooling:157 - HHH10001005: Database info:
 	Database JDBC URL [jdbc:postgresql://localhost:5432/pob]
 	Database driver: org.postgresql.Driver
 	Database version: 16.7
@@ -17,83 +17,134 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: 1
 	Maximum pool size: 20
-16:38:42,262  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-16:38:42,287  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7742a45c] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-16:38:42,936 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0
-16:38:42,984 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:42,985 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,015 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,015 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,018 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,019 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,020 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,021 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,115 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
-16:38:43,115 TRACE bind:24 - binding parameter (1:VARCHAR) <- [2753pk]
-16:38:43,124 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
-16:38:43,125 TRACE bind:24 - binding parameter (1:VARCHAR) <- [17yv84]
-16:38:43,126 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,126 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,129 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
-16:38:43,130 TRACE bind:24 - binding parameter (1:VARCHAR) <- [9xy123]
-16:38:43,132 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,132 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,136 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
-16:38:43,136 TRACE bind:24 - binding parameter (1:VARCHAR) <- [d4z687]
-16:38:43,138 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,138 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,141 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
-16:38:43,141 TRACE bind:24 - binding parameter (1:VARCHAR) <- [a1b2c3]
-16:38:43,142 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.id=?
-16:38:43,143 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,147 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0
-16:38:43,156 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
-16:38:43,157 TRACE bind:24 - binding parameter (1:VARCHAR) <- [João]
-16:38:43,161 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,162 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,168 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
-16:38:43,168 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Maria]
-16:38:43,170 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,170 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,173 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
-16:38:43,173 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Carlos]
-16:38:43,175 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,176 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,179 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
-16:38:43,179 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Ana]
-16:38:43,181 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,181 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,186 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0
-16:38:43,193 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
-16:38:43,193 TRACE bind:24 - binding parameter (1:VARCHAR) <- [1deu58]
-16:38:43,196 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
-16:38:43,196 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,199 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,199 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,202 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
-16:38:43,202 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
-16:38:43,206 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
-16:38:43,206 TRACE bind:24 - binding parameter (1:VARCHAR) <- [24lhy9]
-16:38:43,209 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
-16:38:43,209 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,212 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,213 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,214 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
-16:38:43,215 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,217 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
-16:38:43,217 TRACE bind:24 - binding parameter (1:VARCHAR) <- [3bdg73]
-16:38:43,219 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
-16:38:43,220 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,222 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,222 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,224 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
-16:38:43,224 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
-16:38:43,226 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
-16:38:43,226 TRACE bind:24 - binding parameter (1:VARCHAR) <- [4pws16]
-16:38:43,230 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.id=?
-16:38:43,230 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,231 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
-16:38:43,231 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
-16:38:43,231 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from Pedido p1_0 where p1_0.entrega_id=?
-16:38:43,231 TRACE bind:24 - binding parameter (1:INTEGER) <- [4]
-16:38:43,235  INFO Util:70 - ----desconectar banco
+17:20:30,768  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+17:20:30,796  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1a531422] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+17:20:31,500 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,501 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Lucas]
+17:20:31,554 DEBUG SQL:135 - insert into Entregador (nome) values (?)
+17:20:31,556 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Lucas]
+17:20:31,590 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,590 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Carla]
+17:20:31,592 DEBUG SQL:135 - insert into Entregador (nome) values (?)
+17:20:31,592 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Carla]
+17:20:31,595 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,595 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Ricardo]
+17:20:31,596 DEBUG SQL:135 - insert into Entregador (nome) values (?)
+17:20:31,596 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Ricardo]
+17:20:31,598 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,598 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Fernanda]
+17:20:31,599 DEBUG SQL:135 - insert into Entregador (nome) values (?)
+17:20:31,600 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Fernanda]
+17:20:31,604 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,604 TRACE bind:24 - binding parameter (1:VARCHAR) <- [x2g9q8]
+17:20:31,614 DEBUG SQL:135 - insert into Pedido (codigoPedido,dataPedido,descricao,entrega_id,valor) values (?,?,?,?,?)
+17:20:31,614 TRACE bind:24 - binding parameter (1:VARCHAR) <- [x2g9q8]
+17:20:31,614 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,616 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Smartphone]
+17:20:31,616 TRACE bind:35 - binding parameter (4:INTEGER) <- [null]
+17:20:31,616 TRACE bind:24 - binding parameter (5:DOUBLE) <- [75.0]
+17:20:31,620 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,620 TRACE bind:24 - binding parameter (1:VARCHAR) <- [a4f57t]
+17:20:31,622 DEBUG SQL:135 - insert into Pedido (codigoPedido,dataPedido,descricao,entrega_id,valor) values (?,?,?,?,?)
+17:20:31,622 TRACE bind:24 - binding parameter (1:VARCHAR) <- [a4f57t]
+17:20:31,622 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,622 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Caneca personalizada]
+17:20:31,622 TRACE bind:35 - binding parameter (4:INTEGER) <- [null]
+17:20:31,622 TRACE bind:24 - binding parameter (5:DOUBLE) <- [35.0]
+17:20:31,625 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,625 TRACE bind:24 - binding parameter (1:VARCHAR) <- [z9t21k]
+17:20:31,626 DEBUG SQL:135 - insert into Pedido (codigoPedido,dataPedido,descricao,entrega_id,valor) values (?,?,?,?,?)
+17:20:31,627 TRACE bind:24 - binding parameter (1:VARCHAR) <- [z9t21k]
+17:20:31,627 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,627 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Notebook]
+17:20:31,627 TRACE bind:35 - binding parameter (4:INTEGER) <- [null]
+17:20:31,627 TRACE bind:24 - binding parameter (5:DOUBLE) <- [220.0]
+17:20:31,630 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,630 TRACE bind:24 - binding parameter (1:VARCHAR) <- [j7b46n]
+17:20:31,632 DEBUG SQL:135 - insert into Pedido (codigoPedido,dataPedido,descricao,entrega_id,valor) values (?,?,?,?,?)
+17:20:31,632 TRACE bind:24 - binding parameter (1:VARCHAR) <- [j7b46n]
+17:20:31,633 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,633 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Fone de ouvido Bluetooth]
+17:20:31,633 TRACE bind:35 - binding parameter (4:INTEGER) <- [null]
+17:20:31,633 TRACE bind:24 - binding parameter (5:DOUBLE) <- [45.0]
+17:20:31,637 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
+17:20:31,637 TRACE bind:24 - binding parameter (1:VARCHAR) <- [2sdn85]
+17:20:31,640 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,641 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Lucas]
+17:20:31,646 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+17:20:31,647 TRACE bind:24 - binding parameter (1:INTEGER) <- [5]
+17:20:31,652 DEBUG SQL:135 - insert into Entrega (codigoEntrega,dataEntrega,endereco,entregador_id) values (?,?,?,?)
+17:20:31,652 TRACE bind:24 - binding parameter (1:VARCHAR) <- [2sdn85]
+17:20:31,653 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,653 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Rua Rio de Janeiro, 12]
+17:20:31,653 TRACE bind:24 - binding parameter (4:INTEGER) <- [5]
+17:20:31,658 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,658 TRACE bind:24 - binding parameter (1:VARCHAR) <- [x2g9q8]
+17:20:31,666 DEBUG SQL:135 - update Pedido set codigoPedido=?,dataPedido=?,descricao=?,entrega_id=?,valor=? where id=?
+17:20:31,666 TRACE bind:24 - binding parameter (1:VARCHAR) <- [x2g9q8]
+17:20:31,666 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,666 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Smartphone]
+17:20:31,666 TRACE bind:24 - binding parameter (4:INTEGER) <- [5]
+17:20:31,666 TRACE bind:24 - binding parameter (5:DOUBLE) <- [75.0]
+17:20:31,667 TRACE bind:24 - binding parameter (6:INTEGER) <- [6]
+17:20:31,671 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
+17:20:31,671 TRACE bind:24 - binding parameter (1:VARCHAR) <- [3hk7t4]
+17:20:31,672 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,672 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Carla]
+17:20:31,673 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+17:20:31,673 TRACE bind:24 - binding parameter (1:INTEGER) <- [6]
+17:20:31,674 DEBUG SQL:135 - insert into Entrega (codigoEntrega,dataEntrega,endereco,entregador_id) values (?,?,?,?)
+17:20:31,674 TRACE bind:24 - binding parameter (1:VARCHAR) <- [3hk7t4]
+17:20:31,674 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,675 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Avenida Paulista, 2000]
+17:20:31,675 TRACE bind:24 - binding parameter (4:INTEGER) <- [6]
+17:20:31,676 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,676 TRACE bind:24 - binding parameter (1:VARCHAR) <- [a4f57t]
+17:20:31,677 DEBUG SQL:135 - update Pedido set codigoPedido=?,dataPedido=?,descricao=?,entrega_id=?,valor=? where id=?
+17:20:31,678 TRACE bind:24 - binding parameter (1:VARCHAR) <- [a4f57t]
+17:20:31,678 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,678 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Caneca personalizada]
+17:20:31,678 TRACE bind:24 - binding parameter (4:INTEGER) <- [6]
+17:20:31,678 TRACE bind:24 - binding parameter (5:DOUBLE) <- [35.0]
+17:20:31,678 TRACE bind:24 - binding parameter (6:INTEGER) <- [7]
+17:20:31,680 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
+17:20:31,680 TRACE bind:24 - binding parameter (1:VARCHAR) <- [5drx92]
+17:20:31,681 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,681 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Ricardo]
+17:20:31,682 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+17:20:31,682 TRACE bind:24 - binding parameter (1:INTEGER) <- [7]
+17:20:31,684 DEBUG SQL:135 - insert into Entrega (codigoEntrega,dataEntrega,endereco,entregador_id) values (?,?,?,?)
+17:20:31,684 TRACE bind:24 - binding parameter (1:VARCHAR) <- [5drx92]
+17:20:31,684 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,684 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Rua dos Três Irmãos, 60]
+17:20:31,685 TRACE bind:24 - binding parameter (4:INTEGER) <- [7]
+17:20:31,686 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,686 TRACE bind:24 - binding parameter (1:VARCHAR) <- [z9t21k]
+17:20:31,688 DEBUG SQL:135 - update Pedido set codigoPedido=?,dataPedido=?,descricao=?,entrega_id=?,valor=? where id=?
+17:20:31,688 TRACE bind:24 - binding parameter (1:VARCHAR) <- [z9t21k]
+17:20:31,688 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,688 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Notebook]
+17:20:31,688 TRACE bind:24 - binding parameter (4:INTEGER) <- [7]
+17:20:31,688 TRACE bind:24 - binding parameter (5:DOUBLE) <- [220.0]
+17:20:31,688 TRACE bind:24 - binding parameter (6:INTEGER) <- [8]
+17:20:31,690 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from Entrega e1_0 where e1_0.codigoEntrega=?
+17:20:31,690 TRACE bind:24 - binding parameter (1:VARCHAR) <- [8l9u84]
+17:20:31,691 DEBUG SQL:135 - select e1_0.id,e1_0.nome from Entregador e1_0 where e1_0.nome=?
+17:20:31,691 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Fernanda]
+17:20:31,692 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from Entrega e1_0 where e1_0.entregador_id=?
+17:20:31,692 TRACE bind:24 - binding parameter (1:INTEGER) <- [8]
+17:20:31,694 DEBUG SQL:135 - insert into Entrega (codigoEntrega,dataEntrega,endereco,entregador_id) values (?,?,?,?)
+17:20:31,694 TRACE bind:24 - binding parameter (1:VARCHAR) <- [8l9u84]
+17:20:31,695 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,695 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Avenida das Nações, 500]
+17:20:31,695 TRACE bind:24 - binding parameter (4:INTEGER) <- [8]
+17:20:31,697 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from Pedido p1_0 where p1_0.codigoPedido=?
+17:20:31,697 TRACE bind:24 - binding parameter (1:VARCHAR) <- [j7b46n]
+17:20:31,699 DEBUG SQL:135 - update Pedido set codigoPedido=?,dataPedido=?,descricao=?,entrega_id=?,valor=? where id=?
+17:20:31,699 TRACE bind:24 - binding parameter (1:VARCHAR) <- [j7b46n]
+17:20:31,699 TRACE bind:24 - binding parameter (2:DATE) <- [2025-03-11]
+17:20:31,700 TRACE bind:24 - binding parameter (3:VARCHAR) <- [Fone de ouvido Bluetooth]
+17:20:31,700 TRACE bind:24 - binding parameter (4:INTEGER) <- [8]
+17:20:31,700 TRACE bind:24 - binding parameter (5:DOUBLE) <- [45.0]
+17:20:31,700 TRACE bind:24 - binding parameter (6:INTEGER) <- [9]
+17:20:31,701  INFO Util:70 - ----desconectar banco

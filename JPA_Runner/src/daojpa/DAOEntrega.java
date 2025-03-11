@@ -6,6 +6,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
+import modelo.Pedido;
 
 public class
 DAOEntrega extends DAO<Entrega> {
@@ -22,7 +23,15 @@ DAOEntrega extends DAO<Entrega> {
 		}
 	}
 
-
+	public List<Entrega> readByCodigo(String codigo) {
+		// carregar telefone com seus relacionamentos
+		TypedQuery<Entrega> q = manager.createQuery("""
+				select e from Entrega e 
+				where e.codigoEntrega like :x """, Entrega.class);
+		q.setParameter("x", "%" + codigo + "%");
+		return q.getResultList();
+	}
+	
 	// --------------------------------------------
 	// consultas
 	// --------------------------------------------
