@@ -40,7 +40,7 @@ public class TelaPrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		btnNewButton = new JButton("Pedidos");
+		btnNewButton = new JButton("Pedido");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new TelaPedido();

@@ -2,7 +2,12 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -13,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Pedido;
@@ -26,6 +32,7 @@ public class TelaPedido {
     private JTextField textFieldCodigoPedido, textFieldDataPedido, textFieldValor, textFieldDescricao;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
+	private Timer timer;
 
     public TelaPedido() {
         initialize();
@@ -38,6 +45,31 @@ public class TelaPedido {
         frame.setBounds(100, 100, 744, 428);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        
+        frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				Fachada.inicializar();
+				timer = new Timer(1000, new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String titulo = "Alunos - "
+								+ LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+						frame.setTitle(titulo);
+				        listarPedidos();
+					}
+				});
+				timer.setRepeats(true);
+				timer.setDelay(3000);
+				timer.start();
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				timer.stop();
+				Fachada.finalizar();
+			}
+		});
 
         scrollPane = new JScrollPane();
         scrollPane.setBounds(21, 63, 685, 155);
@@ -76,7 +108,6 @@ public class TelaPedido {
         labelStatus.setBounds(21, 372, 677, 14);
         frame.getContentPane().add(labelStatus);
 
-        listarPedidos();
         frame.setVisible(true);
     }
 
