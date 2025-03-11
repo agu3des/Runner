@@ -41,6 +41,7 @@ public class TelaConsulta {
         frame.setVisible(true);
     }
 
+    @SuppressWarnings("serial")
     private void initialize() {
         frame = new JDialog();
         frame.setModal(true);
@@ -85,7 +86,7 @@ public class TelaConsulta {
         table.setShowGrid(true);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        label = new JLabel(""); // Label para mensagens
+        label = new JLabel(""); // Label mensagens
         label.setForeground(Color.BLUE);
         label.setBounds(20, 320, 750, 20);
         frame.getContentPane().add(label);
@@ -136,13 +137,13 @@ public class TelaConsulta {
         comboBox = new JComboBox<>();
         comboBox.setToolTipText("Selecione a consulta");
         comboBox.setModel(new DefaultComboBoxModel<>(
-                new String[] { 
-                    "Pedidos com '17' no ID", 
-                    "Entregadores com 'An' no nome",
-                    "Entregas com '1' no ID", 
-                    "Entregas na data 06/12/2024", 
-                    "Entregadores com mais de 1 entrega",
-                    "Pedidos com valor 100.00"
+                new String[] {
+                        "Pedidos com '17' no ID",
+                        "Entregadores com 'An' no nome",
+                        "Entregas com '1' no ID",
+                        "Entregas na data 06/12/2024",
+                        "Entregadores com mais de 1 entrega",
+                        "Pedidos com valor 100.00"
                 }));
         comboBox.setBounds(20, 10, 600, 30);
         frame.getContentPane().add(comboBox);
@@ -159,7 +160,7 @@ public class TelaConsulta {
             model.addColumn("Descrição");
 
             for (Pedido p : lista) {
-                model.addRow(new Object[] { p.getIdPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+                model.addRow(new Object[] { p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao() });
             }
         } catch (Exception erro) {
             label.setText(erro.getMessage());
@@ -194,19 +195,19 @@ public class TelaConsulta {
             model.addColumn("Id do Pedido");
 
             for (Entrega e : lista) {
-                model.addRow(new Object[] { 
-                    e.getIdEntrega(), 
-                    e.getdataEntrega(), 
-                    e.getEndereco(), 
-                    e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador", 
-                    e.getPedido() != null ? e.getPedido().getIdPedido() : "Sem pedido" 
+                model.addRow(new Object[] {
+                        e.getId(),
+                        e.getdataEntrega(),
+                        e.getEndereco(),
+                        e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
+                        !e.getPedidos().isEmpty() ? ((Entrega) e.getPedidos()).getId() : "Sem pedido",
                 });
             }
         } catch (Exception erro) {
             label.setText(erro.getMessage());
         }
     }
-    
+
     public static void main(String[] args) {
         // Inicia a interface gráfica
         new TelaConsulta();

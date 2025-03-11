@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class CadastroFrame extends JFrame {
     private JTextField tfIdPedido, tfDataPedido, tfValor, tfDescricao;
     private JTextField tfNomeEntregador, tfIdEntrega, tfDataEntrega, tfEndereco, tfNomeEntregadorEntrega, tfIdPedidoEntrega;
@@ -19,7 +20,7 @@ public class CadastroFrame extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(8, 2));
 
-        
+
         panel.add(new JLabel("ID Pedido:"));
         tfIdPedido = new JTextField();
         panel.add(tfIdPedido);
@@ -38,16 +39,16 @@ public class CadastroFrame extends JFrame {
 
         btnCadastrarPedido = new JButton("Cadastrar Pedido");
         panel.add(btnCadastrarPedido);
-        
-      
+
+
         panel.add(new JLabel("Nome do Entregador:"));
         tfNomeEntregador = new JTextField();
         panel.add(tfNomeEntregador);
-        
+
         btnCadastrarEntregador = new JButton("Cadastrar Entregador");
         panel.add(btnCadastrarEntregador);
-        
-      
+
+
         panel.add(new JLabel("ID Entrega:"));
         tfIdEntrega = new JTextField();
         panel.add(tfIdEntrega);
@@ -73,11 +74,11 @@ public class CadastroFrame extends JFrame {
 
         add(panel, BorderLayout.CENTER);
 
-       
+
         btnCadastrarPedido.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+
                 System.out.println("Cadastrar Pedido");
             }
         });

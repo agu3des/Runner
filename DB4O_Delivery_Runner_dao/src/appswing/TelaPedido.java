@@ -4,36 +4,38 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 
-import modelo.Pedido;
+import modelo.Entregador;
 import regras_negocio.Fachada;
 
-public class TelaPedido {
+public class TelaEntregador {
     private JDialog frame;
     private JTable table;
     private JScrollPane scrollPane;
-    private JButton buttonCriar, buttonBuscar, buttonAtualizar, buttonApagar;
-    private JTextField textFieldIdPedido, textFieldDataPedido, textFieldValor, textFieldDescricao;
+    private JButton buttonCriar, buttonBuscar, buttonAlterar, buttonApagar;
+    private JTextField textFieldNome, textFieldNovoNome;
     private JLabel labelStatus;
-    private JLabel labelIdPedido, labelDataPedido, labelValor, labelDescricao;
+    private JLabel labelNome, labelNovoNome;
     private JLabel labelEscolhaOpcao;
 
-    public TelaPedido() {
+    public TelaEntregador() {
         initialize();
     }
 
     private void initialize() {
         frame = new JDialog();
+        frame.getContentPane().setForeground(Color.LIGHT_GRAY);
+        frame.setForeground(new Color(128, 0, 255));
         frame.setModal(true);
-        frame.setTitle("Pedidos");
+        frame.setTitle("Entregadores");
         frame.setBounds(100, 100, 744, 428);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         // Configuração da tabela
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(21, 63, 685, 155);
+        scrollPane.setBounds(21, 48, 685, 155);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -41,18 +43,18 @@ public class TelaPedido {
 
         // Mensagem inicial
         labelEscolhaOpcao = new JLabel("Escolha uma opção");
-        labelEscolhaOpcao.setBounds(21, 27, 200, 20);
+        labelEscolhaOpcao.setBounds(21, 11, 200, 20);
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
 
         // Botões com o mesmo tamanho e centralizados
         buttonCriar = new JButton("Criar");
+        buttonCriar.setForeground(Color.BLACK);
         buttonCriar.setBounds(21, 340, 150, 30);
         buttonCriar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mostrarCamposCriar();
-                labelEscolhaOpcao.setVisible(false);
-                criarPedido(); // Chama o método para criar o pedido
+                criarEntregador();
             }
         });
         frame.getContentPane().add(buttonCriar);
@@ -62,68 +64,48 @@ public class TelaPedido {
         buttonBuscar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mostrarCamposBuscar();
-                labelEscolhaOpcao.setVisible(false);
-                buscarPedido(); // Chama o método para buscar o pedido
+                buscarEntregador();
             }
         });
         frame.getContentPane().add(buttonBuscar);
 
-        buttonAtualizar = new JButton("Buscar por valor");
-        buttonAtualizar.setBounds(341, 340, 150, 30);
-        buttonAtualizar.addActionListener(new ActionListener() {
+        buttonAlterar = new JButton("Alterar Nome");
+        buttonAlterar.setBounds(341, 340, 150, 30);
+        buttonAlterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarCamposBuscarPorValor();
-                labelEscolhaOpcao.setVisible(false);
-                mostrarPedidosPorValor(); // Chama o método para buscar pedidos por valor
+                mostrarCamposAlterar();
+                alterarNomeEntregador();
             }
         });
-        frame.getContentPane().add(buttonAtualizar);
+        frame.getContentPane().add(buttonAlterar);
 
         buttonApagar = new JButton("Apagar");
         buttonApagar.setBounds(501, 340, 150, 30);
         buttonApagar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mostrarCamposApagar();
-                labelEscolhaOpcao.setVisible(false);
-                apagarPedido(); // Chama o método para apagar o pedido
+                apagarEntregador();
             }
         });
         frame.getContentPane().add(buttonApagar);
 
-        // Campos de texto (inicialmente ocultos)
-        labelIdPedido = new JLabel("ID do Pedido:");
-        labelIdPedido.setBounds(21, 235, 100, 20);
-        frame.getContentPane().add(labelIdPedido);
+        // Campos de texto
+        labelNome = new JLabel("Nome:");
+        labelNome.setBounds(21, 235, 112, 20);
+        frame.getContentPane().add(labelNome);
 
-        textFieldIdPedido = new JTextField();
-        textFieldIdPedido.setBounds(101, 235, 165, 20);
-        frame.getContentPane().add(textFieldIdPedido);
+        textFieldNome = new JTextField();
+        textFieldNome.setBounds(101, 235, 165, 20);
+        frame.getContentPane().add(textFieldNome);
 
-        labelDataPedido = new JLabel("Data do Pedido:");
-        labelDataPedido.setBounds(21, 260, 100, 20);
-        frame.getContentPane().add(labelDataPedido);
+        labelNovoNome = new JLabel("Novo Nome:");
+        labelNovoNome.setBounds(21, 260, 100, 20);
+        frame.getContentPane().add(labelNovoNome);
 
-        textFieldDataPedido = new JTextField();
-        textFieldDataPedido.setBounds(101, 260, 165, 20);
-        frame.getContentPane().add(textFieldDataPedido);
+        textFieldNovoNome = new JTextField();
+        textFieldNovoNome.setBounds(101, 260, 165, 20);
+        frame.getContentPane().add(textFieldNovoNome);
 
-        labelValor = new JLabel("Valor:");
-        labelValor.setBounds(21, 285, 100, 20);
-        frame.getContentPane().add(labelValor);
-
-        textFieldValor = new JTextField();
-        textFieldValor.setBounds(101, 285, 165, 20);
-        frame.getContentPane().add(textFieldValor);
-
-        labelDescricao = new JLabel("Descrição:");
-        labelDescricao.setBounds(21, 310, 100, 20);
-        frame.getContentPane().add(labelDescricao);
-
-        textFieldDescricao = new JTextField();
-        textFieldDescricao.setBounds(101, 310, 165, 20);
-        frame.getContentPane().add(textFieldDescricao);
-
-        // Inicialmente, ocultar os campos
         ocultarCampos();
 
         // Label de status
@@ -135,124 +117,98 @@ public class TelaPedido {
         frame.setVisible(true);
     }
 
-    // Função para listar os pedidos
-    public void listarPedidos() {
-        List<Pedido> lista = Fachada.listarPedidos();
+    // Função para listar os entregadores
+    public void listarEntregadores() {
+        List<Entregador> lista = Fachada.listarEntregadores();
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
-        model.addColumn("ID Pedido");
-        model.addColumn("Data Pedido");
-        model.addColumn("Valor");
-        model.addColumn("Descrição");
+        model.addColumn("Nome");
+        model.addColumn("Quantidade de Entregas");
 
-        for (Pedido p : lista) {
-            model.addRow(new Object[] { p.getIdPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+        for (Entregador e : lista) {
+            model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
         }
     }
 
     private void mostrarCamposCriar() {
         ocultarCampos();
-        labelIdPedido.setVisible(true);
-        textFieldIdPedido.setVisible(true);
-        labelDataPedido.setVisible(true);
-        textFieldDataPedido.setVisible(true);
-        labelValor.setVisible(true);
-        textFieldValor.setVisible(true);
-        labelDescricao.setVisible(true);
-        textFieldDescricao.setVisible(true);
+        labelNome.setVisible(true);
+        textFieldNome.setVisible(true);
     }
 
     private void mostrarCamposBuscar() {
         ocultarCampos();
-        labelIdPedido.setVisible(true);
-        textFieldIdPedido.setVisible(true);
+        labelNome.setVisible(true);
+        textFieldNome.setVisible(true);
     }
 
-    private void mostrarCamposBuscarPorValor() {
+    private void mostrarCamposAlterar() {
         ocultarCampos();
-        labelValor.setVisible(true);
-        textFieldValor.setVisible(true);
+        labelNome.setVisible(true);
+        textFieldNome.setVisible(true);
+        labelNovoNome.setVisible(true);
+        textFieldNovoNome.setVisible(true);
     }
 
     private void mostrarCamposApagar() {
         ocultarCampos();
-        labelIdPedido.setVisible(true);
-        textFieldIdPedido.setVisible(true);
+        labelNome.setVisible(true);
+        textFieldNome.setVisible(true);
     }
 
     private void ocultarCampos() {
-        labelIdPedido.setVisible(false);
-        textFieldIdPedido.setVisible(false);
-        labelDataPedido.setVisible(false);
-        textFieldDataPedido.setVisible(false);
-        labelValor.setVisible(false);
-        textFieldValor.setVisible(false);
-        labelDescricao.setVisible(false);
-        textFieldDescricao.setVisible(false);
+        labelNome.setVisible(false);
+        textFieldNome.setVisible(false);
+        labelNovoNome.setVisible(false);
+        textFieldNovoNome.setVisible(false);
     }
 
-    private void criarPedido() {
+    private void criarEntregador() {
         try {
-            String idPedido = textFieldIdPedido.getText().trim();
-            String dataPedido = textFieldDataPedido.getText().trim();
-            double valor = Double.parseDouble(textFieldValor.getText().trim());
-            String descricao = textFieldDescricao.getText().trim();
-
-            Fachada.criarPedido(idPedido, dataPedido, valor, descricao);
-            labelStatus.setText("Pedido criado com sucesso!");
-            listarPedidos();
+            String nome = textFieldNome.getText().trim();
+            Fachada.criarEntregador(nome);
+            labelStatus.setText("Entregador criado com sucesso!");
+            listarEntregadores();
         } catch (Exception e) {
-            labelStatus.setText("Erro ao criar pedido: " + e.getMessage());
+            labelStatus.setText("Erro ao criar entregador: " + e.getMessage());
         }
     }
 
-    private void buscarPedido() {
+    private void buscarEntregador() {
         try {
-            String idPedido = textFieldIdPedido.getText().trim();
-            Pedido p = Fachada.localizarPedido(idPedido);
-            if (p != null) {
-                textFieldDataPedido.setText(p.getDataPedido());
-                textFieldValor.setText(String.valueOf(p.getValor()));
-                textFieldDescricao.setText(p.getDescricao());
-                labelStatus.setText("Pedido encontrado!");
-            } else {
-                labelStatus.setText("Pedido não encontrado.");
-            }
+            String nome = textFieldNome.getText().trim();
+            Entregador e = Fachada.localizarEntregador(nome);
+            textFieldNovoNome.setText(e.getNome());
+            labelStatus.setText("Entregador encontrado!");
         } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedido: " + e.getMessage());
+            labelStatus.setText("Erro ao buscar entregador: " + e.getMessage());
         }
     }
 
-    private void mostrarPedidosPorValor() {
+    private void alterarNomeEntregador() {
         try {
-            double valor = Double.parseDouble(textFieldValor.getText().trim());
-            List<Pedido> listaPedidos = Fachada.consultarPedidoPorValor(valor);
-
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.setRowCount(0);
-
-            for (Pedido p : listaPedidos) {
-                model.addRow(new Object[] { p.getIdPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
-            }
-
-            labelStatus.setText("Pedidos encontrados!");
+            String nome = textFieldNome.getText().trim();
+            String novoNome = textFieldNovoNome.getText().trim();
+            Fachada.alterarNomeEntregador(nome, novoNome);
+            labelStatus.setText("Nome do entregador alterado com sucesso!");
+            listarEntregadores();
         } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedidos por valor: " + e.getMessage());
+            labelStatus.setText("Erro ao alterar nome do entregador: " + e.getMessage());
         }
     }
 
-    private void apagarPedido() {
+    private void apagarEntregador() {
         try {
-            String idPedido = textFieldIdPedido.getText().trim();
-            Fachada.excluirPedido(idPedido);
-            labelStatus.setText("Pedido apagado com sucesso!");
-            listarPedidos();
+            String nome = textFieldNome.getText().trim();
+            Fachada.excluirEntregador(nome);
+            labelStatus.setText("Entregador excluído com sucesso!");
+            listarEntregadores();
         } catch (Exception e) {
-            labelStatus.setText("Erro ao apagar pedido: " + e.getMessage());
+            labelStatus.setText("Erro ao excluir entregador: " + e.getMessage());
         }
     }
 
     public static void main(String[] args) {
-        new TelaPedido();
+        new TelaEntregador();
     }
 }

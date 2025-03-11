@@ -25,6 +25,8 @@ public class TelaEntregador {
 
     private void initialize() {
         frame = new JDialog();
+        frame.getContentPane().setForeground(Color.LIGHT_GRAY);
+        frame.setForeground(new Color(128, 0, 255));
         frame.setModal(true);
         frame.setTitle("Entregadores");
         frame.setBounds(100, 100, 744, 428);
@@ -33,7 +35,7 @@ public class TelaEntregador {
 
         // Configuração da tabela
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(21, 63, 685, 155);
+        scrollPane.setBounds(21, 48, 685, 155);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -41,12 +43,13 @@ public class TelaEntregador {
 
         // Mensagem inicial
         labelEscolhaOpcao = new JLabel("Escolha uma opção");
-        labelEscolhaOpcao.setBounds(21, 27, 200, 20);
+        labelEscolhaOpcao.setBounds(21, 11, 200, 20);
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
 
         // Botões com o mesmo tamanho e centralizados
         buttonCriar = new JButton("Criar");
+        buttonCriar.setForeground(Color.BLACK);
         buttonCriar.setBounds(21, 340, 150, 30);
         buttonCriar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -88,7 +91,7 @@ public class TelaEntregador {
 
         // Campos de texto
         labelNome = new JLabel("Nome:");
-        labelNome.setBounds(21, 235, 100, 20);
+        labelNome.setBounds(21, 235, 112, 20);
         frame.getContentPane().add(labelNome);
 
         textFieldNome = new JTextField();
