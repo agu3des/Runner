@@ -8,9 +8,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
 import modelo.Entregador;
 import regras_negocio.Fachada;
 
@@ -20,9 +30,7 @@ public class TelaEntregador {
 	private JScrollPane scrollPane;
 	private JButton buttonCreate, buttonUpdate, buttonDelete, buttonClear;
 	private JLabel label, label2, label3, label4;
-	private JPanel panel;
-	private JTextField textFieldName;
-	private Timer timer;
+	private JTextField textFieldName, textFieldName2;
 
 	public TelaEntregador() {
 		initialize();
@@ -37,36 +45,26 @@ public class TelaEntregador {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				Fachada.inicializar();
-				timer = new Timer(1000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						String titulo = "Entregador - " + java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss"));
-						frame.setTitle(titulo);
-						listagem();
-					}
-				});
-				timer.setRepeats(true);
-				timer.setDelay(3000);
-				timer.start();
-			}
-/*
-			@Override
-			public void windowClosing(WindowEvent e) {
-				timer.stop();
-				Fachada.finalizar();
-			}*/
-		});
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent arg0) {
+                Fachada.inicializar();
+                listarEntregadores();
+            }
 
-		// Scroll Pane
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Fachada.finalizar();
+            }
+        });
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 39, 751, 179);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable() {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int rowIndex, int vColIndex) {
 				return false;
 			}
@@ -83,7 +81,7 @@ public class TelaEntregador {
 		table.setFocusable(false);
 		table.setBackground(Color.WHITE);
 		table.setRowSelectionAllowed(true);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -98,26 +96,32 @@ public class TelaEntregador {
 		frame.getContentPane().add(label2);
 
 		label3 = new JLabel("Nome:");
-		label3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label3.setFont(new Font("Arial", Font.PLAIN, 11));
 		label3.setHorizontalAlignment(SwingConstants.RIGHT);
 		label3.setBounds(21, 239, 62, 14);
 		frame.getContentPane().add(label3);
 
 		label4 = new JLabel("Entregas:");
-		label4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		label4.setFont(new Font("Arial", Font.PLAIN, 11));
 		label4.setHorizontalAlignment(SwingConstants.RIGHT);
 		label4.setBounds(21, 264, 62, 14);
 		frame.getContentPane().add(label4);
 
-		// Text Fields
 		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("Dialog", Font.PLAIN, 12));
+		textFieldName.setFont(new Font("Arial", Font.PLAIN, 11));
 		textFieldName.setColumns(10);
 		textFieldName.setBackground(Color.WHITE);
 		textFieldName.setBounds(93, 236, 165, 20);
 		frame.getContentPane().add(textFieldName);
 
-		// Buttons
+		textFieldName2 = new JTextField();
+		textFieldName2.setFont(new Font("Arial", Font.PLAIN, 11));
+		textFieldName2.setColumns(10);
+		textFieldName2.setBackground(Color.WHITE);
+		textFieldName2.setBounds(93, 236, 165, 20);
+		frame.getContentPane().add(textFieldName2);
+
+
 		buttonCreate = new JButton("Criar");
 		buttonCreate.setToolTipText("Cadastrar novo entregador");
 		buttonCreate.addActionListener(new ActionListener() {
@@ -128,7 +132,7 @@ public class TelaEntregador {
 					criarEntregador();
 			}
 		});
-		buttonCreate.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonCreate.setFont(new Font("Arial", Font.PLAIN, 11));
 		buttonCreate.setBounds(93, 317, 62, 23);
 		frame.getContentPane().add(buttonCreate);
 
@@ -142,7 +146,7 @@ public class TelaEntregador {
 					atualizarEntregadorSelecionada();
 			}
 		});
-		buttonUpdate.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonUpdate.setFont(new Font("Arial", Font.PLAIN, 11));
 		buttonUpdate.setBounds(170, 317, 87, 23);
 		frame.getContentPane().add(buttonUpdate);
 
@@ -156,7 +160,7 @@ public class TelaEntregador {
 					apagarEntregadorSelecionada();
 			}
 		});
-		buttonDelete.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonDelete.setFont(new Font("Arial", Font.PLAIN, 11));
 		buttonDelete.setBounds(267, 317, 74, 23);
 		frame.getContentPane().add(buttonDelete);
 
@@ -172,7 +176,7 @@ public class TelaEntregador {
 		frame.setVisible(true);
 	}
 
-	public void listagem() {
+	public void listarEntregadores() {
 		try {
 			DefaultTableModel model = new DefaultTableModel();
 			table.setModel(model);
@@ -200,7 +204,7 @@ public class TelaEntregador {
 			label.setText("");
 			if (table.getSelectedRow() >= 0) {
 				String nome = (String) table.getValueAt(table.getSelectedRow(), 1);
-				Entregador e = Fachada.localizarEntregador(nome);
+				Fachada.localizarEntregador(nome);
 				textFieldName.setText(nome);
 			}
 		} catch (Exception e) {
@@ -210,9 +214,9 @@ public class TelaEntregador {
 
 	public void criarEntregador() {
 		try {
-			Fachada.cadastrarEntregador(textFieldName.getText());
+			Fachada.criarEntregador(textFieldName.getText());
 			label.setText("Entregador criado com sucesso!");
-			listagem();
+			listarEntregadores();
 		} catch (Exception e) {
 			label.setText(e.getMessage());
 		}
@@ -220,9 +224,9 @@ public class TelaEntregador {
 
 	public void atualizarEntregadorSelecionada() {
 		try {
-			Fachada.atualizarEntregador(textFieldName.getText());
+			Fachada.alterarNomeEntregador(textFieldName.getText(), textFieldName2.getText());
 			label.setText("Entregador atualizado com sucesso!");
-			listagem();
+			listarEntregadores();
 		} catch (Exception e) {
 			label.setText(e.getMessage());
 		}
@@ -230,9 +234,9 @@ public class TelaEntregador {
 
 	public void apagarEntregadorSelecionada() {
 		try {
-			Fachada.apagarEntregador(textFieldName.getText());
+			Fachada.excluirEntregador(textFieldName.getText());
 			label.setText("Entregador apagado com sucesso!");
-			listagem();
+			listarEntregadores();
 		} catch (Exception e) {
 			label.setText(e.getMessage());
 		}

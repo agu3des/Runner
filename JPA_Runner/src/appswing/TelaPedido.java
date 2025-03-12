@@ -2,12 +2,9 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -18,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Pedido;
@@ -29,10 +25,9 @@ public class TelaPedido {
     private JTable table;
     private JScrollPane scrollPane;
     private JButton buttonCriar, buttonBuscar, buttonBuscarValor, buttonApagar;
-    private JTextField textFieldCodigoPedido, textFieldDataPedido, textFieldValor, textFieldDescricao;
+    private JTextField textFieldCodigoPedido, textFieldValor, textFieldDescricao;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
-	private Timer timer;
 
     public TelaPedido() {
         initialize();
@@ -45,31 +40,19 @@ public class TelaPedido {
         frame.setBounds(100, 100, 744, 428);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-        
-        frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				Fachada.inicializar();
-				timer = new Timer(1000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						String titulo = "Alunos - "
-								+ LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-						frame.setTitle(titulo);
-				        listarPedidos();
-					}
-				});
-				timer.setRepeats(true);
-				timer.setDelay(3000);
-				timer.start();
-			}
 
-			@Override
-			public void windowClosing(WindowEvent e) {
-				timer.stop();
-				Fachada.finalizar();
-			}
-		});
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent arg0) {
+                Fachada.inicializar();
+                listarPedidos();
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Fachada.finalizar();
+            }
+        });
 
         scrollPane = new JScrollPane();
         scrollPane.setBounds(21, 63, 685, 155);
@@ -82,6 +65,18 @@ public class TelaPedido {
         labelEscolhaOpcao.setBounds(21, 27, 200, 20);
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
+
+        textFieldCodigoPedido = new JTextField();
+        textFieldCodigoPedido.setBounds(21, 250, 150, 30);
+        frame.getContentPane().add(textFieldCodigoPedido);
+
+        textFieldValor = new JTextField();
+        textFieldValor.setBounds(181, 250, 150, 30);
+        frame.getContentPane().add(textFieldValor);
+
+        textFieldDescricao = new JTextField();
+        textFieldDescricao.setBounds(341, 250, 310, 30);
+        frame.getContentPane().add(textFieldDescricao);
 
         buttonCriar = new JButton("Criar");
         buttonCriar.setBounds(21, 340, 150, 30);
@@ -114,10 +109,9 @@ public class TelaPedido {
     private void criarPedido() {
         try {
             String codigo = textFieldCodigoPedido.getText().trim();
-            LocalDate dataPedido = LocalDate.parse(textFieldDataPedido.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             double valor = Double.parseDouble(textFieldValor.getText().trim());
             String descricao = textFieldDescricao.getText().trim();
-            Fachada.criarPedido(codigo, dataPedido, valor, descricao);
+            Fachada.criarPedido(codigo, LocalDate.now(), valor, descricao);
             labelStatus.setText("Pedido criado com sucesso!");
             listarPedidos();
         } catch (Exception e) {
@@ -148,8 +142,6 @@ public class TelaPedido {
         try {
             Pedido pedido = Fachada.localizarPedido(textFieldCodigoPedido.getText().trim());
             if (pedido != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                textFieldDataPedido.setText(pedido.getDataPedido().format(formatter));
                 textFieldValor.setText(String.valueOf(pedido.getValor()));
                 textFieldDescricao.setText(pedido.getDescricao());
                 labelStatus.setText("Pedido encontrado!");
@@ -185,9 +177,5 @@ public class TelaPedido {
         } catch (Exception e) {
             labelStatus.setText("Erro ao apagar pedido: " + e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        new TelaPedido();
     }
 }

@@ -122,6 +122,41 @@ public class Fachada {
 		daoentrega.create(e);
 		DAO.commit();
 	}
+	
+	public static void criarEntrega(String codigoEntrega, LocalDate dataEntrega, String endereco, Entregador entregador,
+			Pedido pedido) throws Exception {
+		DAO.begin();
+
+		Entrega e = daoentrega.read(codigoEntrega);
+		if (e != null) {
+			DAO.rollback();
+			throw new Exception("Criar entrega - pedido ja existe:" + codigoEntrega);
+		}
+		e = new Entrega(codigoEntrega);
+		e.setDataEntrega(dataEntrega);
+		e.setEndereco(endereco);
+
+		Entregador en = daoentregador.read(entregador);
+		if (en != null && en.getEntregas().size() < 5) {
+			en.adicionar(e);
+		} else {
+			DAO.rollback();
+			throw new Exception("Criar entrega - entregador não existe:" + entregador);
+		}
+		e.setEntregador(en);
+
+		Pedido p = daopedido.read(pedido);
+		if (p != null) {
+			e.adicionar(p);
+		} else {
+			DAO.rollback();
+			throw new Exception("Criar entrega - pedido não existe:" + pedido);
+		}
+		p.setEntrega(e);
+
+		daoentrega.create(e);
+		DAO.commit();
+	}
 
 	public static void alterarEntregadorDeEntrega(String codigoEntrega, String entregador) throws Exception {
 		DAO.begin();

@@ -6,9 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,7 +72,7 @@ public class TelaConsulta {
         table.setBackground(Color.LIGHT_GRAY);
         table.setFillsViewportHeight(true);
         table.setRowSelectionAllowed(true);
-        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        table.setFont(new Font("Arial", Font.PLAIN, 14));
         scrollPane.setViewportView(table);
         table.setBorder(new LineBorder(new Color(0, 0, 0)));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -79,7 +89,7 @@ public class TelaConsulta {
         frame.getContentPane().add(label_4);
 
         button = new JButton("Consultar");
-        button.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        button.setFont(new Font("Arial", Font.PLAIN, 12));
         button.setBounds(650, 10, 120, 30);
         frame.getContentPane().add(button);
 
@@ -120,7 +130,8 @@ public class TelaConsulta {
                             listarEntregas(Fachada.consultarEntregas(input));
                             break;
                         case 3:
-                            listarEntregas(Fachada.consultarEntregaPorData(input));
+                        	LocalDate data = LocalDate.parse(input.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            listarEntregas(Fachada.consultarEntregaPorData(data));
                             break;
                         case 4:
                             listarEntregadores(Fachada.consultarPorNEntregas(Integer.parseInt(input)));
@@ -169,7 +180,7 @@ public class TelaConsulta {
         for (Entrega e : lista) {
             model.addRow(new Object[] {
                     e.getId(),
-                    e.getdataEntrega(),
+                    e.getDataEntrega(),
                     e.getEndereco(),
                     e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
                     !e.getPedidos().isEmpty() ? e.getPedidos().get(0).getId() : "Sem pedido"

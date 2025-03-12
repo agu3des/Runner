@@ -3,7 +3,6 @@ package daojpa;
 import java.util.List;
 
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import modelo.Entregador;
 

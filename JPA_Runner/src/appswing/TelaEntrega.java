@@ -3,6 +3,8 @@ package appswing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,6 +42,19 @@ public class TelaEntrega {
         frame.setBounds(100, 100, 744, 500);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent arg0) {
+                Fachada.inicializar();
+                listarEntregas();
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Fachada.finalizar();
+            }
+        });
 
         scrollPane = new JScrollPane();
         scrollPane.setBounds(21, 63, 685, 155);
@@ -125,7 +140,7 @@ public class TelaEntrega {
             model.addColumn("Pedido");
 
             for (Entrega e : lista) {
-                model.addRow(new Object[]{e.getId(), e.getDataEntrega(), e.getEndereco(), e.getEntregador().getNome(), e.getPedido().getDescricao()});
+                model.addRow(new Object[]{e.getCodigoEntrega(), e.getDataEntrega(), e.getEndereco(), e.getEntregador().getNome(), e.getPedidos().toString()});
             }
         } catch (Exception e) {
             labelStatus.setText("Erro ao listar entregas: " + e.getMessage());
@@ -139,7 +154,7 @@ public class TelaEntrega {
                 textFieldDataEntrega.setText(entrega.getDataEntrega().toString());
                 textFieldEndereco.setText(entrega.getEndereco());
                 textFieldEntregador.setText(entrega.getEntregador().getNome());
-                textFieldPedido.setText(entrega.getPedido().getDescricao());
+                textFieldPedido.setText(entrega.getPedidos().toString());
                 labelStatus.setText("Entrega encontrada!");
             } else {
                 labelStatus.setText("Entrega não encontrada.");
