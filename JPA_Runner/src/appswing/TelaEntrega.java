@@ -19,8 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Entrega;
-import modelo.Entregador;
-import modelo.Pedido;
 import regras_negocio.Fachada;
 
 public class TelaEntrega {
@@ -28,7 +26,7 @@ public class TelaEntrega {
     private JTable table;
     private JScrollPane scrollPane;
     private JButton buttonCriar, buttonBuscar, buttonApagar;
-    private JTextField codigoEntregaTextField, dataEntregaTextField, enderecoTextField, entregadorTextField, pedidoTextField;
+    private JTextField codigoEntregaTextField, enderecoTextField, entregadorTextField, pedidoTextField;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
 
@@ -164,7 +162,6 @@ public class TelaEntrega {
         try {
             Entrega entrega = Fachada.localizarEntrega(codigoEntregaTextField.getText().trim());
             if (entrega != null) {
-                dataEntregaTextField.setText(entrega.getDataEntrega().toString());
                 enderecoTextField.setText(entrega.getEndereco());
                 entregadorTextField.setText(entrega.getEntregador().getNome());
                 pedidoTextField.setText(entrega.getPedidos().toString());

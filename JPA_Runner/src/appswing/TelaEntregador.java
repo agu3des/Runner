@@ -139,7 +139,7 @@ public class TelaEntregador {
             model.addColumn("Entregas");
 
             for (Entregador e : lista) {
-                    model.addRow(new Object[]{e.getId(), e.getNome()/*, e.getEntregas().size()*/});
+                    model.addRow(new Object[]{e.getId(), e.getNome(), e.getEntregas().toString()});
             }
         } catch (Exception e) {
             label.setText("Erro ao listar entregadores: " + e.getMessage());
