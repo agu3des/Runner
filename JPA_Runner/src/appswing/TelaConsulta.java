@@ -8,16 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,19 +24,17 @@ public class TelaConsulta {
     private JButton button;
     private JLabel label;
     private JLabel label_4;
-
     private JComboBox<String> comboBox;
+    private JTextField textField;
 
     public TelaConsulta() {
         initialize();
         frame.setVisible(true);
     }
 
-    @SuppressWarnings("serial")
     private void initialize() {
         frame = new JDialog();
         frame.setModal(true);
-
         frame.setResizable(false);
         frame.setTitle("Consultas");
         frame.setBounds(100, 100, 800, 400);
@@ -64,17 +53,11 @@ public class TelaConsulta {
         });
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(20, 50, 750, 200);
+        scrollPane.setBounds(20, 100, 750, 200);
         frame.getContentPane().add(scrollPane);
 
-        table = new JTable() {
-            public boolean isCellEditable(int rowIndex, int vColIndex) {
-                return false;
-            }
-        };
-
+        table = new JTable();
         table.setGridColor(Color.BLACK);
-        table.setRequestFocusEnabled(false);
         table.setFocusable(false);
         table.setBackground(Color.LIGHT_GRAY);
         table.setFillsViewportHeight(true);
@@ -86,130 +69,115 @@ public class TelaConsulta {
         table.setShowGrid(true);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        label = new JLabel(""); // Label mensagens
+        label = new JLabel("");
         label.setForeground(Color.BLUE);
         label.setBounds(20, 320, 750, 20);
         frame.getContentPane().add(label);
 
         label_4 = new JLabel("Resultados:");
-        label_4.setBounds(20, 260, 750, 20);
+        label_4.setBounds(20, 280, 750, 20);
         frame.getContentPane().add(label_4);
 
         button = new JButton("Consultar");
         button.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int index = comboBox.getSelectedIndex();
-                if (index < 0)
-                    label_4.setText("Consulta não selecionada");
-                else {
-                    label_4.setText("");
-                    try {
-                        switch (index) {
-                            case 0: // Consultar pedidos que tenham "17" no ID
-                                listarPedidos(Fachada.consultarPedidos("17"));
-                                break;
-                            case 1: // Consultar entregadores com "An" no nome
-                                listarEntregadores(Fachada.consultarEntregadores("An"));
-                                break;
-                            case 2: // Consultar entregas que tenham "1" no ID
-                                listarEntregas(Fachada.consultarEntregas("1"));
-                                break;
-                            case 3: // Consultar entregas por data
-                                listarEntregas(Fachada.consultarEntregaPorData("06/12/2024"));
-                                break;
-                            case 4: // Consultar entregadores com mais de N entregas
-                                listarEntregadores(Fachada.consultarPorNEntregas(1));
-                                break;
-                            case 5: // Consultar pedidos por valor
-                                listarPedidos(Fachada.consultarPedidoPorValor(100.00));
-                                break;
-                        }
-                    } catch (Exception ex) {
-                        label.setText(ex.getMessage());
-                    }
-                }
-            }
-        });
         button.setBounds(650, 10, 120, 30);
         frame.getContentPane().add(button);
 
-        comboBox = new JComboBox<>();
-        comboBox.setToolTipText("Selecione a consulta");
-        comboBox.setModel(new DefaultComboBoxModel<>(
-                new String[] {
-                        "Pedidos com '17' no ID",
-                        "Entregadores com 'An' no nome",
-                        "Entregas com '1' no ID",
-                        "Entregas na data 06/12/2024",
-                        "Entregadores com mais de 1 entrega",
-                        "Pedidos com valor 100.00"
-                }));
+        comboBox = new JComboBox<>(new String[] {
+                "Consultar pedidos pelo código",
+                "Consultar entregadores pelo nome",
+                "Consultar entregas pelo código",
+                "Consultar entregas pela data",
+                "Consultar entregadores com n entregas",
+                "Consultar pedidos pelo valor"
+        });
         comboBox.setBounds(20, 10, 600, 30);
         frame.getContentPane().add(comboBox);
+
+        textField = new JTextField();
+        textField.setBounds(20, 50, 600, 30);
+        frame.getContentPane().add(textField);
+
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = comboBox.getSelectedIndex();
+                String input = textField.getText().trim();
+
+                if (input.isEmpty()) {
+                    label.setText("Por favor, insira um valor para a consulta.");
+                    return;
+                }
+
+                try {
+                    switch (index) {
+                        case 0:
+                            listarPedidos(Fachada.consultarPedidos(input));
+                            break;
+                        case 1:
+                            listarEntregadores(Fachada.consultarEntregadores(input));
+                            break;
+                        case 2:
+                            listarEntregas(Fachada.consultarEntregas(input));
+                            break;
+                        case 3:
+                            listarEntregas(Fachada.consultarEntregaPorData(input));
+                            break;
+                        case 4:
+                            listarEntregadores(Fachada.consultarPorNEntregas(Integer.parseInt(input)));
+                            break;
+                        case 5:
+                            listarPedidos(Fachada.consultarPedidoPorValor(Double.parseDouble(input)));
+                            break;
+                    }
+                } catch (Exception ex) {
+                    label.setText("Erro: " + ex.getMessage());
+                }
+            }
+        });
     }
 
     private void listarPedidos(List<Pedido> lista) {
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-            table.setModel(model);
-
-            model.addColumn("ID");
-            model.addColumn("Data");
-            model.addColumn("Valor");
-            model.addColumn("Descrição");
-
-            for (Pedido p : lista) {
-                model.addRow(new Object[] { p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao() });
-            }
-        } catch (Exception erro) {
-            label.setText(erro.getMessage());
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
+        model.addColumn("Código");
+        model.addColumn("Data");
+        model.addColumn("Valor");
+        model.addColumn("Descrição");
+        for (Pedido p : lista) {
+            model.addRow(new Object[] { p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao() });
         }
     }
 
     private void listarEntregadores(List<Entregador> lista) {
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-            table.setModel(model);
-
-            model.addColumn("Nome");
-            model.addColumn("Número de Entregas");
-
-            for (Entregador e : lista) {
-                model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
-            }
-        } catch (Exception erro) {
-            label.setText(erro.getMessage());
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
+        model.addColumn("Nome");
+        model.addColumn("Número de Entregas");
+        for (Entregador e : lista) {
+            model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
         }
     }
 
     private void listarEntregas(List<Entrega> lista) {
-        try {
-            DefaultTableModel model = new DefaultTableModel();
-            table.setModel(model);
-
-            model.addColumn("ID");
-            model.addColumn("Data");
-            model.addColumn("Endereço");
-            model.addColumn("Entregador");
-            model.addColumn("Id do Pedido");
-
-            for (Entrega e : lista) {
-                model.addRow(new Object[] {
-                        e.getId(),
-                        e.getdataEntrega(),
-                        e.getEndereco(),
-                        e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
-                        !e.getPedidos().isEmpty() ? ((Entrega) e.getPedidos()).getId() : "Sem pedido",
-                });
-            }
-        } catch (Exception erro) {
-            label.setText(erro.getMessage());
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
+        model.addColumn("Código");
+        model.addColumn("Data");
+        model.addColumn("Endereço");
+        model.addColumn("Entregador");
+        model.addColumn("Id do Pedido");
+        for (Entrega e : lista) {
+            model.addRow(new Object[] {
+                    e.getId(),
+                    e.getdataEntrega(),
+                    e.getEndereco(),
+                    e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
+                    !e.getPedidos().isEmpty() ? e.getPedidos().get(0).getId() : "Sem pedido"
+            });
         }
     }
 
     public static void main(String[] args) {
-        // Inicia a interface gráfica
         new TelaConsulta();
     }
 }
