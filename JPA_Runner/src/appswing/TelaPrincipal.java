@@ -13,6 +13,7 @@ public class TelaPrincipal {
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
 
 
 	public static void main(String[] args) {
@@ -36,7 +37,7 @@ public class TelaPrincipal {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 349, 390);
+		frame.setBounds(100, 100, 320, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -66,5 +67,15 @@ public class TelaPrincipal {
 		});
 		btnNewButton_2.setBounds(96, 215, 112, 44);
 		frame.getContentPane().add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Consultas");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaConsulta();
+			}
+		});
+		btnNewButton_3.setBounds(96, 285, 112, 44);
+		frame.getContentPane().add(btnNewButton_3 	);
+		
 	}
 }
