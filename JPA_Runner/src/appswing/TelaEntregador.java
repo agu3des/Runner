@@ -136,10 +136,10 @@ public class TelaEntregador {
             table.setModel(model);
             model.addColumn("ID do Entregador");
             model.addColumn("Nome");
-            model.addColumn("Número de Entregas");
+            model.addColumn("Entregas");
 
             for (Entregador e : lista) {
-                model.addRow(new Object[]{e.getId(), e.getNome(), e.getEntregas().size()});
+                    model.addRow(new Object[]{e.getId(), e.getNome()/*, e.getEntregas().size()*/});
             }
         } catch (Exception e) {
             label.setText("Erro ao listar entregadores: " + e.getMessage());
@@ -160,7 +160,6 @@ public class TelaEntregador {
             Entrega entrega = Fachada.localizarEntrega(entregaCodigo);
 
             if (entregador != null && entrega != null) {
-                // Chama o método para associar entrega a entregador, já tratando o limite de entregas
                 Fachada.alterarEntregadorDeEntrega(entregaCodigo, nome);  
                 label.setText("Entrega associada com sucesso!");
                 listarEntregadores();

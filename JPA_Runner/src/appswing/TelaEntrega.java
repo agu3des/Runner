@@ -129,7 +129,7 @@ public class TelaEntrega {
     private void criarEntrega(ActionEvent e) {
         try {
             String codigo = codigoEntregaTextField.getText().trim();
-            String endereco = enderecoTextField.getText().trim();     
+            String endereco = enderecoTextField.getText().trim();
             String entregador = entregadorTextField.getText().trim(); 
             String pedido = pedidoTextField.getText().trim();         
             Fachada.criarEntrega(codigo, LocalDate.now(), endereco, entregador, pedido);

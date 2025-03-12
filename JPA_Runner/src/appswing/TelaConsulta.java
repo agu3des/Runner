@@ -121,13 +121,13 @@ public class TelaConsulta {
                 try {
                     switch (index) {
                         case 0:
-                            listarPedidos(Fachada.consultarPedidos(input));
+                            listarPedidos(Fachada.localizarPedido(input));
                             break;
                         case 1:
-                            listarEntregadores(Fachada.consultarEntregadores(input));
+                            listarEntregadores(Fachada.localizarEntregador(input));
                             break;
                         case 2:
-                            listarEntregas(Fachada.consultarEntregas(input));
+                            listarEntregas(Fachada.localizarEntrega(input));
                             break;
                         case 3:
                         	LocalDate data = LocalDate.parse(input.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -147,29 +147,43 @@ public class TelaConsulta {
         });
     }
 
-    private void listarPedidos(List<Pedido> lista) {
+    private void listarPedidos(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Código");
         model.addColumn("Data");
         model.addColumn("Valor");
         model.addColumn("Descrição");
-        for (Pedido p : lista) {
-            model.addRow(new Object[] { p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+
+        if (resultado instanceof List) {
+            List<Pedido> lista = (List<Pedido>) resultado;
+            for (Pedido p : lista) {
+                model.addRow(new Object[] { p.getCodigoPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+            }
+        } else if (resultado instanceof Pedido) {
+            Pedido p = (Pedido) resultado;
+            model.addRow(new Object[] { p.getCodigoPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
         }
     }
 
-    private void listarEntregadores(List<Entregador> lista) {
+    private void listarEntregadores(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Nome");
         model.addColumn("Número de Entregas");
-        for (Entregador e : lista) {
+
+        if (resultado instanceof List) {
+            List<Entregador> lista = (List<Entregador>) resultado;
+            for (Entregador e : lista) {
+                model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
+            }
+        } else if (resultado instanceof Entregador) {
+            Entregador e = (Entregador) resultado;
             model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
         }
     }
 
-    private void listarEntregas(List<Entrega> lista) {
+    private void listarEntregas(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Código");
@@ -177,9 +191,22 @@ public class TelaConsulta {
         model.addColumn("Endereço");
         model.addColumn("Entregador");
         model.addColumn("Id do Pedido");
-        for (Entrega e : lista) {
+
+        if (resultado instanceof List) {
+            List<Entrega> lista = (List<Entrega>) resultado;
+            for (Entrega e : lista) {
+                model.addRow(new Object[] {
+                        e.getCodigoEntrega(),
+                        e.getDataEntrega(),
+                        e.getEndereco(),
+                        e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
+                        !e.getPedidos().isEmpty() ? e.getPedidos().get(0).getId() : "Sem pedido"
+                });
+            }
+        } else if (resultado instanceof Entrega) {
+            Entrega e = (Entrega) resultado;
             model.addRow(new Object[] {
-                    e.getId(),
+                    e.getCodigoEntrega(),
                     e.getDataEntrega(),
                     e.getEndereco(),
                     e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
@@ -187,6 +214,7 @@ public class TelaConsulta {
             });
         }
     }
+
 
     public static void main(String[] args) {
         new TelaConsulta();
