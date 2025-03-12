@@ -28,8 +28,9 @@ public class TelaEntrega {
     private JTable table;
     private JScrollPane scrollPane;
     private JButton buttonCriar, buttonBuscar, buttonApagar;
-    private JTextField textFieldCodigoEntrega, textFieldDataEntrega, textFieldEndereco, textFieldEntregador, textFieldPedido;
+    private JTextField codigoEntregaTextField, dataEntregaTextField, enderecoTextField, entregadorTextField, pedidoTextField;
     private JLabel labelStatus;
+    private JLabel labelEscolhaOpcao;
 
     public TelaEntrega() {
         initialize();
@@ -63,7 +64,7 @@ public class TelaEntrega {
         table = new JTable();
         scrollPane.setViewportView(table);
 
-        JLabel labelEscolhaOpcao = new JLabel("Escolha uma opção");
+        labelEscolhaOpcao = new JLabel("Escolha uma opção");
         labelEscolhaOpcao.setBounds(21, 27, 200, 20);
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
@@ -88,39 +89,50 @@ public class TelaEntrega {
         labelStatus.setBounds(21, 440, 677, 14);
         frame.getContentPane().add(labelStatus);
 
-        textFieldCodigoEntrega = new JTextField();
-        textFieldCodigoEntrega.setBounds(21, 250, 150, 25);
-        frame.getContentPane().add(textFieldCodigoEntrega);
+        JLabel labelCodigoEntrega = new JLabel("Código da Entrega:");
+        labelCodigoEntrega.setBounds(21, 230, 150, 20);
+        frame.getContentPane().add(labelCodigoEntrega);
 
-        textFieldDataEntrega = new JTextField();
-        textFieldDataEntrega.setBounds(181, 250, 150, 25);
-        frame.getContentPane().add(textFieldDataEntrega);
+        codigoEntregaTextField = new JTextField();
+        codigoEntregaTextField.setBounds(21, 250, 150, 25);
+        frame.getContentPane().add(codigoEntregaTextField);
 
-        textFieldEndereco = new JTextField();
-        textFieldEndereco.setBounds(341, 250, 150, 25);
-        frame.getContentPane().add(textFieldEndereco);
+        JLabel labelEndereco = new JLabel("Endereço:");
+        labelEndereco.setBounds(200, 228, 150, 20);
+        frame.getContentPane().add(labelEndereco);
 
-        textFieldEntregador = new JTextField();
-        textFieldEntregador.setBounds(501, 250, 150, 25);
-        frame.getContentPane().add(textFieldEntregador);
+        enderecoTextField = new JTextField();
+        enderecoTextField.setBounds(200, 250, 150, 25);
+        frame.getContentPane().add(enderecoTextField);
 
-        textFieldPedido = new JTextField();
-        textFieldPedido.setBounds(21, 280, 150, 25);
-        frame.getContentPane().add(textFieldPedido);
+        JLabel labelEntregador = new JLabel("Entregador:");
+        labelEntregador.setBounds(384, 228, 150, 20);
+        frame.getContentPane().add(labelEntregador);
+
+        entregadorTextField = new JTextField();
+        entregadorTextField.setBounds(384, 250, 150, 25);
+        frame.getContentPane().add(entregadorTextField);
+
+        JLabel labelPedido = new JLabel("Pedido:");
+        labelPedido.setBounds(557, 228, 150, 20);
+        frame.getContentPane().add(labelPedido);
+
+        pedidoTextField = new JTextField();
+        pedidoTextField.setBounds(556, 250, 150, 25);
+        frame.getContentPane().add(pedidoTextField);
 
         listarEntregas();
+        System.out.println(labelStatus);
         frame.setVisible(true);
     }
 
     private void criarEntrega(ActionEvent e) {
         try {
-            String codigo = textFieldCodigoEntrega.getText().trim();
-            LocalDate dataEntrega = LocalDate.parse(textFieldDataEntrega.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String endereco = textFieldEndereco.getText().trim();
-            Entregador entregador = Fachada.localizarEntregador(textFieldEntregador.getText().trim());
-            Pedido pedido = Fachada.localizarPedido(textFieldPedido.getText().trim());
-
-            Fachada.criarEntrega(codigo, dataEntrega, endereco, entregador, pedido);
+            String codigo = codigoEntregaTextField.getText().trim();
+            String endereco = enderecoTextField.getText().trim();     
+            String entregador = entregadorTextField.getText().trim(); 
+            String pedido = pedidoTextField.getText().trim();         
+            Fachada.criarEntrega(codigo, LocalDate.now(), endereco, entregador, pedido);
             labelStatus.setText("Entrega criada com sucesso!");
             listarEntregas();
         } catch (Exception ex) {
@@ -139,8 +151,9 @@ public class TelaEntrega {
             model.addColumn("Entregador");
             model.addColumn("Pedido");
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             for (Entrega e : lista) {
-                model.addRow(new Object[]{e.getCodigoEntrega(), e.getDataEntrega(), e.getEndereco(), e.getEntregador().getNome(), e.getPedidos().toString()});
+                model.addRow(new Object[]{e.getCodigoEntrega(), e.getDataEntrega().format(formatter), e.getEndereco(), e.getEntregador().getNome(), e.getPedidos().toString()});
             }
         } catch (Exception e) {
             labelStatus.setText("Erro ao listar entregas: " + e.getMessage());
@@ -149,12 +162,12 @@ public class TelaEntrega {
 
     private void buscarEntrega(ActionEvent e) {
         try {
-            Entrega entrega = Fachada.localizarEntrega(textFieldCodigoEntrega.getText().trim());
+            Entrega entrega = Fachada.localizarEntrega(codigoEntregaTextField.getText().trim());
             if (entrega != null) {
-                textFieldDataEntrega.setText(entrega.getDataEntrega().toString());
-                textFieldEndereco.setText(entrega.getEndereco());
-                textFieldEntregador.setText(entrega.getEntregador().getNome());
-                textFieldPedido.setText(entrega.getPedidos().toString());
+                dataEntregaTextField.setText(entrega.getDataEntrega().toString());
+                enderecoTextField.setText(entrega.getEndereco());
+                entregadorTextField.setText(entrega.getEntregador().getNome());
+                pedidoTextField.setText(entrega.getPedidos().toString());
                 labelStatus.setText("Entrega encontrada!");
             } else {
                 labelStatus.setText("Entrega não encontrada.");
@@ -166,7 +179,7 @@ public class TelaEntrega {
 
     private void apagarEntrega(ActionEvent e) {
         try {
-            Fachada.excluirEntrega(textFieldCodigoEntrega.getText().trim());
+            Fachada.excluirEntrega(codigoEntregaTextField.getText().trim());
             labelStatus.setText("Entrega apagada com sucesso!");
             listarEntregas();
         } catch (Exception ex) {

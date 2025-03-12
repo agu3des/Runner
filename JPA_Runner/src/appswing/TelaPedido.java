@@ -28,6 +28,7 @@ public class TelaPedido {
     private JTextField textFieldCodigoPedido, textFieldValor, textFieldDescricao;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
+    private JLabel labelCodigoPedido, labelValor, labelDescricao;
 
     public TelaPedido() {
         initialize();
@@ -66,13 +67,25 @@ public class TelaPedido {
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
 
+        labelCodigoPedido = new JLabel("Código do Pedido:");
+        labelCodigoPedido.setBounds(21, 230, 150, 20);
+        frame.getContentPane().add(labelCodigoPedido);
+
         textFieldCodigoPedido = new JTextField();
         textFieldCodigoPedido.setBounds(21, 250, 150, 30);
         frame.getContentPane().add(textFieldCodigoPedido);
 
+        labelValor = new JLabel("Valor:");
+        labelValor.setBounds(181, 230, 150, 20);
+        frame.getContentPane().add(labelValor);
+
         textFieldValor = new JTextField();
         textFieldValor.setBounds(181, 250, 150, 30);
         frame.getContentPane().add(textFieldValor);
+
+        labelDescricao = new JLabel("Descrição:");
+        labelDescricao.setBounds(341, 230, 150, 20);
+        frame.getContentPane().add(labelDescricao);
 
         textFieldDescricao = new JTextField();
         textFieldDescricao.setBounds(341, 250, 310, 30);

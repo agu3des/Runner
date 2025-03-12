@@ -25,9 +25,9 @@ public class Entrega {
 	private LocalDate dataEntrega = LocalDate.now();	
     private String endereco;
     
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
-	private Entregador entregador;
-    
+	    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+		private Entregador entregador;
+	    
     @OneToMany(mappedBy = "entrega", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 	private List<Pedido> pedidos = new ArrayList<>();
 
@@ -97,8 +97,15 @@ public class Entrega {
 		return entregador;
 	}
 	public void setEntregador(Entregador entregador) {
-		this.entregador = entregador;
+	    if (this.entregador != null) {
+	        this.entregador.getEntregas().remove(this);
+	    }
+	    this.entregador = entregador;
+	    if (entregador != null) {
+	        entregador.getEntregas().add(this);
+	    }
 	}
+
 	
 
 	/*----------Relacionamento com Pedidos-----------*/

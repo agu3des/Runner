@@ -37,6 +37,7 @@ public class DAOEntregador extends DAO<Entregador>{
 			TypedQuery<Entregador> q = manager.createQuery(
 					"""
 					select er from Entregador er 
+					join fetch er.entregas
 					where SIZE(er.entregas) = :x
 					""", Entregador.class);
 			q.setParameter("x", n);
