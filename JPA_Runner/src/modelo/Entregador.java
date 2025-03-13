@@ -28,7 +28,7 @@ public class Entregador {
 	}
 	
 	public Entregador(String nome) {
-		this.nome = nome;
+		this.nome = nome.toLowerCase();
 	}
 	
 	

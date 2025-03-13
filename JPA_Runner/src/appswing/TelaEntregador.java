@@ -28,7 +28,7 @@ public class TelaEntregador {
     private JTable table;
     private JScrollPane scrollPane;
     private JButton buttonAddEntrega, buttonUpdate, buttonDelete, buttonCreate, buttonBuscar;
-    private JLabel label, label2, label3, label4;
+    private JLabel label, label2, label3, label4, label5;
     private JTextField textFieldName, textFieldEntrega;
 
     public TelaEntregador() {
@@ -91,6 +91,11 @@ public class TelaEntregador {
         label4 = new JLabel("Nova Entrega:");
         label4.setFont(new Font("Arial", Font.PLAIN, 11));
         label4.setBounds(21, 264, 80, 14);
+        frame.getContentPane().add(label4);
+        
+        label5 = new JLabel("Status:");
+        label5.setFont(new Font("Arial", Font.PLAIN, 11));
+        label5.setBounds(21, 264, 80, 14);
         frame.getContentPane().add(label4);
         
         textFieldName = new JTextField();
@@ -163,12 +168,10 @@ public class TelaEntregador {
                 model.addRow(new Object[]{entregador.getId(), entregador.getNome(), entregas});
             }
       
-			label2.setText("resultados: " + lista.size() + " entregadores - selecione uma linha para editar");
+			label5.setText("resultados: " + lista.size() + " entregadores - selecione uma linha para editar");
 
             // redimensionar colunas
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
-            table.getColumnModel().getColumn(0).setMaxWidth(40);
-            table.getColumnModel().getColumn(2).setMinWidth(200); 
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
 
         } catch (Exception erro) {
