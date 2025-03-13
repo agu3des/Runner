@@ -106,17 +106,7 @@ public class Entrega {
 	    }
 	}
 
-	
 
-	/*----------Relacionamento com Pedidos-----------*/
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-	public void setPedidos(List<Pedido> listaPedidos){
-		this.pedidos = listaPedidos;
-	}
-	
-	
 	public String toString() {
 		String texto = "Codigo da Entrega: " + getCodigoEntrega() +
 				", Data de Entrega: " + getDataEntrega() + 
@@ -133,5 +123,14 @@ public class Entrega {
 		    }
 		return texto += " ]";
 	}
+	
+	/*----------Relacionamento com Pedidos-----------*/
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	public void setPedidos(List<Pedido> listaPedidos){
+		this.pedidos = listaPedidos;
+	}
+	
 
 }

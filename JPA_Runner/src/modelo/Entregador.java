@@ -78,8 +78,12 @@ public class Entregador {
 		return texto += " ]";
 	}
 	
+	/*----------Relacionamento com Entregas-----------*/
 	public List<Entrega> getEntregas() {
 		return entregas;
+	}
+	public void setEntregas(List<Entrega> listaEntregas){
+		this.entregas = listaEntregas;
 	}
 	
 }

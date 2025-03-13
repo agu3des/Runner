@@ -1,15 +1,15 @@
-09:46:43,385  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
-09:46:43,389  INFO Util:34 - sgbd => postgresql
-09:46:43,389  INFO Util:35 - banco => pob
-09:46:43,389  INFO Util:36 - ip => localhost
-09:46:43,389  INFO Util:41 - ----configurando postgresql
-09:46:43,416 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
-09:46:43,558  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
-09:46:43,614  INFO Version:44 - HHH000412: Hibernate ORM core version 6.6.5.Final
-09:46:43,648 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
-09:46:43,649  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
-09:46:43,875  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
-09:46:44,162  INFO pooling:157 - HHH10001005: Database info:
+10:22:08,320  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
+10:22:08,323  INFO Util:34 - sgbd => postgresql
+10:22:08,324  INFO Util:35 - banco => pob
+10:22:08,325  INFO Util:36 - ip => localhost
+10:22:08,325  INFO Util:41 - ----configurando postgresql
+10:22:08,346 DEBUG logging:38 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+10:22:08,472  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+10:22:08,529  INFO Version:44 - HHH000412: Hibernate ORM core version 6.6.5.Final
+10:22:08,563 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+10:22:08,563  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+10:22:08,778  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
+10:22:09,061  INFO pooling:157 - HHH10001005: Database info:
 	Database JDBC URL [jdbc:postgresql://localhost:5432/pob]
 	Database driver: org.postgresql.Driver
 	Database version: 17.2
@@ -17,9 +17,74 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: 1
 	Maximum pool size: 20
-09:46:45,168  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-09:46:45,182  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3aa6a7a3] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-09:46:45,689 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0
-09:46:45,769 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0 where e1_0.codigoEntrega=?
-09:46:45,770 TRACE bind:24 - binding parameter (1:VARCHAR) <- [hswu]
-09:46:47,463  INFO Util:70 - ----desconectar banco
+10:22:10,062  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+10:22:10,078  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@62ccd86f] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10:22:10,593 DEBUG SQL:135 - select p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.entrega_id,p1_0.valor from pedido_20231370020 p1_0
+10:22:27,766  INFO Util:70 - ----desconectar banco
+10:22:28,742  INFO Util:70 - ----desconectar banco
+10:22:29,880  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
+10:22:29,881  INFO Util:34 - sgbd => postgresql
+10:22:29,881  INFO Util:35 - banco => pob
+10:22:29,881  INFO Util:36 - ip => localhost
+10:22:29,881  INFO Util:41 - ----configurando postgresql
+10:22:29,886  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+10:22:29,888 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+10:22:29,888  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+10:22:29,913  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
+10:22:29,980  INFO pooling:157 - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/pob]
+	Database driver: org.postgresql.Driver
+	Database version: 17.2
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Minimum pool size: 1
+	Maximum pool size: 20
+10:22:30,056  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+10:22:30,057  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@58397ce8] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10:22:30,245 DEBUG SQL:135 - select e1_0.id,e1_0.nome from entregador_20231370020 e1_0
+10:22:30,303 DEBUG SQL:135 - select e1_0.id,e1_0.nome from entregador_20231370020 e1_0 where e1_0.nome=?
+10:22:30,305 TRACE bind:24 - binding parameter (1:VARCHAR) <- [bob]
+10:22:30,311 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from entrega_20231370020 e1_0 where e1_0.entregador_id=?
+10:22:30,312 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+10:22:30,317 DEBUG SQL:135 - select e1_0.id,e1_0.nome from entregador_20231370020 e1_0 where e1_0.nome=?
+10:22:30,317 TRACE bind:24 - binding parameter (1:VARCHAR) <- [Lucio]
+10:22:30,319 DEBUG SQL:135 - select e1_0.entregador_id,e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco from entrega_20231370020 e1_0 where e1_0.entregador_id=?
+10:22:30,319 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+10:22:34,261  INFO Util:70 - ----desconectar banco
+10:22:35,664  INFO Util:27 - ----conectar banco - lendo arquivo de propriedades 
+10:22:35,665  INFO Util:34 - sgbd => postgresql
+10:22:35,665  INFO Util:35 - banco => pob
+10:22:35,665  INFO Util:36 - ip => localhost
+10:22:35,665  INFO Util:41 - ----configurando postgresql
+10:22:35,670  INFO LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: hibernate-postgresql]
+10:22:35,672 DEBUG RegionFactoryInitiator:122 - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+10:22:35,672  INFO RegionFactoryInitiator:50 - HHH000026: Second-level cache disabled
+10:22:35,690  WARN pooling:86 - HHH10001002: Using built-in connection pool (not intended for production use)
+10:22:35,751  INFO pooling:157 - HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/pob]
+	Database driver: org.postgresql.Driver
+	Database version: 17.2
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Minimum pool size: 1
+	Maximum pool size: 20
+10:22:35,815  INFO JtaPlatformInitiator:59 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+10:22:35,816  INFO access:52 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@77cb71df] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10:22:35,994 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0
+10:22:36,008 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0 where e1_0.codigoEntrega=?
+10:22:36,009 TRACE bind:24 - binding parameter (1:VARCHAR) <- [hswu]
+10:22:36,011 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from pedido_20231370020 p1_0 where p1_0.entrega_id=?
+10:22:36,011 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+10:22:36,015 DEBUG SQL:135 - select e1_0.id,e1_0.nome from entregador_20231370020 e1_0 where e1_0.id=?
+10:22:36,016 TRACE bind:24 - binding parameter (1:INTEGER) <- [1]
+10:22:36,018 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0 where e1_0.codigoEntrega=?
+10:22:36,018 TRACE bind:24 - binding parameter (1:VARCHAR) <- [dheyu]
+10:22:36,019 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from pedido_20231370020 p1_0 where p1_0.entrega_id=?
+10:22:36,019 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+10:22:36,020 DEBUG SQL:135 - select e1_0.id,e1_0.nome from entregador_20231370020 e1_0 where e1_0.id=?
+10:22:36,021 TRACE bind:24 - binding parameter (1:INTEGER) <- [2]
+10:22:36,023 DEBUG SQL:135 - select e1_0.id,e1_0.codigoEntrega,e1_0.dataEntrega,e1_0.endereco,e1_0.entregador_id from entrega_20231370020 e1_0 where e1_0.codigoEntrega=?
+10:22:36,023 TRACE bind:24 - binding parameter (1:VARCHAR) <- [egd5]
+10:22:36,024 DEBUG SQL:135 - select p1_0.entrega_id,p1_0.id,p1_0.codigoPedido,p1_0.dataPedido,p1_0.descricao,p1_0.valor from pedido_20231370020 p1_0 where p1_0.entrega_id=?
+10:22:36,024 TRACE bind:24 - binding parameter (1:INTEGER) <- [3]
+10:22:44,813  INFO Util:70 - ----desconectar banco

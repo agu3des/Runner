@@ -149,48 +149,38 @@ public class TelaEntrega {
             model.addColumn("Código");
             model.addColumn("Data");
             model.addColumn("Endereço");
-            model.addColumn("Entregador");
             model.addColumn("Pedidos");
+            model.addColumn("Entregador");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            String pedidos, entregadorNome;
+            String pedidos, entregador;
             List<Entrega> lista = Fachada.listarEntregas();
 
             for (Entrega e : lista) {
-            	Entrega er = Fachada.localizarEntrega(e.getCodigoEntrega());
+            	Entrega entrega = Fachada.localizarEntrega(e.getCodigoEntrega());
 
-            	if (er.getEntregador() != null) {
-            	    entregadorNome = e.getEntregador().getNome();
-            	} else {
-            	    entregadorNome = "Desconhecido";
-            	}
-            	
-            	pedidos = String.join(",", er.getPedidos().toString());
-                if (e.getPedidos().size() == 0) {
+                if (entrega.getPedidos().size() == 0) {
                     pedidos = "sem pedido";
                 } else {
                     pedidos = "";
-                    for (Pedido p : e.getPedidos()) {
+                    for (Pedido p : entrega.getPedidos()) {
                         pedidos += " " + p.getCodigoPedido();
                     }
-                }
-
-                model.addRow(new Object[]{
-                    e.getCodigoEntrega(),
-                    e.getDataEntrega().format(formatter),
-                    e.getEndereco(),
-                    entregadorNome,
-                    pedidos
-                });
+                }            	
+                
+            	if (entrega.getEntregador() != null) {
+            	    entregador = entrega.getEntregador().getNome();
+            	} else {
+            		entregador = "Desconhecido";
+            	}
+            	
+            	model.addRow(new Object[]{e.getCodigoEntrega(), e.getDataEntrega().format(formatter), e.getEndereco(), pedidos, entregador});
             }
 
-            labelStatus.setText("resultados: " + lista.size() + " entregas - selecione uma linha para editar");
+            labelStatus.setText("Resultados: " + lista.size() + " entregas - selecione uma linha para editar");
 
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
-            table.getColumnModel().getColumn(0).setMaxWidth(60); 
-            table.getColumnModel().getColumn(3).setMinWidth(150); 
-            table.getColumnModel().getColumn(4).setMinWidth(200); 
             table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
 
         } catch (Exception erro) {

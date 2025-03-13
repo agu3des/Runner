@@ -136,22 +136,6 @@ public class TelaEntregador {
         }
     }
 
-/*    private void listarEntregadores() {
-        try {
-            List<Entregador> lista = Fachada.listarEntregadores();
-            DefaultTableModel model = new DefaultTableModel();
-            table.setModel(model);
-            model.addColumn("ID do Entregador");
-            model.addColumn("Nome");
-            model.addColumn("Entregas");
-
-            for (Entregador e : lista) {
-                model.addRow(new Object[]{e.getId(), e.getNome(), e.getEntregas().toString()});
-            }
-        } catch (Exception e) {
-            label.setText("Erro ao listar entregadores: " + e.getMessage());
-        }
-    }*/
     private void listarEntregadores() {
         try {      
             DefaultTableModel model = new DefaultTableModel();
@@ -182,10 +166,10 @@ public class TelaEntregador {
 			label2.setText("resultados: " + lista.size() + " entregadores - selecione uma linha para editar");
 
             // redimensionar colunas
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // desabilita
-            table.getColumnModel().getColumn(0).setMaxWidth(40); // coluna id
-            table.getColumnModel().getColumn(2).setMinWidth(200); // coluna de entregas
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // habilita redimensionamento
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
+            table.getColumnModel().getColumn(0).setMaxWidth(40);
+            table.getColumnModel().getColumn(2).setMinWidth(200); 
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
 
         } catch (Exception erro) {
             label.setText("Erro ao listar entregadores: " + erro.getMessage());
