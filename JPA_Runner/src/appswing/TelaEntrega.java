@@ -3,6 +3,7 @@ package appswing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -19,9 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Entrega;
-import modelo.Entregador;
 import modelo.Pedido;
-import modelo.Pessoa;
 import regras_negocio.Fachada;
 
 public class TelaEntrega {
@@ -32,6 +31,10 @@ public class TelaEntrega {
     private JTextField codigoEntregaTextField, enderecoTextField, entregadorTextField, pedidoTextField;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
+    
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_3;
 
     public TelaEntrega() {
         initialize();
@@ -84,6 +87,35 @@ public class TelaEntrega {
         buttonApagar.setBounds(341, 300, 150, 30);
         buttonApagar.addActionListener(this::apagarEntrega);
         frame.getContentPane().add(buttonApagar);
+        
+        
+		btnNewButton = new JButton("Pedido");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaPedido();
+			}
+		});
+		btnNewButton.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("Entregador");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntregador();
+			}
+		});
+		btnNewButton_1.setBounds(181, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_1);
+
+		
+		btnNewButton_3 = new JButton("Consultas");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaConsulta();
+			}
+		});
+		btnNewButton_3.setBounds(339, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_3);
 
         labelStatus = new JLabel("");
         labelStatus.setForeground(Color.BLUE);

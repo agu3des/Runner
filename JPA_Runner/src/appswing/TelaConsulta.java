@@ -36,6 +36,10 @@ public class TelaConsulta {
     private JLabel label_4;
     private JComboBox<String> comboBox;
     private JTextField textField;
+    
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
 
     public TelaConsulta() {
         initialize();
@@ -63,7 +67,7 @@ public class TelaConsulta {
         });
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(20, 100, 750, 200);
+        scrollPane.setBounds(20, 129, 750, 200);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -81,7 +85,7 @@ public class TelaConsulta {
 
         label = new JLabel("");
         label.setForeground(Color.BLUE);
-        label.setBounds(20, 320, 750, 20);
+        label.setBounds(20, 333, 750, 20);
         frame.getContentPane().add(label);
 
         label_4 = new JLabel("Resultados:");
@@ -90,8 +94,36 @@ public class TelaConsulta {
 
         button = new JButton("Consultar");
         button.setFont(new Font("Arial", Font.PLAIN, 12));
-        button.setBounds(650, 10, 120, 30);
+        button.setBounds(636, 36, 120, 30);
         frame.getContentPane().add(button);
+        
+        
+		btnNewButton = new JButton("Pedido");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaPedido();
+			}
+		});
+		btnNewButton.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("Entregador");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntregador();
+			}
+		});
+		btnNewButton_1.setBounds(334, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Entrega");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntrega();
+			}
+		});
+		btnNewButton_2.setBounds(175, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_2);
 
         comboBox = new JComboBox<>(new String[] {
                 "Consultar pedidos pelo código",
@@ -101,11 +133,11 @@ public class TelaConsulta {
                 "Consultar entregadores com n entregas",
                 "Consultar pedidos pelo valor"
         });
-        comboBox.setBounds(20, 10, 600, 30);
+        comboBox.setBounds(20, 36, 600, 30);
         frame.getContentPane().add(comboBox);
 
         textField = new JTextField();
-        textField.setBounds(20, 50, 600, 30);
+        textField.setBounds(20, 76, 600, 30);
         frame.getContentPane().add(textField);
 
         button.addActionListener(new ActionListener() {

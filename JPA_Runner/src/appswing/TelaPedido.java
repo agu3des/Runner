@@ -3,6 +3,7 @@ package appswing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -30,6 +31,10 @@ public class TelaPedido {
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
     private JLabel labelCodigoPedido, labelValor, labelDescricao;
+    
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
 
     public TelaPedido() {
         initialize();
@@ -112,6 +117,34 @@ public class TelaPedido {
         buttonApagar.addActionListener(e -> apagarPedido());
         frame.getContentPane().add(buttonApagar);
 
+		
+		btnNewButton_1 = new JButton("Entregador");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntregador();
+			}
+		});
+		btnNewButton_1.setBounds(180, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Entrega");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntrega();
+			}
+		});
+		btnNewButton_2.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Consultas");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaConsulta();
+			}
+		});
+		btnNewButton_3.setBounds(343, 11, 112, 14);
+		frame.getContentPane().add(btnNewButton_3);
+        
         labelStatus = new JLabel("");
         labelStatus.setForeground(Color.BLUE);
         labelStatus.setBounds(21, 372, 677, 14);

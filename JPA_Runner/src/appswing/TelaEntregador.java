@@ -3,6 +3,7 @@ package appswing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -27,9 +28,14 @@ public class TelaEntregador {
     private JDialog frame;
     private JTable table;
     private JScrollPane scrollPane;
-    private JButton buttonAddEntrega, buttonUpdate, buttonDelete, buttonCreate, buttonBuscar;
+    private JButton buttonAddEntrega, buttonUpdate, buttonApagar, buttonCreate, buttonBuscar;
     private JLabel label, label2, label3, label4, label5;
     private JTextField textFieldName, textFieldEntrega;
+    
+	private JButton btnNewButton;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+
 
     public TelaEntregador() {
         initialize();
@@ -58,7 +64,7 @@ public class TelaEntregador {
         });
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(21, 39, 751, 179);
+        scrollPane.setBounds(21, 33, 751, 179);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -105,23 +111,58 @@ public class TelaEntregador {
 
         textFieldEntrega = new JTextField();
         textFieldEntrega.setFont(new Font("Arial", Font.PLAIN, 11));
-        textFieldEntrega.setBounds(110, 261, 148, 20);
+        textFieldEntrega.setBounds(93, 262, 165, 20);
         frame.getContentPane().add(textFieldEntrega);
 
         buttonCreate = new JButton("Criar Entregador");
-        buttonCreate.setBounds(274, 235, 150, 23);
+        buttonCreate.setBounds(53, 319, 150, 30);
         buttonCreate.addActionListener(e -> criarEntregador());
         frame.getContentPane().add(buttonCreate);
 
         buttonAddEntrega = new JButton("Adicionar Entrega");
-        buttonAddEntrega.setBounds(274, 260, 150, 23);
+        buttonAddEntrega.setBounds(606, 319, 150, 30);
         buttonAddEntrega.addActionListener(e -> associarEntregaAEntregador());
         frame.getContentPane().add(buttonAddEntrega);
 
         buttonBuscar = new JButton("Buscar");
-        buttonBuscar.setBounds(274, 285, 150, 23);
+        buttonBuscar.setBounds(237, 319, 150, 30);
         buttonBuscar.addActionListener(this::buscarEntregador);
         frame.getContentPane().add(buttonBuscar);
+        
+        buttonApagar = new JButton("Apagar");
+        buttonApagar.setBounds(424, 319, 150, 30);
+        buttonApagar.addActionListener(this::apagarEntregador);
+        frame.getContentPane().add(buttonApagar);
+        
+        
+        
+		btnNewButton = new JButton("Pedido");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaPedido();
+			}
+		});
+		btnNewButton.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton);
+		
+		btnNewButton_2 = new JButton("Entrega");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntrega();
+			}
+		});
+		btnNewButton_2.setBounds(175, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Consultas");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaConsulta();
+			}
+		});
+		btnNewButton_3.setBounds(342, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_3);
+        
         
         frame.setVisible(true);
     }
@@ -184,6 +225,17 @@ public class TelaEntregador {
     	new TelaConsulta();
     }
 
+    private void apagarEntregador(ActionEvent e) {
+        try {
+            Fachada.excluirEntrega(textFieldName.getText().trim());
+            label5.setText("Entrega apagada com sucesso!");
+            listarEntregadores();
+        } catch (Exception ex) {
+        	label5.setText("Erro ao apagar entrega: " + ex.getMessage());
+        }
+    }
+
+    
     private void associarEntregaAEntregador() {
         try {
             String nome = textFieldName.getText().trim();
