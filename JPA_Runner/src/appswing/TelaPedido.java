@@ -2,6 +2,7 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -112,7 +113,7 @@ public class TelaPedido {
         frame.getContentPane().add(buttonApagar);
 
         labelStatus = new JLabel("");
-        labelStatus.setForeground(Color.RED);
+        labelStatus.setForeground(Color.BLUE);
         labelStatus.setBounds(21, 372, 677, 14);
         frame.getContentPane().add(labelStatus);
 
@@ -152,18 +153,7 @@ public class TelaPedido {
     }
 
     private void buscarPedido() {
-        try {
-            Pedido pedido = Fachada.localizarPedido(textFieldCodigoPedido.getText().trim());
-            if (pedido != null) {
-                textFieldValor.setText(String.valueOf(pedido.getValor()));
-                textFieldDescricao.setText(pedido.getDescricao());
-                labelStatus.setText("Pedido encontrado!");
-            } else {
-                labelStatus.setText("Pedido não encontrado.");
-            }
-        } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedido: " + e.getMessage());
-        }
+    	new TelaConsulta(); 
     }
 
     private void mostrarPedidosPorValor() {

@@ -19,6 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Entrega;
+import modelo.Entregador;
+import modelo.Pedido;
+import modelo.Pessoa;
 import regras_negocio.Fachada;
 
 public class TelaEntrega {
@@ -68,23 +71,23 @@ public class TelaEntrega {
         frame.getContentPane().add(labelEscolhaOpcao);
 
         buttonCriar = new JButton("Criar");
-        buttonCriar.setBounds(21, 400, 150, 30);
+        buttonCriar.setBounds(21, 300, 150, 30);
         buttonCriar.addActionListener(this::criarEntrega);
         frame.getContentPane().add(buttonCriar);
 
         buttonBuscar = new JButton("Buscar");
-        buttonBuscar.setBounds(181, 400, 150, 30);
+        buttonBuscar.setBounds(181, 300, 150, 30);
         buttonBuscar.addActionListener(this::buscarEntrega);
         frame.getContentPane().add(buttonBuscar);
 
         buttonApagar = new JButton("Apagar");
-        buttonApagar.setBounds(341, 400, 150, 30);
+        buttonApagar.setBounds(341, 300, 150, 30);
         buttonApagar.addActionListener(this::apagarEntrega);
         frame.getContentPane().add(buttonApagar);
 
         labelStatus = new JLabel("");
-        labelStatus.setForeground(Color.RED);
-        labelStatus.setBounds(21, 440, 677, 14);
+        labelStatus.setForeground(Color.BLUE);
+        labelStatus.setBounds(21, 400, 677, 14);
         frame.getContentPane().add(labelStatus);
 
         JLabel labelCodigoEntrega = new JLabel("Código da Entrega:");
@@ -140,38 +143,64 @@ public class TelaEntrega {
 
     private void listarEntregas() {
         try {
-            List<Entrega> lista = Fachada.listarEntregas();
             DefaultTableModel model = new DefaultTableModel();
             table.setModel(model);
+
             model.addColumn("Código");
             model.addColumn("Data");
             model.addColumn("Endereço");
             model.addColumn("Entregador");
-            model.addColumn("Pedido");
+            model.addColumn("Pedidos");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            String pedidos, entregadorNome;
+            List<Entrega> lista = Fachada.listarEntregas();
+
             for (Entrega e : lista) {
-                model.addRow(new Object[]{e.getCodigoEntrega(), e.getDataEntrega().format(formatter), e.getEndereco(), e.getEntregador().getNome(), e.getPedidos().toString()});
+            	Entrega er = Fachada.localizarEntrega(e.getCodigoEntrega());
+
+            	if (er.getEntregador() != null) {
+            	    entregadorNome = e.getEntregador().getNome();
+            	} else {
+            	    entregadorNome = "Desconhecido";
+            	}
+            	
+            	pedidos = String.join(",", er.getPedidos().toString());
+                if (e.getPedidos().size() == 0) {
+                    pedidos = "sem pedido";
+                } else {
+                    pedidos = "";
+                    for (Pedido p : e.getPedidos()) {
+                        pedidos += " " + p.getCodigoPedido();
+                    }
+                }
+
+                model.addRow(new Object[]{
+                    e.getCodigoEntrega(),
+                    e.getDataEntrega().format(formatter),
+                    e.getEndereco(),
+                    entregadorNome,
+                    pedidos
+                });
             }
-        } catch (Exception e) {
-            labelStatus.setText("Erro ao listar entregas: " + e.getMessage());
+
+            labelStatus.setText("resultados: " + lista.size() + " entregas - selecione uma linha para editar");
+
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
+            table.getColumnModel().getColumn(0).setMaxWidth(60); 
+            table.getColumnModel().getColumn(3).setMinWidth(150); 
+            table.getColumnModel().getColumn(4).setMinWidth(200); 
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
+
+        } catch (Exception erro) {
+            labelStatus.setText("Erro ao listar entregas: " + erro.getMessage());
+            System.out.println(erro.getMessage());
         }
     }
 
     private void buscarEntrega(ActionEvent e) {
-        try {
-            Entrega entrega = Fachada.localizarEntrega(codigoEntregaTextField.getText().trim());
-            if (entrega != null) {
-                enderecoTextField.setText(entrega.getEndereco());
-                entregadorTextField.setText(entrega.getEntregador().getNome());
-                pedidoTextField.setText(entrega.getPedidos().toString());
-                labelStatus.setText("Entrega encontrada!");
-            } else {
-                labelStatus.setText("Entrega não encontrada.");
-            }
-        } catch (Exception ex) {
-            labelStatus.setText("Erro ao buscar entrega: " + ex.getMessage());
-        }
+    	new TelaConsulta();
     }
 
     private void apagarEntrega(ActionEvent e) {

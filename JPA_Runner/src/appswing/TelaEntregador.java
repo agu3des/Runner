@@ -2,10 +2,12 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ public class TelaEntregador {
     private JDialog frame;
     private JTable table;
     private JScrollPane scrollPane;
-    private JButton buttonAddEntrega, buttonUpdate, buttonDelete, buttonCreate;
+    private JButton buttonAddEntrega, buttonUpdate, buttonDelete, buttonCreate, buttonBuscar;
     private JLabel label, label2, label3, label4;
     private JTextField textFieldName, textFieldEntrega;
 
@@ -72,7 +74,7 @@ public class TelaEntregador {
         scrollPane.setViewportView(table);
 
         label = new JLabel("");
-        label.setForeground(Color.RED);
+        label.setForeground(Color.BLUE);
         label.setBounds(21, 363, 735, 14);
         frame.getContentPane().add(label);
 
@@ -90,7 +92,7 @@ public class TelaEntregador {
         label4.setFont(new Font("Arial", Font.PLAIN, 11));
         label4.setBounds(21, 264, 80, 14);
         frame.getContentPane().add(label4);
-
+        
         textFieldName = new JTextField();
         textFieldName.setFont(new Font("Arial", Font.PLAIN, 11));
         textFieldName.setBounds(93, 236, 165, 20);
@@ -111,6 +113,11 @@ public class TelaEntregador {
         buttonAddEntrega.addActionListener(e -> associarEntregaAEntregador());
         frame.getContentPane().add(buttonAddEntrega);
 
+        buttonBuscar = new JButton("Buscar");
+        buttonBuscar.setBounds(274, 285, 150, 23);
+        buttonBuscar.addActionListener(this::buscarEntregador);
+        frame.getContentPane().add(buttonBuscar);
+        
         frame.setVisible(true);
     }
 
@@ -129,7 +136,7 @@ public class TelaEntregador {
         }
     }
 
-    private void listarEntregadores() {
+/*    private void listarEntregadores() {
         try {
             List<Entregador> lista = Fachada.listarEntregadores();
             DefaultTableModel model = new DefaultTableModel();
@@ -139,13 +146,56 @@ public class TelaEntregador {
             model.addColumn("Entregas");
 
             for (Entregador e : lista) {
-                    model.addRow(new Object[]{e.getId(), e.getNome(), e.getEntregas().toString()});
+                model.addRow(new Object[]{e.getId(), e.getNome(), e.getEntregas().toString()});
             }
         } catch (Exception e) {
             label.setText("Erro ao listar entregadores: " + e.getMessage());
         }
+    }*/
+    private void listarEntregadores() {
+        try {      
+            DefaultTableModel model = new DefaultTableModel();
+            table.setModel(model);
+
+            model.addColumn("ID do Entregador");
+            model.addColumn("Nome");
+            model.addColumn("Entregas");
+
+            String entregas;
+            List<Entregador> lista = Fachada.listarEntregadores();
+
+            for (Entregador e : lista) {
+                Entregador entregador = Fachada.localizarEntregador(e.getNome());
+
+                if (entregador.getEntregas().size() == 0) {
+                    entregas = "sem entrega";
+                } else {
+                    entregas = "";
+                    for (Entrega entrega : entregador.getEntregas()) {
+                        entregas += " " + entrega.getCodigoEntrega();
+                    }
+                }
+
+                model.addRow(new Object[]{entregador.getId(), entregador.getNome(), entregas});
+            }
+      
+			label2.setText("resultados: " + lista.size() + " entregadores - selecione uma linha para editar");
+
+            // redimensionar colunas
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // desabilita
+            table.getColumnModel().getColumn(0).setMaxWidth(40); // coluna id
+            table.getColumnModel().getColumn(2).setMinWidth(200); // coluna de entregas
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // habilita redimensionamento
+
+        } catch (Exception erro) {
+            label.setText("Erro ao listar entregadores: " + erro.getMessage());
+        }
     }
 
+
+    private void buscarEntregador(ActionEvent e) {
+    	new TelaConsulta();
+    }
 
     private void associarEntregaAEntregador() {
         try {

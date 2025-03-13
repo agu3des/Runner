@@ -97,7 +97,7 @@ public class TelaConsulta {
                 "Consultar pedidos pelo código",
                 "Consultar entregadores pelo nome",
                 "Consultar entregas pelo código",
-                "Consultar entregas pela data",
+                "Consultar entregas pela data 'yyyy-MM-dd'",
                 "Consultar entregadores com n entregas",
                 "Consultar pedidos pelo valor"
         });
