@@ -35,6 +35,7 @@ public class TelaPedido {
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
 
     public TelaPedido() {
         initialize();
@@ -70,7 +71,7 @@ public class TelaPedido {
 
         labelEscolhaOpcao = new JLabel("Escolha uma opção");
         labelEscolhaOpcao.setBounds(21, 27, 200, 20);
-        labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
+        labelEscolhaOpcao.setFont(new Font("Tahoma", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
 
         labelCodigoPedido = new JLabel("Código do Pedido:");
@@ -142,8 +143,17 @@ public class TelaPedido {
 				new TelaConsulta();
 			}
 		});
-		btnNewButton_3.setBounds(343, 11, 112, 14);
+		btnNewButton_3.setBounds(341, 10, 112, 14);
 		frame.getContentPane().add(btnNewButton_3);
+		
+		btnNewButton_4 = new JButton("Alterar");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaAlterar();
+			}
+		});
+		btnNewButton_4.setBounds(492, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_4);
         
         labelStatus = new JLabel("");
         labelStatus.setForeground(Color.BLUE);
@@ -156,6 +166,10 @@ public class TelaPedido {
     private void criarPedido() {
         try {
             String codigo = textFieldCodigoPedido.getText().trim();
+            if (codigo.isEmpty()) {
+                labelStatus.setText("Código não pode estar vazio");
+                return;
+            }
             double valor = Double.parseDouble(textFieldValor.getText().trim());
             String descricao = textFieldDescricao.getText().trim();
             Fachada.criarPedido(codigo, LocalDate.now(), valor, descricao);
@@ -180,6 +194,7 @@ public class TelaPedido {
             for (Pedido p : lista) {
                 model.addRow(new Object[]{p.getCodigoPedido(), p.getDataPedido().format(formatter), p.getValor(), p.getDescricao()});
             }
+            labelStatus.setText("Resultados: " + lista.size() + " pedidos - selecione uma linha para editar");
         } catch (Exception e) {
             labelStatus.setText("Erro ao listar pedidos: " + e.getMessage());
         }

@@ -40,6 +40,7 @@ public class TelaConsulta {
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
+	private JButton btnNewButton_4;
 
     public TelaConsulta() {
         initialize();
@@ -76,7 +77,7 @@ public class TelaConsulta {
         table.setBackground(Color.LIGHT_GRAY);
         table.setFillsViewportHeight(true);
         table.setRowSelectionAllowed(true);
-        table.setFont(new Font("Arial", Font.PLAIN, 14));
+        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
         scrollPane.setViewportView(table);
         table.setBorder(new LineBorder(new Color(0, 0, 0)));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -93,7 +94,7 @@ public class TelaConsulta {
         frame.getContentPane().add(label_4);
 
         button = new JButton("Consultar");
-        button.setFont(new Font("Arial", Font.PLAIN, 12));
+        button.setFont(new Font("Tahoma", Font.PLAIN, 12));
         button.setBounds(636, 36, 120, 30);
         frame.getContentPane().add(button);
         
@@ -124,6 +125,15 @@ public class TelaConsulta {
 		});
 		btnNewButton_2.setBounds(175, 9, 112, 14);
 		frame.getContentPane().add(btnNewButton_2);
+		
+		btnNewButton_4 = new JButton("Alterar");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaAlterar();
+			}
+		});
+		btnNewButton_4.setBounds(485, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_4);
 
         comboBox = new JComboBox<>(new String[] {
                 "Consultar pedidos pelo código",

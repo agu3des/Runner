@@ -8,8 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,11 +30,13 @@ public class TelaEntregador {
     private JScrollPane scrollPane;
     private JButton buttonAddEntrega, buttonUpdate, buttonApagar, buttonCreate, buttonBuscar;
     private JLabel label, label2, label3, label4, label5;
-    private JTextField textFieldName, textFieldEntrega;
+    private JTextField textFieldName;
+    private JComboBox<String> comboBoxEntrega;
     
 	private JButton btnNewButton;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
 
 
     public TelaEntregador() {
@@ -55,6 +57,7 @@ public class TelaEntregador {
             public void windowOpened(WindowEvent arg0) {
                 Fachada.inicializar();
                 listarEntregadores();
+                listarEntregas();
             }
 
             @Override
@@ -75,7 +78,7 @@ public class TelaEntregador {
         table.setFocusable(false);
         table.setBackground(Color.WHITE);
         table.setRowSelectionAllowed(true);
-        table.setFont(new Font("Arial", Font.PLAIN, 14));
+        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(table);
 
@@ -83,36 +86,36 @@ public class TelaEntregador {
         label.setForeground(Color.BLUE);
         label.setBounds(21, 363, 735, 14);
         frame.getContentPane().add(label);
-
-        label2 = new JLabel("Selecione um entregador para editar");
+ 
+        label2 = new JLabel("Crie um novo entregador");
         label2.setBounds(21, 216, 394, 14);
         frame.getContentPane().add(label2);
 
         label3 = new JLabel("Nome:");
         label3.setVerticalAlignment(SwingConstants.BOTTOM);
-        label3.setFont(new Font("Arial", Font.PLAIN, 11));
-        label3.setBounds(21, 239, 62, 14);
+        label3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        label3.setBounds(21, 241, 62, 14);
         frame.getContentPane().add(label3);
 
         label4 = new JLabel("Nova Entrega:");
-        label4.setFont(new Font("Arial", Font.PLAIN, 11));
-        label4.setBounds(21, 264, 80, 14);
+        label4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        label4.setBounds(262, 241, 80, 14);
         frame.getContentPane().add(label4);
         
         label5 = new JLabel("Status:");
-        label5.setFont(new Font("Arial", Font.PLAIN, 11));
+        label5.setFont(new Font("Tahoma", Font.PLAIN, 11));
         label5.setBounds(21, 264, 80, 14);
         frame.getContentPane().add(label4);
         
         textFieldName = new JTextField();
-        textFieldName.setFont(new Font("Arial", Font.PLAIN, 11));
-        textFieldName.setBounds(93, 236, 165, 20);
+        textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        textFieldName.setBounds(21, 264, 165, 20);
         frame.getContentPane().add(textFieldName);
 
-        textFieldEntrega = new JTextField();
-        textFieldEntrega.setFont(new Font("Arial", Font.PLAIN, 11));
-        textFieldEntrega.setBounds(93, 262, 165, 20);
-        frame.getContentPane().add(textFieldEntrega);
+        comboBoxEntrega = new JComboBox<>();
+        comboBoxEntrega.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        comboBoxEntrega.setBounds(262, 263, 165, 20);
+        frame.getContentPane().add(comboBoxEntrega);
 
         buttonCreate = new JButton("Criar Entregador");
         buttonCreate.setBounds(53, 319, 150, 30);
@@ -160,9 +163,17 @@ public class TelaEntregador {
 				new TelaConsulta();
 			}
 		});
-		btnNewButton_3.setBounds(342, 9, 112, 14);
+		btnNewButton_3.setBounds(354, 10, 112, 14);
 		frame.getContentPane().add(btnNewButton_3);
         
+		btnNewButton_4 = new JButton("Alterar");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaAlterar();
+			}
+		});
+		btnNewButton_4.setBounds(512, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_4);
         
         frame.setVisible(true);
     }
@@ -189,20 +200,20 @@ public class TelaEntregador {
 
             model.addColumn("ID do Entregador");
             model.addColumn("Nome");
-            model.addColumn("Entregas");
+            model.addColumn("Quantidade de Entregas");
 
-            String entregas;
+            int entregas;
             List<Entregador> lista = Fachada.listarEntregadores();
 
             for (Entregador e : lista) {
                 Entregador entregador = Fachada.localizarEntregador(e.getNome());
 
                 if (entregador.getEntregas().size() == 0) {
-                    entregas = "sem entrega";
+                    entregas = 0;
                 } else {
-                    entregas = "";
+                    entregas = 0;
                     for (Entrega entrega : entregador.getEntregas()) {
-                        entregas += " " + entrega.getCodigoEntrega();
+                        entregas = entregador.getEntregas().size();
                     }
                 }
 
@@ -227,7 +238,7 @@ public class TelaEntregador {
 
     private void apagarEntregador(ActionEvent e) {
         try {
-            Fachada.excluirEntrega(textFieldName.getText().trim());
+            Fachada.excluirEntregador(textFieldName.getText().trim());
             label5.setText("Entrega apagada com sucesso!");
             listarEntregadores();
         } catch (Exception ex) {
@@ -236,12 +247,31 @@ public class TelaEntregador {
     }
 
     
+    private void listarEntregas() {
+        try {
+            comboBoxEntrega.removeAllItems(); // Limpa o combo box antes de adicionar novos itens
+            List<Entrega> entregas = Fachada.listarEntregas();
+
+            for (Entrega entrega : entregas) {
+                comboBoxEntrega.addItem(entrega.getCodigoEntrega());
+            }
+
+            if (comboBoxEntrega.getItemCount() == 0) {
+                comboBoxEntrega.addItem("Nenhuma entrega disponível");
+            }
+        } catch (Exception e) {
+            label.setText("Erro ao listar entregas: " + e.getMessage());
+        }
+    }
+
+    
     private void associarEntregaAEntregador() {
         try {
             String nome = textFieldName.getText().trim();
-            String entregaCodigo = textFieldEntrega.getText().trim();
-            if (nome.isEmpty() || entregaCodigo.isEmpty()) {
-                label.setText("Nome ou entrega vazios");
+            String entregaCodigo = (String) comboBoxEntrega.getSelectedItem();
+            
+            if (nome.isEmpty() || entregaCodigo.equals("Nenhuma entrega disponível")) {
+                label.setText("Nome inválido ou sem entregas disponíveis");
                 return;
             }
 
@@ -252,6 +282,7 @@ public class TelaEntregador {
                 Fachada.alterarEntregadorDeEntrega(entregaCodigo, nome);  
                 label.setText("Entrega associada com sucesso!");
                 listarEntregadores();
+                listarEntregas(); // Atualiza o combobox após alteração
             } else {
                 label.setText("Entregador ou entrega inválidos!");
             }
@@ -259,4 +290,6 @@ public class TelaEntregador {
             label.setText(e.getMessage());
         }
     }
+
+    
 }

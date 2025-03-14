@@ -14,6 +14,7 @@ public class TelaPrincipal {
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
 
 
 	public static void main(String[] args) {
@@ -47,7 +48,7 @@ public class TelaPrincipal {
 				new TelaPedido();
 			}
 		});
-		btnNewButton.setBounds(96, 69, 112, 44);
+		btnNewButton.setBounds(88, 25, 112, 44);
 		frame.getContentPane().add(btnNewButton);
 		
 		btnNewButton_1 = new JButton("Entregador");
@@ -56,7 +57,7 @@ public class TelaPrincipal {
 				new TelaEntregador();
 			}
 		});
-		btnNewButton_1.setBounds(96, 138, 112, 44);
+		btnNewButton_1.setBounds(88, 92, 112, 44);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Entrega");
@@ -65,7 +66,7 @@ public class TelaPrincipal {
 				new TelaEntrega();
 			}
 		});
-		btnNewButton_2.setBounds(96, 215, 112, 44);
+		btnNewButton_2.setBounds(88, 159, 112, 44);
 		frame.getContentPane().add(btnNewButton_2);
 		
 		btnNewButton_3 = new JButton("Consultas");
@@ -74,8 +75,17 @@ public class TelaPrincipal {
 				new TelaConsulta();
 			}
 		});
-		btnNewButton_3.setBounds(96, 285, 112, 44);
+		btnNewButton_3.setBounds(88, 224, 112, 44);
 		frame.getContentPane().add(btnNewButton_3 	);
+		
+		btnNewButton_4 = new JButton("Alterar");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaAlterar();
+			}
+		});
+		btnNewButton_4.setBounds(88, 285, 112, 44);
+		frame.getContentPane().add(btnNewButton_4);
 		
 	}
 }
