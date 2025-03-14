@@ -144,7 +144,7 @@ public class TelaConsulta {
                 "Consultar entregadores pelo nome",
                 "Consultar entregas pelo código",
                 "Consultar entregas pela data 'yyyy-MM-dd'",
-                "Consultar entregadores com n entregas",
+                "Consultar entregadores com mais de n entregas",
                 "Consultar pedidos pelo valor"
         });
         comboBox.setBounds(20, 36, 600, 30);
