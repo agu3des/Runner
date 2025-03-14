@@ -35,7 +35,7 @@ public class Consultar {
             }
             //Verificar lógica
             System.out.println("\n---Consultar entregadores com mais de 1 entrega");
-            for (Entregador e : Fachada.consultarPorNEntregas(2)) {
+            for (Entregador e : Fachada.consultarPorNEntregas(1)) {
                 System.out.println(Fachada.localizarEntregador(e.getNome()));
             }
 
