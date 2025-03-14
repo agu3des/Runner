@@ -29,8 +29,8 @@ public class Consultar {
                 System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
             }
 
-            System.out.println("\n---Consultar entregas com data 11/03/2025");
-            for (Entrega e : Fachada.consultarEntregaPorData(LocalDate.parse("11/03/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")))) {
+            System.out.println("\n---Consultar entregas com data 14/03/2025");
+            for (Entrega e : Fachada.consultarEntregaPorData(LocalDate.parse("14/03/2025", DateTimeFormatter.ofPattern("dd/MM/yyyy")))) {
                 System.out.println(Fachada.localizarEntrega(e.getCodigoEntrega()));
             }
             //Verificar lógica
