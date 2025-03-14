@@ -8,13 +8,13 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import modelo.Entrega;
 
-public class
-DAOEntrega extends DAO<Entrega> {
+public class DAOEntrega extends DAO<Entrega> {
 
 	public Entrega read(Object chave) {
 		try {
 			String codigo = (String) chave;
-			TypedQuery<Entrega> q = manager.createQuery("select e from Entrega e where e.codigoEntrega =: en", Entrega.class);
+			TypedQuery<Entrega> q = manager.createQuery("select e from Entrega e where e.codigoEntrega =:en", 
+					Entrega.class);
 			q.setParameter("en", codigo);
 			return q.getSingleResult();
 
@@ -24,7 +24,6 @@ DAOEntrega extends DAO<Entrega> {
 	}
 
 	public List<Entrega> readByCodigo(String codigo) {
-		// carregar telefone com seus relacionamentos
 		TypedQuery<Entrega> q = manager.createQuery("""
 				select e from Entrega e 
 				where e.codigoEntrega like :x """, Entrega.class);

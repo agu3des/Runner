@@ -36,6 +36,10 @@ public class TelaConsulta {
     private JLabel label_4;
     private JComboBox<String> comboBox;
     private JTextField textField;
+    
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
 
     public TelaConsulta() {
         initialize();
@@ -63,7 +67,7 @@ public class TelaConsulta {
         });
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(20, 100, 750, 200);
+        scrollPane.setBounds(20, 129, 750, 200);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -81,7 +85,7 @@ public class TelaConsulta {
 
         label = new JLabel("");
         label.setForeground(Color.BLUE);
-        label.setBounds(20, 320, 750, 20);
+        label.setBounds(20, 333, 750, 20);
         frame.getContentPane().add(label);
 
         label_4 = new JLabel("Resultados:");
@@ -90,22 +94,50 @@ public class TelaConsulta {
 
         button = new JButton("Consultar");
         button.setFont(new Font("Arial", Font.PLAIN, 12));
-        button.setBounds(650, 10, 120, 30);
+        button.setBounds(636, 36, 120, 30);
         frame.getContentPane().add(button);
+        
+        
+		btnNewButton = new JButton("Pedido");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaPedido();
+			}
+		});
+		btnNewButton.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("Entregador");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntregador();
+			}
+		});
+		btnNewButton_1.setBounds(334, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Entrega");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntrega();
+			}
+		});
+		btnNewButton_2.setBounds(175, 9, 112, 14);
+		frame.getContentPane().add(btnNewButton_2);
 
         comboBox = new JComboBox<>(new String[] {
                 "Consultar pedidos pelo código",
                 "Consultar entregadores pelo nome",
                 "Consultar entregas pelo código",
-                "Consultar entregas pela data",
+                "Consultar entregas pela data 'yyyy-MM-dd'",
                 "Consultar entregadores com n entregas",
                 "Consultar pedidos pelo valor"
         });
-        comboBox.setBounds(20, 10, 600, 30);
+        comboBox.setBounds(20, 36, 600, 30);
         frame.getContentPane().add(comboBox);
 
         textField = new JTextField();
-        textField.setBounds(20, 50, 600, 30);
+        textField.setBounds(20, 76, 600, 30);
         frame.getContentPane().add(textField);
 
         button.addActionListener(new ActionListener() {
@@ -121,13 +153,13 @@ public class TelaConsulta {
                 try {
                     switch (index) {
                         case 0:
-                            listarPedidos(Fachada.consultarPedidos(input));
+                            listarPedidos(Fachada.localizarPedido(input));
                             break;
                         case 1:
-                            listarEntregadores(Fachada.consultarEntregadores(input));
+                            listarEntregadores(Fachada.localizarEntregador(input));
                             break;
                         case 2:
-                            listarEntregas(Fachada.consultarEntregas(input));
+                            listarEntregas(Fachada.localizarEntrega(input));
                             break;
                         case 3:
                         	LocalDate data = LocalDate.parse(input.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -147,29 +179,43 @@ public class TelaConsulta {
         });
     }
 
-    private void listarPedidos(List<Pedido> lista) {
+    private void listarPedidos(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Código");
         model.addColumn("Data");
         model.addColumn("Valor");
         model.addColumn("Descrição");
-        for (Pedido p : lista) {
-            model.addRow(new Object[] { p.getId(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+
+        if (resultado instanceof List) {
+            List<Pedido> lista = (List<Pedido>) resultado;
+            for (Pedido p : lista) {
+                model.addRow(new Object[] { p.getCodigoPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
+            }
+        } else if (resultado instanceof Pedido) {
+            Pedido p = (Pedido) resultado;
+            model.addRow(new Object[] { p.getCodigoPedido(), p.getDataPedido(), p.getValor(), p.getDescricao() });
         }
     }
 
-    private void listarEntregadores(List<Entregador> lista) {
+    private void listarEntregadores(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Nome");
         model.addColumn("Número de Entregas");
-        for (Entregador e : lista) {
+
+        if (resultado instanceof List) {
+            List<Entregador> lista = (List<Entregador>) resultado;
+            for (Entregador e : lista) {
+                model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
+            }
+        } else if (resultado instanceof Entregador) {
+            Entregador e = (Entregador) resultado;
             model.addRow(new Object[] { e.getNome(), e.getEntregas().size() });
         }
     }
 
-    private void listarEntregas(List<Entrega> lista) {
+    private void listarEntregas(Object resultado) {
         DefaultTableModel model = new DefaultTableModel();
         table.setModel(model);
         model.addColumn("Código");
@@ -177,9 +223,22 @@ public class TelaConsulta {
         model.addColumn("Endereço");
         model.addColumn("Entregador");
         model.addColumn("Id do Pedido");
-        for (Entrega e : lista) {
+
+        if (resultado instanceof List) {
+            List<Entrega> lista = (List<Entrega>) resultado;
+            for (Entrega e : lista) {
+                model.addRow(new Object[] {
+                        e.getCodigoEntrega(),
+                        e.getDataEntrega(),
+                        e.getEndereco(),
+                        e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
+                        !e.getPedidos().isEmpty() ? e.getPedidos().get(0).getId() : "Sem pedido"
+                });
+            }
+        } else if (resultado instanceof Entrega) {
+            Entrega e = (Entrega) resultado;
             model.addRow(new Object[] {
-                    e.getId(),
+                    e.getCodigoEntrega(),
                     e.getDataEntrega(),
                     e.getEndereco(),
                     e.getEntregador() != null ? e.getEntregador().getNome() : "Sem entregador",
@@ -187,6 +246,7 @@ public class TelaConsulta {
             });
         }
     }
+
 
     public static void main(String[] args) {
         new TelaConsulta();

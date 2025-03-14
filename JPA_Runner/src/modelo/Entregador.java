@@ -28,7 +28,7 @@ public class Entregador {
 	}
 	
 	public Entregador(String nome) {
-		this.nome = nome;
+		this.nome = nome.toLowerCase();
 	}
 	
 	
@@ -78,8 +78,12 @@ public class Entregador {
 		return texto += " ]";
 	}
 	
+	/*----------Relacionamento com Entregas-----------*/
 	public List<Entrega> getEntregas() {
 		return entregas;
+	}
+	public void setEntregas(List<Entrega> listaEntregas){
+		this.entregas = listaEntregas;
 	}
 	
 }

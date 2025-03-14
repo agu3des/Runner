@@ -3,7 +3,10 @@ package daojpa;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.hibernate.Hibernate;
+
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceUnitUtil;
 import jakarta.persistence.TypedQuery;
 
 public abstract class DAO<T> implements DAOInterface<T> {
@@ -45,6 +48,7 @@ public abstract class DAO<T> implements DAOInterface<T> {
 		return  query.getResultList();
 	}
 
+	
 	// ----------------------- TRANSACAO ----------------------
 	public static void begin() {
 		if (!manager.getTransaction().isActive())

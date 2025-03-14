@@ -2,6 +2,8 @@ package appswing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -28,6 +30,11 @@ public class TelaPedido {
     private JTextField textFieldCodigoPedido, textFieldValor, textFieldDescricao;
     private JLabel labelStatus;
     private JLabel labelEscolhaOpcao;
+    private JLabel labelCodigoPedido, labelValor, labelDescricao;
+    
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
 
     public TelaPedido() {
         initialize();
@@ -66,13 +73,25 @@ public class TelaPedido {
         labelEscolhaOpcao.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.getContentPane().add(labelEscolhaOpcao);
 
+        labelCodigoPedido = new JLabel("Código do Pedido:");
+        labelCodigoPedido.setBounds(21, 230, 150, 20);
+        frame.getContentPane().add(labelCodigoPedido);
+
         textFieldCodigoPedido = new JTextField();
         textFieldCodigoPedido.setBounds(21, 250, 150, 30);
         frame.getContentPane().add(textFieldCodigoPedido);
 
+        labelValor = new JLabel("Valor:");
+        labelValor.setBounds(181, 230, 150, 20);
+        frame.getContentPane().add(labelValor);
+
         textFieldValor = new JTextField();
         textFieldValor.setBounds(181, 250, 150, 30);
         frame.getContentPane().add(textFieldValor);
+
+        labelDescricao = new JLabel("Descrição:");
+        labelDescricao.setBounds(341, 230, 150, 20);
+        frame.getContentPane().add(labelDescricao);
 
         textFieldDescricao = new JTextField();
         textFieldDescricao.setBounds(341, 250, 310, 30);
@@ -98,8 +117,36 @@ public class TelaPedido {
         buttonApagar.addActionListener(e -> apagarPedido());
         frame.getContentPane().add(buttonApagar);
 
+		
+		btnNewButton_1 = new JButton("Entregador");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntregador();
+			}
+		});
+		btnNewButton_1.setBounds(180, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Entrega");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaEntrega();
+			}
+		});
+		btnNewButton_2.setBounds(21, 10, 112, 14);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Consultas");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaConsulta();
+			}
+		});
+		btnNewButton_3.setBounds(343, 11, 112, 14);
+		frame.getContentPane().add(btnNewButton_3);
+        
         labelStatus = new JLabel("");
-        labelStatus.setForeground(Color.RED);
+        labelStatus.setForeground(Color.BLUE);
         labelStatus.setBounds(21, 372, 677, 14);
         frame.getContentPane().add(labelStatus);
 
@@ -139,18 +186,7 @@ public class TelaPedido {
     }
 
     private void buscarPedido() {
-        try {
-            Pedido pedido = Fachada.localizarPedido(textFieldCodigoPedido.getText().trim());
-            if (pedido != null) {
-                textFieldValor.setText(String.valueOf(pedido.getValor()));
-                textFieldDescricao.setText(pedido.getDescricao());
-                labelStatus.setText("Pedido encontrado!");
-            } else {
-                labelStatus.setText("Pedido não encontrado.");
-            }
-        } catch (Exception e) {
-            labelStatus.setText("Erro ao buscar pedido: " + e.getMessage());
-        }
+    	new TelaConsulta(); 
     }
 
     private void mostrarPedidosPorValor() {

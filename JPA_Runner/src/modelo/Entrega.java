@@ -27,7 +27,7 @@ public class Entrega {
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
 	private Entregador entregador;
-    
+	    
     @OneToMany(mappedBy = "entrega", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 	private List<Pedido> pedidos = new ArrayList<>();
 
@@ -97,19 +97,16 @@ public class Entrega {
 		return entregador;
 	}
 	public void setEntregador(Entregador entregador) {
-		this.entregador = entregador;
+	    if (this.entregador != null) {
+	        this.entregador.getEntregas().remove(this);
+	    }
+	    this.entregador = entregador;
+	    if (entregador != null) {
+	        entregador.getEntregas().add(this);
+	    }
 	}
-	
 
-	/*----------Relacionamento com Pedidos-----------*/
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-	public void setPedidos(List<Pedido> listaPedidos){
-		this.pedidos = listaPedidos;
-	}
-	
-	
+
 	public String toString() {
 		String texto = "Codigo da Entrega: " + getCodigoEntrega() +
 				", Data de Entrega: " + getDataEntrega() + 
@@ -126,5 +123,14 @@ public class Entrega {
 		    }
 		return texto += " ]";
 	}
+	
+	/*----------Relacionamento com Pedidos-----------*/
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	public void setPedidos(List<Pedido> listaPedidos){
+		this.pedidos = listaPedidos;
+	}
+	
 
 }
