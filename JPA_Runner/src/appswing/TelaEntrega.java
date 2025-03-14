@@ -72,6 +72,25 @@ public class TelaEntrega {
 
         table = new JTable();
         scrollPane.setViewportView(table);
+        
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) { 
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String codigoEntrega = (String) table.getValueAt(selectedRow, 0);
+                    String endereco = (String) table.getValueAt(selectedRow, 2);
+                    String pedidos = (String) table.getValueAt(selectedRow, 3);
+                    String entregador = (String) table.getValueAt(selectedRow, 4);
+
+                    codigoEntregaTextField.setText(codigoEntrega);
+                    enderecoTextField.setText(endereco);
+                    comboEntregadores.setSelectedItem(entregador);
+                    comboPedidos.setSelectedItem(pedidos.trim().isEmpty() ? null : pedidos);
+
+                    labelStatus.setText("Entrega selecionada: " + codigoEntrega + ".");
+                }
+            }
+        });
 
         JLabel labelCodigoEntrega = new JLabel("Código da Entrega:");
         labelCodigoEntrega.setBounds(21, 230, 150, 20);
@@ -265,11 +284,21 @@ public class TelaEntrega {
 
     private void apagarEntrega(ActionEvent e) {
         try {
-            Fachada.excluirEntrega(codigoEntregaTextField.getText().trim());
-            labelStatus.setText("Entrega apagada com sucesso!");
-            listarEntregas();
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                String codigoEntrega = (String) table.getValueAt(selectedRow, 0);
+
+                Fachada.excluirEntrega(codigoEntrega);
+
+                labelStatus.setText("Entrega apagada com sucesso!");
+                listarEntregas();
+            } else {
+                labelStatus.setText("Por favor, selecione uma entrega para apagar.");
+            }
         } catch (Exception ex) {
             labelStatus.setText("Erro ao apagar entrega: " + ex.getMessage());
+            System.out.println(ex.getMessage());
         }
     }
+
 }

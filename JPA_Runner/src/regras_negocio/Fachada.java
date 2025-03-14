@@ -233,6 +233,14 @@ public class Fachada {
 			DAO.rollback();
 			throw new Exception("Excluir entrega - id inexistente:" + codigoEntrega);
 		}
+		
+	    for (Pedido p : e.getPedidos()) {
+	        p.setEntrega(null); 
+	    }
+		
+		if (e.getEntregador() != null) {
+	        e.getEntregador().getEntregas().remove(e);
+	    }
 
 		daoentrega.delete(e);
 		DAO.commit();

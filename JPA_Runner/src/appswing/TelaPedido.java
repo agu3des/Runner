@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.swing.Timer;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -36,6 +37,8 @@ public class TelaPedido {
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
 	private JButton btnNewButton_4;
+	
+	private Timer timerReset;
 
     public TelaPedido() {
         initialize();
@@ -69,6 +72,23 @@ public class TelaPedido {
         table = new JTable();
         scrollPane.setViewportView(table);
 
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) { 
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String codigoPedido = (String) table.getValueAt(selectedRow, 0);
+                    String valor = table.getValueAt(selectedRow, 2).toString();
+                    String descricao = (String) table.getValueAt(selectedRow, 3);
+
+                    textFieldCodigoPedido.setText(codigoPedido);
+                    textFieldValor.setText(valor);
+                    textFieldDescricao.setText(descricao);
+
+                    labelStatus.setText("Pedido selecionado: " + codigoPedido + ".");
+                }
+            }
+        });
+        
         labelEscolhaOpcao = new JLabel("Escolha uma opção");
         labelEscolhaOpcao.setBounds(21, 27, 200, 20);
         labelEscolhaOpcao.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -206,7 +226,12 @@ public class TelaPedido {
 
     private void mostrarPedidosPorValor() {
         try {
-            double valor = Double.parseDouble(textFieldValor.getText().trim());
+        	String valorText = textFieldValor.getText().trim();
+            if (valorText.isEmpty()) {
+                labelStatus.setText("Valor não pode estar vazio");
+                return;
+            }
+            double valor = Double.parseDouble(valorText);
             List<Pedido> listaPedidos = Fachada.consultarPedidoPorValor(valor);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
@@ -214,19 +239,41 @@ public class TelaPedido {
             for (Pedido p : listaPedidos) {
                 model.addRow(new Object[]{p.getCodigoPedido(), p.getDataPedido().format(formatter), p.getValor(), p.getDescricao()});
             }
-            labelStatus.setText("Pedidos encontrados!");
+            labelStatus.setText("Pedido(s) encontrados!");
+            
+            if (timerReset != null && timerReset.isRunning()) {
+                timerReset.stop(); 
+            }
+
+            timerReset = new Timer(60000, e -> resetarConsulta()); 
+            timerReset.setRepeats(false); 
+            timerReset.start();
+            
         } catch (Exception e) {
             labelStatus.setText("Erro ao buscar pedidos por valor: " + e.getMessage());
         }
     }
 
     private void apagarPedido() {
-        try {
-            Fachada.excluirPedido(textFieldCodigoPedido.getText().trim());
+    	try {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow == -1) {
+                labelStatus.setText("Selecione um pedido para apagar.");
+                return;
+            }
+
+            String codigoPedido = (String) table.getValueAt(selectedRow, 0);
+            Fachada.excluirPedido(codigoPedido);
             labelStatus.setText("Pedido apagado com sucesso!");
             listarPedidos();
         } catch (Exception e) {
             labelStatus.setText("Erro ao apagar pedido: " + e.getMessage());
         }
     }
+    
+    private void resetarConsulta() {
+        listarPedidos();
+        labelStatus.setText("Lista restaurada automaticamente após 60 segundos.");
+    }
+
 }

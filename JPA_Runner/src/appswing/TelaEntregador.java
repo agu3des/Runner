@@ -73,6 +73,20 @@ public class TelaEntregador {
         table = new JTable();
         scrollPane.setViewportView(table);
 
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String idEntregador = (String) table.getValueAt(selectedRow, 0);
+                    String nome = (String) table.getValueAt(selectedRow, 1);
+                    int entregas = (int) table.getValueAt(selectedRow, 2);
+
+                    textFieldName.setText(nome);
+                    label5.setText("Entregador selecionado: " + nome + " com " + entregas + " entregas.");
+                }
+            }
+        });
+
 
         table.setGridColor(Color.BLACK);
         table.setFocusable(false);
@@ -238,13 +252,23 @@ public class TelaEntregador {
 
     private void apagarEntregador(ActionEvent e) {
         try {
-            Fachada.excluirEntregador(textFieldName.getText().trim());
-            label5.setText("Entrega apagada com sucesso!");
-            listarEntregadores();
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                String idEntregador = (String) table.getValueAt(selectedRow, 0);
+
+                Fachada.excluirEntregador(idEntregador);
+
+                label5.setText("Entregador apagado com sucesso!");
+                listarEntregadores(); 
+            } else {
+                label5.setText("Por favor, selecione um entregador para apagar.");
+            }
         } catch (Exception ex) {
-        	label5.setText("Erro ao apagar entrega: " + ex.getMessage());
+            label5.setText("Erro ao apagar entregador: " + ex.getMessage());
+            System.out.println(ex.getMessage());
         }
     }
+
 
     
     private void listarEntregas() {
