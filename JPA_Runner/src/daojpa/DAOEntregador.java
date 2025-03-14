@@ -37,7 +37,7 @@ public class DAOEntregador extends DAO<Entregador>{
 		public List<Entregador> readByNEntregas(int n) {
 		    TypedQuery<Entregador> q = manager.createQuery(
 		            "select er from Entregador er " +		          
-		            "where SIZE(er.entregas) = :x", 
+		            "where SIZE(er.entregas) > :x", 
 		            Entregador.class);
 		    q.setParameter("x", n);
 		    return q.getResultList();
