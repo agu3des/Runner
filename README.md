@@ -19,6 +19,8 @@
 ## Uso
 >  Projeto desenvolvido na disciplina de Persistência de Objetos 2024.2, utilizando a linguagem java, ministrada pelo professor Fausto Veras, no curso de Sistemas para Internet (IFPB).
 
+## Protótipo
+[Figma](https://www.figma.com/proto/zciluhXWgiHlxJsUPjmNhr/RUNNER?node-id=235-966&t=orwEmoDvB519oG8w-1)
 
 ## Exigências
 + `Aplicação Gráfica:` Tela para a aplicação ser executada.
